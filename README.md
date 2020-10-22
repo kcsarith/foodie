@@ -1,2 +1,2 @@
 # flask-react-group-project
-Clone based off open table.
+Clone based off https://www.opentable.com/.
