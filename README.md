@@ -12,12 +12,12 @@ Hungry people looking for nearby restaurants may reserve seats ahead of time, so
 This also benefit the restaraunt since it'll save time by already having the seats reserved and so they can use the extra time to provide quicker, high quality service.
 
 ## Ratings/reviews
-To understand how well a customer 
+These are used to guage interaction between the customers and the restaraunt. Ratings are tied to the restaraunt but are created by the customers.
 
-Reviews are not private, so if a customer decides to give an unfair review to the restaraunt and they decide to come back. The restaraunt may 
+Note: Reviews are not private, so the reviews should be honest and provide valid criticsm.
 
 ## Favorites
-
+Users who find a restaraunts they love or really want to go visit in the future, may bookmark them in the future.
 
 ## Bonus: Discover/explore
 ## Bonus: points for bookings and usage of site
