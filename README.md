@@ -17,7 +17,7 @@ These are used to guage interaction between the customers and the restaraunt. Ra
 Note: Reviews are not private, so the reviews should be honest and provide valid criticsm.
 
 ## Favorites
-
+Users who find a restaraunts they love or really want to go visit in the future, may bookmark them in the future.
 
 ## Bonus: Discover/explore
 ## Bonus: points for bookings and usage of site
