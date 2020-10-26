@@ -8,24 +8,26 @@ import UserList from './components/UsersList';
 import { getUserInfo } from './store/currentUser';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  let needLogin = useSelector(state => !state.authentication.id);
-  return (
-      <Route {...rest} render={(props) => (
-          needLogin
-          ? <Redirect to='/login' />
-          : <Component {...props} />
-      )} />
-  )
+    let needLogin = useSelector(state => !state.authentication.id);
+    return (
+        <Route {...rest} render={(props) => (
+            needLogin
+                ? <Redirect to='/login' />
+                : <Component {...props} />
+        )} />
+    )
 }
 
 function App() {
+
   let currentUserId = useSelector(state => state.authentication.id);
   let location = useLocation();
   let dispatch = useDispatch();
 
-  // useEffect(() => {
-  //     dispatch(getUserInfo(currentUserId));
-  // }, [currentUserId, dispatch])
+    // useEffect(() => {
+    //     dispatch(getUserInfo(currentUserId));
+    // }, [currentUserId, dispatch])
+
 
 
   return (
@@ -52,6 +54,7 @@ function App() {
         </Switch>
     </>
   );
+
 }
 
 export default App;
