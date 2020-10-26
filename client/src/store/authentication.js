@@ -41,7 +41,11 @@ function loadUser() {
 
 export const login = (email, password) => {
   return async dispatch => {
+<<<<<<< HEAD
     const res = await fetch('/api/session', {
+=======
+    const res = await fetch('/api/session/', {
+>>>>>>> main
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({ email, password })
@@ -77,4 +81,8 @@ export default function reducer(state=loadUser(), action){
     default:
         return state
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main
