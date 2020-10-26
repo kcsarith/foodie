@@ -19,6 +19,13 @@ function SignUp() {
         setUser(user => ({ ...user, [name]:value }))
     }
 
+    function handleSubmit(e){
+        e.preventDefault();
+        const { name, email, city, state, password } = user;
+        const response = await fetch("")
+
+    }
+
     return (
         <div>
             <h2>Sign Up</h2>

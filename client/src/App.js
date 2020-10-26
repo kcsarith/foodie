@@ -17,9 +17,7 @@ function App() {
             </ul>
         </nav>
         <Switch>
-            <Route path="/users">
-                <UserList />
-            </Route>
+            <Route path="/users" component={UserList} />
             <Route path="/signup">
                 <UserList />
             </Route>
