@@ -8,55 +8,56 @@ import UserList from './components/UsersList';
 import { getUserInfo } from './store/currentUser';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  let needLogin = useSelector(state => !state.authentication.id);
-  return (
-      <Route {...rest} render={(props) => (
-          needLogin
-          ? <Redirect to='/login' />
-          : <Component {...props} />
-      )} />
-  )
+    let needLogin = useSelector(state => !state.authentication.id);
+    return (
+        <Route {...rest} render={(props) => (
+            needLogin
+                ? <Redirect to='/login' />
+                : <Component {...props} />
+        )} />
+    )
 }
 
 function App() {
-  let currentUserId = useSelector(state => state.authentication.id);
-  //let location = useLocation();
-  let dispatch = useDispatch();
+    let currentUserId = useSelector(state => state.authentication.id);
+    //let location = useLocation();
+    let dispatch = useDispatch();
 
-  // useEffect(() => {
-  //     dispatch(getUserInfo(currentUserId));
-  // }, [currentUserId, dispatch])
+    // useEffect(() => {
+    //     dispatch(getUserInfo(currentUserId));
+    // }, [currentUserId, dispatch])
 
 
-  return (
-    <BrowserRouter>
-        <nav>
-            <ul>
-                <li><NavLink to="/" activeclass="active">Home</NavLink></li>
-                <li><NavLink to="/users" activeclass="active">Users</NavLink></li>
-            </ul>
-        </nav>
-        {/* {location.pathname !== '/login' && location.pathname !== '/signup' ?
+    return (
+        <BrowserRouter>
+
+            {/* {location.pathname !== '/login' && location.pathname !== '/signup' ?
             <NavBar />
             : null} */}
-        <Switch>
-            <Route path="/login" component={LoginPanel} />
-            <PrivateRoute
-                path="/users"
-                exact={true}
-                component={UserList}
-            />
-            <PrivateRoute
-                path="/profile"
-                exact={true}
-                component={Profile}
-            />
-            <Route path="/">
-                <h1>My Home Page</h1>
-            </Route>
-        </Switch>
-    </BrowserRouter>
-  );
+            <Switch>
+                <Route path="/login" component={LoginPanel} />
+                <PrivateRoute
+                    path="/users"
+                    exact={true}
+                    component={UserList}
+                />
+                <PrivateRoute
+                    path="/profile"
+                    exact={true}
+                    component={Profile}
+                />
+                <Route path="/">
+                    <h1>My Home Page</h1>
+                    <nav>
+                        <ul>
+                            <li><NavLink to="/" activeclass="active">Home</NavLink></li>
+                            <li><NavLink to="/users" activeclass="active">Users</NavLink></li>
+                        </ul>
+                    </nav>
+                </Route>
+            </Switch>
+        </BrowserRouter>
+    );
 }
 
 export default App;
