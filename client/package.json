@@ -8,26 +8,16 @@
     "@testing-library/user-event": "^7.1.2",
     "http-proxy-middleware": "^1.0.5",
     "js-cookie": "^2.2.1",
-<<<<<<< HEAD
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-=======
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
->>>>>>> main
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "redux": "^4.0.5",
-<<<<<<< HEAD
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
-=======
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.2.0"
->>>>>>> main
   },
   "scripts": {
     "start": "react-scripts start",
