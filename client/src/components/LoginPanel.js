@@ -9,21 +9,16 @@ const LoginFormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  width: 600px;
   padding: 28px 10px 34px 10px;
-  border: 1px solid #d0d0c8;
-  border-radius: 4px;
-  box-shadow: 0px 1px 1px #d0d0c8;
   margin: 0 auto;
-  background-color: white;
   text-align: center;
   h1 {
     display: block;
     width: 100%;
     text-align: center;
-    color: #382110;
+    color: #111111;
     background-color: transparent;
-    font-size: 20px;
+    font-size: 48px;
     font-family: "Merriweather", Georgia, 'Times New Roman', serif;
     font-weight: bold;
     margin-bottom: 15px;
@@ -34,7 +29,8 @@ const LoginFormWrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: auto;
-    color: #030303
+    padding: 20px;
+    margin: 20px;
   }
   fieldset {
     border: none;
@@ -47,6 +43,7 @@ const LoginFormWrapper = styled.div`
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    padding: 20px 0px;
     margin-top: 8px;
     font-family: "Lato", "Helvetica Neue", Arial, Helvetica, sans-serif;
     color: #030303;
@@ -105,6 +102,10 @@ const LoginFormWrapper = styled.div`
     color: #00635d;
     text-decoration: none;
     cursor: pointer;
+  }
+
+  button:hover {
+      opacity: 0.7;
   }
 `;
 
