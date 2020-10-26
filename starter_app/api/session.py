@@ -5,7 +5,7 @@ from starter_app.models import User
 bp = Blueprint("session", __name__)
 
 
-@bp.route("/", methods=["GET", "POST"])
+@bp.route("/login", methods=["GET", "POST"])
 def login():
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 400
