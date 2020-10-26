@@ -23,6 +23,7 @@ RUN ["cp", "-r", "starter_app/static/static/css", "starter_app/static"]
 ENV FLASK_APP=starter_app
 ENV FLASK_ENV=production
 ENV SQLALCHEMY_ECHO=True
+ENV REACT_APP_BASE_URL=https://foodie0520.herokuapp.com/
 
 EXPOSE 8000
 
