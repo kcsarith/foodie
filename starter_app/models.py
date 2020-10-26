@@ -3,8 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 favorites = db.Table('favorites',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
-    db.Column('restaurant_id', db.Integer, db.ForeignKey('restaurant.id'), primary_key=True)
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    db.Column('restaurant_id', db.Integer, db.ForeignKey('restaurants.id'), primary_key=True)
 )
 
 
@@ -32,28 +32,6 @@ class User(db.Model):
         }
 
 
-class Reservation(db.Model):
-
-    __tablename__ = 'reservations'
-
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
-    group_num = db.Column(db.Numeric(1, 10), nullable=False)
-    start_time = db.Column(db.DateTime(timezone=True), nullable=False)
-
-
-class Review(db.Model):
-
-    __tablename__ = 'reviews'
-
-    id = db.Column(db.Integer, primary_key=True)
-    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    content = db.Column(db.Text, nullable=False)
-    rating = db.Column(db.Numeric(1, 5), nullable=False)
-
-
 class Restaurant(db.Model):
 
     __tablename__ = 'restaurants'
@@ -68,3 +46,24 @@ class Restaurant(db.Model):
     max_price = db.Column(db.Integer, nullable=True)
     reviews = db.relationship('Review', backref='restaurant', lazy=True)
     reservations = db.relationship('Reservation', backref='restaurant', lazy=True)
+
+class Reservation(db.Model):
+
+    __tablename__ = 'reservations'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
+    group_num = db.Column(db.Integer, nullable=False)
+    start_time = db.Column(db.DateTime(timezone=True), nullable=False)
+
+
+class Review(db.Model):
+
+    __tablename__ = 'reviews'
+
+    id = db.Column(db.Integer, primary_key=True)
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
