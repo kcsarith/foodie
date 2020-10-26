@@ -16,8 +16,8 @@ const NavBarButtons = () => {
         path={'/'}
         text={"Home"}/>
       <NavBarLink
-        path={'/profile'}
-        text={"My Profile"}/>
+        path={'/users'}
+        text={"Customers"}/>
       <NavBarLink
         path={'/restaurants'}
         text={"Browse"}/>
