@@ -1,8 +1,9 @@
 from dotenv import load_dotenv
-from starter_app import app, db
 from starter_app.models import User
+from starter_app import app, db
 
 load_dotenv()
+
 
 
 with app.app_context():
