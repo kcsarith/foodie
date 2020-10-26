@@ -12,11 +12,11 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(40), nullable=False, unique=True)
+    username = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     city = db.Column(db.String(50), nullable=False)
     state = db.Column(db.String(50), nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+    hashed_password = db.Column(db.String(100), nullable=False)
     reservations = db.relationship('Reservation', backref='user', lazy=True)
     reviews = db.relationship('Review', backref='user', lazy=True)
     favorites = db.relationship('Restaurant', secondary=favorites, lazy='subquery', backref=db.backref('users', lazy=True))
