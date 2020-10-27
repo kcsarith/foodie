@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, useLocation, Switch, Route, NavLink, Redirect } from 'react-router-dom';
 import LoginPanel from './components/LoginPanel';
+import SignUp from './components/SignUp';
 //import NavBar from './components/NavBar';
 import Profile from './components/Profile';
 import UserList from './components/UsersList';
@@ -52,6 +53,7 @@ function App() {
                 exact={true}
                 component={Profile}
             />
+            <Route path="/signup" component={SignUp} />
             <Route path="/">
                 <h1>My Home Page</h1>
             </Route>

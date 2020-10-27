@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import authentication from './authentication';
 
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
 
 const reducer = combineReducers({
