@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, Switch, Route, NavLink, Redirect } from 'react-router-dom';
 import LoginPanel from './components/LoginPanel';
+import SignUp from './components/SignUp';
 import NavBar from './components/NavBar';
 import Profile from './components/Profile';
 import UserList from './components/UsersList';
@@ -29,33 +30,30 @@ function App() {
     //     dispatch(getUserInfo(currentUserId));
     // }, [currentUserId, dispatch])
 
-
-
-    return (
-        <>
-
-            {location.pathname !== '/login' && location.pathname !== '/signup' ?
-                <NavBar />
-                : null}
-            <Switch>
-                <Route path="/login" component={LoginPanel} />
-                <PrivateRoute
-                    path="/users"
-                    exact={true}
-                    component={UserList}
-                />
-                <PrivateRoute
-                    path="/profile"
-                    exact={true}
-                    component={Profile}
-                />
-                <Route path="/">
-                    <HomePage />
-                </Route>
-            </Switch>
-        </>
-    );
-
+  return (
+    <>
+        {location.pathname !== '/login' && location.pathname !== '/signup' ?
+            <NavBar />
+            : null}
+        <Switch>
+            <Route path="/login" component={LoginPanel} />
+            <PrivateRoute
+                path="/users"
+                exact={true}
+                component={UserList}
+            />
+            <PrivateRoute
+                path="/profile"
+                exact={true}
+                component={Profile}
+            />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/">
+                <h1>My Home Page</h1>
+            </Route>
+        </Switch>
+    </>
+  );
 }
 
 export default App;

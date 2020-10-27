@@ -1,7 +1,8 @@
 from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_user, logout_user
+from starter_app.models import User, db
 
-from starter_app.models import User
+
 bp = Blueprint("session", __name__)
 
 
@@ -25,3 +26,26 @@ def login():
 def logout():
     logout_user()
     return {'msg': "you've been logged out"}, 200
+
+# yongho
+@bp.route("/signup", methods=["GET", "POST"])
+def signup():
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 400
+    email = request.json.get("email", None)
+    user = User.query.filter(User.email == email).first()
+    print(user)
+    if user:
+        # return {"errors":["The email you've entered has been already registed"]}, 400
+         return jsonify({"msg": "The email you've entered has been already registed"}), 400
+    name = request.json.get("name", None)
+    password = request.json.get("password", None)
+    city = request.json.get("city", None)
+    state = request.json.get("state", None)
+    newUser = User(name=name, email=email, password=password, city=city, state=state)
+    db.session.add(newUser)
+    db.session.commit()
+    return {"user": "user" }
+ 
+    
+
