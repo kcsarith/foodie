@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import ReactDOM from 'react-dom';
 import React, { useState } from "react";
 import { signup } from '../store/authentication';
@@ -113,7 +112,8 @@ function SignUp() {
     const [email, setEmail]= useState('');
     const [password, setPassword]= useState('');
     const [city, setCity]= useState('');
-    const [state, setState]= useState('');
+    const [state, setState]= useState('')
+    const [submitted, setSubmitted] = useState(false);
 
     const dispatch = useDispatch();
     const currentUserId = useSelector(state => state.authentication.id);
@@ -143,9 +143,9 @@ function SignUp() {
         }
     }
 
-    let error=''
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSubmitted(true);
         dispatch(signup(name, email, password, city, state));
     }
 
@@ -178,6 +178,8 @@ function SignUp() {
                                 value={name}
                                 placeholder="Please enter your name"
                                 onChange={handleChange} />
+                        {submitted && !name &&
+                        <div className="invalid-feedback">Name is required</div>}
                     </div>
                     <div className="input-fields">
                         <label htmlFor="email">Email</label>
@@ -186,6 +188,8 @@ function SignUp() {
                                 value={email}
                                 placeholder="Please enter Email"
                                 onChange={handleChange} />
+                        {submitted && !email &&
+                        <div className="invalid-feedback">Email is required</div>}
                     </div>
                     <div className="input-fields">
                         <label htmlFor="password">Password</label>
@@ -193,7 +197,9 @@ function SignUp() {
                                 id="password"
                                 placeholder="Please enter password"
                                 value={password}
-                        onChange={handleChange} />
+                                onChange={handleChange} />
+                        {submitted && !password &&
+                        <div className="invalid-feedback">Password is required</div>}
                     </div>
                     <div className="input-fields">
                         <label htmlFor="city">Primary Dining City</label>
