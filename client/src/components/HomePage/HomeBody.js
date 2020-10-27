@@ -10,7 +10,7 @@ function HomeBody() {
 
     useEffect(() => {
         async function fetchData() {
-            const res = await fetch(`/api/users/${userId}`)
+            const res = await fetch(`/api/home/${userId}`)
             const data = await res.json()
             setRestData(data.restaurants)
         }

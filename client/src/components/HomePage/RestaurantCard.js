@@ -42,16 +42,12 @@ export default function RestaurantCard({ rest }) {
 
     console.log('these are the props', rest)
 
-    const redirect = () => {
-        return <Redirect to='/restaurant/profile' />
-    }
-
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
     return (
-        <div className='rest-card' onClick={redirect}>
+        <div className='rest-card' >
             <Card className={classes.root}>
                 <CardHeader
                     avatar={
