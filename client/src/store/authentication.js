@@ -67,9 +67,7 @@ export const login = (email, password) => {
   }
 }
 
-export const signup = (name, email, password, location) => {
-    const city=location.substring(0, location.length-4);
-    const state=location.substring(location.length-2);
+export const signup = (name, email, password, city, state) => {
     return async (dispatch, getState) => {
         const fetchWithCSRF = getState().authentication.csrf;
         const res = await fetchWithCSRF('/api/session/signup', {

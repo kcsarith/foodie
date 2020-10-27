@@ -112,18 +112,18 @@ function SignUp() {
     const [name, setName]= useState('');
     const [email, setEmail]= useState('');
     const [password, setPassword]= useState('');
-    const [city, setCity]= useState('Las Vegas');
-    const [state, setState]= useState('NV');
+    const [city, setCity]= useState('');
+    const [state, setState]= useState('');
 
     const dispatch = useDispatch();
     const currentUserId = useSelector(state => state.authentication.id);
-    const location = `${city}, ${state}`;
+
     function handleChange(e){
         const { id, value } = e.target;
         switch (id) {
             case "name":
                 setName(value);
-            return;
+                return;
             case "email":
                 setEmail(value);
                 return;
@@ -143,19 +143,22 @@ function SignUp() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(signup(name, email, password, location));
+        dispatch(signup(name, email, password, city, state));
     }
 
-    console.log(currentUserId)
+
     if (currentUserId) {
       return <Redirect to="/" />;
     }
 
-    const options = [
-        "Las Vegas, NV", "Birmingham, AL", "Huntsville , AL", "Montgomery, AL","Los Angeles, CA", "San Diego, CA", "San Jose, CA","San Francisco, CA",
-        "Boise, ID", "Meridian, ID", "Nampa, ID","Idaho Falls, ID", "New York City, NY"
+    const cityOptions = [
+        "Las Vegas", "Birmingham", "Huntsville", "Montgomery","Los Angeles", "San Diego", "San Jose","San Francisco", "Boise", "Meridian", "Nampa","Idaho Falls", "New York City", "Baltimore",
+        "Wilmington", "Philadelphia", "Houston", "Trenton",
         ]
 
+    const stateOptions = [
+        "NV", "AL", "CA", "ID", "NY", "TX", "DE", "PA", "NJ", "MD",
+        ]
 
     return (
         <div>
@@ -166,7 +169,7 @@ function SignUp() {
                      <div className="input-fields">
                         <label htmlFor="name">Name</label>
                         <input type="txt"
-                                name= "name"
+                                id= "name"
                                 value={name}
                                 placeholder="Please enter your name"
                                 onChange={handleChange} />
@@ -174,7 +177,7 @@ function SignUp() {
                     <div className="input-fields">
                         <label htmlFor="email">Email</label>
                         <input type="email"
-                                name= "email"
+                                id= "email"
                                 value={email}
                                 placeholder="Please enter Email"
                                 onChange={handleChange} />
@@ -182,15 +185,21 @@ function SignUp() {
                     <div className="input-fields">
                         <label htmlFor="password">Password</label>
                         <input type="password"
-                                name="password"
+                                id="password"
                                 placeholder="Please enter password"
                                 value={password}
                         onChange={handleChange} />
                     </div>
                     <div className="input-fields">
-                        <label htmlFor="location">Primary Dining Location</label>
-                        <select value={location} name="location" placeholder="Select Side" onChange={handleChange}>
-                            {options.map((value) => <option key={value} location={value}>{value}</option>)}
+                        <label htmlFor="city">Primary Dining City</label>
+                        <select value={city} id="city" placeholder="Select City" onChange={handleChange}>
+                            {cityOptions.map((value, i) => <option key={`${value}-${i}`} city={value}>{value}</option>)}
+                        </select>
+                    </div>
+                    <div className="input-fields">
+                        <label htmlFor="state">Primary Dining State</label>
+                        <select value={state} id="state" placeholder="Select State" onChange={handleChange}>
+                            {stateOptions.map((value, i) => <option key={`${value}-${i}`} state={value}>{value}</option>)}
                         </select>
                     </div>
                     <br />

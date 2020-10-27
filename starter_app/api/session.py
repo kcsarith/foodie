@@ -45,4 +45,4 @@ def signup():
     newUser = User(name=name, email=email, password=password, city=city, state=state)
     db.session.add(newUser)
     db.session.commit()
-    return {"user": "user" }
+    return {"user": newUser.to_dict() }
