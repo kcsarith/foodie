@@ -53,7 +53,7 @@ const Footer = () => {
 
                             <Grid.Column width={15}>
                                 OpenTable is part of Booking Holdings, the world leader in online travel and related services.
-                                <div class="ui small images">
+                                <div className="ui small images">
                                     {imageFooterUrls.map(image => <img src={image} />)}
                                 </div>
                             </Grid.Column>

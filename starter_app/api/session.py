@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 from starter_app.models import User, db
 
 
@@ -21,7 +21,7 @@ def login():
     return {"user": current_user.to_dict()}
 
 
-
+@login_required
 @bp.route('/logout', methods=["POST"])
 def logout():
     logout_user()
@@ -45,7 +45,4 @@ def signup():
     newUser = User(name=name, email=email, password=password, city=city, state=state)
     db.session.add(newUser)
     db.session.commit()
-    return {"user": "user" }
- 
-    
-
+    return {"user": newUser.to_dict() }

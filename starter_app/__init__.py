@@ -21,6 +21,7 @@ db.init_app(app)
 # Application Security
 
 CORS(app)
+CSRFProtect(app)
 
 
 @app.after_request
@@ -50,3 +51,8 @@ login.login_view = "session.login"
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+
+@app.route('/api/csrf/restore')
+def restore_csrf():
+    return {"csrf_token": generate_csrf()}

@@ -9,7 +9,7 @@ export default function TimePickers() {
                 label="Time"
                 type="time"
                 defaultValue="19:30"
-                InputLabelProps={{
+                inputLabelProps={{
                     shrink: true,
                 }}
                 inputProps={{
