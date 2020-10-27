@@ -1,0 +1,56 @@
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home__selectors {
+    position: absolute;
+    display: flex;
+}
+
+
+.home__groupSelect {
+    height: 50px;
+    text-align: center;
+    border-radius: 0 10px 10px 0;
+    padding: 10px;
+    font-size: 20px;
+    width: 200px;
+    border: none;
+    border-left: 1px solid lightgray;
+}
+
+.home__dateInput, .home__time input {
+    height: 50px;
+    text-align: center;
+    padding: 2px;
+    font-size: 18px;
+    width: 200px;
+    border-top: none;
+    border-bottom: none;
+}
+
+.home__dateInput {
+    border-radius: 10px 0 0 10px;
+}
+
+.home__dateInput {
+    border: none;
+    border-right: 1px solid lightgray;
+}
+
+.home__time input {
+    border-right: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+}
+
+.home__img {
+    width: 100%;
+}
+
+.home__img img{
+    object-fit: cover;
+    width: 100%;
+    height: 300px;
+}

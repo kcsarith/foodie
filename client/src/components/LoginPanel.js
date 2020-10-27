@@ -152,7 +152,7 @@ const Login = () => {
             <img className='login__image' src='https://images.unsplash.com/photo-1508213824875-83a3d36e72a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80' />
             <LoginFormWrapper>
                 <div className="login">
-                    <h1>Sign in to Foodie</h1>
+                    <h1>Sign in</h1>
                     <form onSubmit={handleLogIn}>
                         <fieldset>
                             <div className="input-fields">
