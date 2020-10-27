@@ -7,6 +7,13 @@ export const setUser = user => {
     }
 }
 
+export const updateUser = user => {
+  return {
+    type: UPDATE_USER,
+    user
+  }
+}
+
 export const getUserInfo = (id) => {
     return async dispatch => {
         const response = await fetch(`/api/users/${id}/profile`);
