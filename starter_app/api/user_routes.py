@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from starter_app.models import User
 
 user_routes = Blueprint('users', __name__)
@@ -9,24 +9,13 @@ def index():
     response = User.query.all()
     return {"users": [user.to_dict() for user in response]}
 
-# Krisna
-@user_routes.route("/:id/update", methods=["GET", "PUT"])
-def update():
-    id = request.args.get('id')
-    user = User.query.get(id)
-    if not request.is_json:
-        return jsonify({"msg": "Missing JSON in request"}), 400
-    email = request.json.get("email", None)
-    user = User.query.filter(User.email == email).first()
+@user_routes.route("/<int:userId>/update", methods=["GET", "PATCH"])
+def update(userId):
+    user = User.query.get(userId)
     print(user)
-    if user:
-        # return {"errors":["The email you've entered has been already registed"]}, 400
-         return jsonify({"msg": "The email you've entered has been already registed"}), 400
     name = request.json.get("name", None)
-    password = request.json.get("password", None)
+    email = request.json.get("email", None)
     city = request.json.get("city", None)
     state = request.json.get("state", None)
-    newUser = User(name=name, email=email, password=password, city=city, state=state)
-    db.session.add(newUser)
-    db.session.commit()
-    return {"user": "user" }
+    user.name = name
+    return {"user": user.to_dict()}

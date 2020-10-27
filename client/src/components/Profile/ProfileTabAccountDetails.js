@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Form } from 'semantic-ui-react';
+import { updateUserInfo } from '../../store/currentUser';
 import { usStatesDictionary } from '../../lists/states.js';
 
 const options = usStatesDictionary.map(function (state) {
@@ -11,7 +12,8 @@ const options = usStatesDictionary.map(function (state) {
 console.log(options)
 
 const ProfileTabAccountDetail = () => {
-    const authSelector = useSelector(state => state.authentication)
+    const authSelector = useSelector(state => state.authentication);
+    const dispatch = useDispatch();
     const [state, setState] = useState({
         name: authSelector.name,
         city: authSelector.city,
@@ -25,9 +27,14 @@ const ProfileTabAccountDetail = () => {
     const handleChange = (e, { id, value },) => {
         return setState({ ...state, [id]: value })
     }
-    const handleUserUpdate = (e, { value }) => {
+    const handleUserUpdate = (e, { children }) => {
         e.preventDefault();
-        setState({ value })
+        console.log(children);
+        const formData = children.map(child => {
+            return { [child.props.id]: state[child.props.id] }
+        });
+        console.log(formData)
+        dispatch(updateUserInfo(authSelector.id));
     }
     return (
         <Form action='POST' onSubmit={handleUserUpdate} >
