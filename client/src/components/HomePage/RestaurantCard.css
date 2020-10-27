@@ -1,0 +1,8 @@
+.rest-card {
+    padding: 10px;
+}
+
+.rest-card:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
