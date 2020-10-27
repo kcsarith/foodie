@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Form } from 'semantic-ui-react';
-import { updateUserInfo } from '../../store/currentUser';
 import { usStatesDictionary } from '../../lists/states.js';
 
 const options = usStatesDictionary.map(function (state) {
@@ -34,7 +33,6 @@ const ProfileTabAccountDetail = () => {
             return { [child.props.id]: state[child.props.id] }
         });
         console.log(formData)
-        dispatch(updateUserInfo(authSelector.id));
     }
     return (
         <Form action='POST' onSubmit={handleUserUpdate} >
