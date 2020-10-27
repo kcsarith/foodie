@@ -5,6 +5,7 @@ import './HomePage.css'
 import SearchInput from './SearchInput'
 import Footer from '../Footer';
 import 'semantic-ui-css/semantic.min.css'
+import HomeBody from './HomeBody';
 
 function HomePage() {
     return (
@@ -36,8 +37,11 @@ function HomePage() {
                 <div className='home__img'>
                     <img src='https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80' />
                 </div>
+                <div className='home__body'>
+                    <HomeBody />
+                </div>
+                <Footer />
             </div>
-            <Footer />
         </>
     )
 }
