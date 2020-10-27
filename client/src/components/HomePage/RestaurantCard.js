@@ -52,11 +52,6 @@ export default function RestaurantCard() {
                         R
           </Avatar>
                 }
-                action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                    </IconButton>
-                }
                 title="Shrimp and Chorizo Paella"
                 subheader="September 14, 2016"
             />
@@ -74,9 +69,6 @@ export default function RestaurantCard() {
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon />
                 </IconButton>
                 <IconButton
                     className={clsx(classes.expand, {

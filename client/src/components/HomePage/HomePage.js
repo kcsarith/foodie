@@ -11,6 +11,9 @@ function HomePage() {
     return (
         <>
             <div className='home'>
+                <div className='home__title'>
+                    <h1> Find your Reservation!</h1>
+                </div>
                 <div className='home__selectors'>
                     <div className='home__date'>
                         <input className="home__dateInput" type="date" />
@@ -20,6 +23,7 @@ function HomePage() {
                     </div>
                     <div className='home__group'>
                         <select className='home__groupSelect' label='2 People' defaultValue='2 People' >
+                            <option> 1 Person</option>
                             <option> 2 People</option>
                             <option> 3 People</option>
                             <option> 4 People</option>
@@ -29,6 +33,13 @@ function HomePage() {
                             <option> 8 People</option>
                             <option> 9 People</option>
                             <option> 10 People</option>
+                            <option> 11 People</option>
+                            <option> 12 People</option>
+                            <option> 13 People</option>
+                            <option> 14 People</option>
+                            <option> 15 People</option>
+                            <option> More than 15</option>
+
                         </select>
                     </div>
                     <SearchInput />

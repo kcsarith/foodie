@@ -69,3 +69,10 @@
     height: 50px;
     margin-bottom: auto;
 }
+
+.home__title {
+    width: 100%;
+    background-color: #111111;
+    color: white;
+    text-align: center;
+}
