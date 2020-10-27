@@ -30,30 +30,30 @@ function App() {
     //     dispatch(getUserInfo(currentUserId));
     // }, [currentUserId, dispatch])
 
-  return (
-    <>
-        {location.pathname !== '/login' && location.pathname !== '/signup' ?
-            <NavBar />
-            : null}
-        <Switch>
-            <Route path="/login" component={LoginPanel} />
-            <PrivateRoute
-                path="/users"
-                exact={true}
-                component={UserList}
-            />
-            <PrivateRoute
-                path="/profile"
-                exact={true}
-                component={Profile}
-            />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/">
-                <h1>My Home Page</h1>
-            </Route>
-        </Switch>
-    </>
-  );
+    return (
+        <>
+            {location.pathname !== '/login' && location.pathname !== '/signup' ?
+                <NavBar />
+                : null}
+            <Switch>
+                <Route path="/login" component={LoginPanel} />
+                <PrivateRoute
+                    path="/users"
+                    exact={true}
+                    component={UserList}
+                />
+                <PrivateRoute
+                    path="/profile"
+                    exact={true}
+                    component={Profile}
+                />
+                <Route path="/signup" component={SignUp} />
+                <Route path="/">
+                    <HomePage />
+                </Route>
+            </Switch>
+        </>
+    );
 }
 
 export default App;
