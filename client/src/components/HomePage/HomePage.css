@@ -1,0 +1,14 @@
+.home {
+    display: flex;
+}
+
+.home__selectors {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    margin: auto;
+}
+
+.home__img {
+    width: 100%;;
+}
