@@ -24,8 +24,8 @@ with app.app_context():
     demo = User(name='demo', email='demo@example.com', city='NY',
                 state="NY", password='password')
 
-    fork = Restaurant(name='Fork', address='1234 N. 8th Street Boise, ID 83703', city='Boise',
-                      state='ID', avg_rating=4.4, min_price=0, max_price=5)
+    fork = Restaurant(name='Fork', address='1234 N. 8th Street New York, NY 83703', city='NY',
+                      state='NY', avg_rating=4.4, min_price=0, max_price=5)
 
     Ian_reservation = Reservation(user_id=1, restaurant_id=1, group_num=3,start_time=date(2020, 6, 28))
 

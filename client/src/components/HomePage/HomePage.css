@@ -72,7 +72,12 @@
 
 .home__title {
     width: 100%;
-    background-color: #111111;
+    background-color: #1b1c1d;
     color: white;
     text-align: center;
+}
+
+.home__body {
+    width: 100%;
+    padding: 30px;
 }

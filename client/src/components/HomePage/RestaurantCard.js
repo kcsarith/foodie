@@ -36,9 +36,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function RestaurantCard() {
+export default function RestaurantCard({ rest }) {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
+
+    console.log('these are the props', rest)
+
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -52,19 +55,17 @@ export default function RestaurantCard() {
                         R
           </Avatar>
                 }
-                title="Shrimp and Chorizo Paella"
-                subheader="September 14, 2016"
+                title={rest.name}
+                subheader={rest.address}
             />
             <CardMedia
                 className={classes.media}
-                image="/static/images/cards/paella.jpg"
+                image="https://images.unsplash.com/photo-1498654896293-37aacf113fd9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
                 title="Paella dish"
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    This impressive paella is a perfect party dish and a fun meal to cook together with your
-                    guests. Add 1 cup of frozen peas along with the mussels, if you like.
-        </Typography>
+                </Typography>
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
@@ -83,7 +84,7 @@ export default function RestaurantCard() {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Typography paragraph>Method:</Typography>
+                    <Typography paragraph>Reviews:</Typography>
                     <Typography paragraph>
                         Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
                         minutes.

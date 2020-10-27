@@ -38,11 +38,6 @@ function App() {
             <Switch>
                 <Route path="/login" component={LoginPanel} />
                 <PrivateRoute
-                    path="/users"
-                    exact={true}
-                    component={UserList}
-                />
-                <PrivateRoute
                     path="/profile"
                     exact={true}
                     component={Profile}
