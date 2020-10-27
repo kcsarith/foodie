@@ -15,6 +15,7 @@ import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './RestaurantCard.css'
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,13 +42,16 @@ export default function RestaurantCard({ rest }) {
 
     console.log('these are the props', rest)
 
+    const redirect = () => {
+        return <Redirect to='/restaurant/profile' />
+    }
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
     return (
-        <div className='rest-card'>
+        <div className='rest-card' onClick={redirect}>
             <Card className={classes.root}>
                 <CardHeader
                     avatar={

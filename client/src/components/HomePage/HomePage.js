@@ -13,9 +13,6 @@ function HomePage() {
     return (
         <>
             <div className='home'>
-                <div className='home__title'>
-                    <h1> Find your Reservation!</h1>
-                </div>
                 <div className='home__selectors'>
                     <div className='home__date'>
                         <input className="home__dateInput" type="date" />

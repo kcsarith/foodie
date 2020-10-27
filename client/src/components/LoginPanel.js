@@ -142,7 +142,7 @@ const Login = () => {
     }
 
     if (currentUserId) {
-        return <Redirect to="/profile" />;
+        return <Redirect to="/" />;
     }
 
 
