@@ -28,8 +28,16 @@ with app.app_context():
                       state='ID', avg_rating=4.4, min_price=0, max_price=5)
 
     Ian_reservation = Reservation(user_id=1, restaurant_id=1, group_num=3,start_time=date(2020, 6, 28))
+
     Ian_review = Review(restaurant_id=1, user_id=1,
-                        content='This place is great! me and my family had a great time here!', rating=4)
+                        content='This place is great! me and my family had a great time here!', rating=5)
+
+    demo_reservation = Reservation(user_id=7, restaurant_id=1, group_num=2, start_time=date(2020,6,28))
+
+    demo_review = Review(restaurant_id=1, user_id=7,
+                        content='''Overall this place was great, had to wait longer for food than I wanted to which is
+                                why I gave it 4 stars but overall I had a great experience!''', rating=4)
+
 
     db.session.add(ian)
     db.session.add(javier)
@@ -41,5 +49,7 @@ with app.app_context():
     db.session.add(fork)
     db.session.add(Ian_reservation)
     db.session.add(Ian_review)
+    db.session.add(demo_reservation)
+    db.session.add(demo_review)
 
     db.session.commit()
