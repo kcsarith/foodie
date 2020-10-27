@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelecor } from 'react-redux';
+import React, { useState } from "react";
+import { signup } from '../store/authentication';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import styled from "styled-components";
 
-//import { userAction } from '../actions';
+
 
 const SignUpFormWrapper = styled.div`
   display: flex;
@@ -101,45 +102,53 @@ const SignUpFormWrapper = styled.div`
     cursor: pointer;
   }
   select {
-    font-size: 15px;   
-    padding: 10px 4px; 
+    font-size: 15px;
+    padding: 10px 4px;
   }
 `;
 
-function SignUp(props) {
-    const [person, setPerson]= useState({
-        name: '',
-        email:'',	
-        password:'',
-        location:"Las Vegas, NV"
-    })
+function SignUp() {
 
+    const [name, setName]= useState('');
+    const [email, setEmail]= useState('');
+    const [password, setPassword]= useState('');
+    const [city, setCity]= useState('Las Vegas');
+    const [state, setState]= useState('NV');
+
+    const dispatch = useDispatch();
+    const currentUserId = useSelector(state => state.authentication.id);
+    const location = `${city}, ${state}`;
     function handleChange(e){
-        const { name, value } = e.target;
-        setPerson(person => ({ ...person, [name]:value }))
+        const { id, value } = e.target;
+        switch (id) {
+            case "name":
+                setName(value);
+            return;
+            case "email":
+                setEmail(value);
+                return;
+            case "password":
+                setPassword(value);
+                return;
+            case "city":
+                setCity(value);
+                return;
+            case "state":
+                setState(value);
+                return;
+            default:
+                return;
+        }
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('person:::::', person)
-        const { name, email, password,location } = person;
-        const city=location.substring(0, location.length-4);
-        const state=location.substring(location.length-2);
-        const response = await fetch("/api/session/signup", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                name,
-                email,
-                password,
-                city,
-                state
-             }),
-        })
-        
-        if (response.ok) {
-            props.history.push("/")
-        }
+        dispatch(signup(name, email, password, location));
+    }
+
+    console.log(currentUserId)
+    if (currentUserId) {
+      return <Redirect to="/" />;
     }
 
     const options = [
@@ -158,7 +167,7 @@ function SignUp(props) {
                         <label htmlFor="name">Name</label>
                         <input type="txt"
                                 name= "name"
-                                value={person.name}
+                                value={name}
                                 placeholder="Please enter your name"
                                 onChange={handleChange} />
                     </div>
@@ -166,7 +175,7 @@ function SignUp(props) {
                         <label htmlFor="email">Email</label>
                         <input type="email"
                                 name= "email"
-                                value={person.email}
+                                value={email}
                                 placeholder="Please enter Email"
                                 onChange={handleChange} />
                     </div>
@@ -175,12 +184,12 @@ function SignUp(props) {
                         <input type="password"
                                 name="password"
                                 placeholder="Please enter password"
-                                value={person.password}
+                                value={password}
                         onChange={handleChange} />
                     </div>
                     <div className="input-fields">
                         <label htmlFor="location">Primary Dining Location</label>
-                        <select value={person.location} name="location" placeholder="Select Side" onChange={handleChange}>
+                        <select value={location} name="location" placeholder="Select Side" onChange={handleChange}>
                             {options.map((value) => <option key={value} location={value}>{value}</option>)}
                         </select>
                     </div>
