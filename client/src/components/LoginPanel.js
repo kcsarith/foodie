@@ -1,28 +1,24 @@
 import React, { useState } from 'react';
-import {Redirect} from 'react-router-dom';
-import {useSelector, useDispatch} from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../store/authentication';
 import styled from "styled-components";
+import './LoginPanel.css'
 
 const LoginFormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  width: 600px;
   padding: 28px 10px 34px 10px;
-  border: 1px solid #d0d0c8;
-  border-radius: 4px;
-  box-shadow: 0px 1px 1px #d0d0c8;
   margin: 0 auto;
-  background-color: white;
   text-align: center;
   h1 {
     display: block;
     width: 100%;
     text-align: center;
-    color: #382110;
+    color: #111111;
     background-color: transparent;
-    font-size: 20px;
+    font-size: 48px;
     font-family: "Merriweather", Georgia, 'Times New Roman', serif;
     font-weight: bold;
     margin-bottom: 15px;
@@ -33,7 +29,8 @@ const LoginFormWrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: auto;
-    color: #030303
+    padding: 20px;
+    margin: 20px;
   }
   fieldset {
     border: none;
@@ -46,6 +43,7 @@ const LoginFormWrapper = styled.div`
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    padding: 20px 0px;
     margin-top: 8px;
     font-family: "Lato", "Helvetica Neue", Arial, Helvetica, sans-serif;
     color: #030303;
@@ -105,82 +103,91 @@ const LoginFormWrapper = styled.div`
     text-decoration: none;
     cursor: pointer;
   }
+
+  button:hover {
+      opacity: 0.7;
+  }
 `;
 
-const Login = () =>  {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
-  const currentUserId = useSelector(state => state.authentication.id);
+const Login = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
+    const currentUserId = useSelector(state => state.authentication.id);
 
-  const handleLogIn = (e) => {
-    e.preventDefault();
-    dispatch(login(email, password));
-  }
-
-  const handleDemoLogIn = (e) => {
-    e.preventDefault();
-    const demoEmail = 'demo@example.com';
-    const demoPassword = 'password';
-    dispatch(login(demoEmail, demoPassword));
-  }
-
-  const handleChange = (e) => {
-    const {id, value} = e.target;
-    switch(id){
-      case "email":
-        setEmail(value);
-        return;
-      case "password":
-        setPassword(value);
-        return;
-      default:
-        return;
+    const handleLogIn = (e) => {
+        e.preventDefault();
+        dispatch(login(email, password));
     }
-  }
 
-  if (currentUserId) {
-    return <Redirect to="/profile" />;
-  }
+    const handleDemoLogIn = (e) => {
+        e.preventDefault();
+        const demoEmail = 'demo@example.com';
+        const demoPassword = 'password';
+        dispatch(login(demoEmail, demoPassword));
+    }
+
+    const handleChange = (e) => {
+        const { id, value } = e.target;
+        switch (id) {
+            case "email":
+                setEmail(value);
+                return;
+            case "password":
+                setPassword(value);
+                return;
+            default:
+                return;
+        }
+    }
+
+    if (currentUserId) {
+        return <Redirect to="/profile" />;
+    }
 
 
-  return (
-    <div className="loginandsignup">
-      <LoginFormWrapper>
-        <h1>Sign in to Foodie</h1>
-        <form onSubmit={handleLogIn}>
-          <fieldset>
-            <div className="input-fields">
-              <label htmlFor="email">Email address</label>
-              <input type="email"
-                    id= "email"
-                    placeholder="you@yours.com"
-                    onChange={handleChange} />
-            </div>
-            <div className="input-fields">
-              <label htmlFor="password">Password</label>
-              <input type="password"
-                    id="password"
-                    onChange={handleChange} />
-            </div>
-            <div className="login-spacer"></div>
-            <div className="login-submit">
-              <div className="login-buttons">
-                <button type="submit">Sign in</button>
-                <button className="demouser" onClick={handleDemoLogIn}>Demo User</button>
-              </div>
-              <div className="login-signup">
-                <span>
-                  <span>Not a member?</span>
-                  <a href="/signup">Sign up</a>
-                </span>
-              </div>
-            </div>
-          </fieldset>
-        </form>
-      </LoginFormWrapper>
-    </div>
-  );
+    return (
+
+        <div className="loginandsignup">
+            <img className='login__image' src='https://images.unsplash.com/photo-1508213824875-83a3d36e72a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80' />
+            <LoginFormWrapper>
+                <div className="login">
+                    <h1>Sign in to Foodie</h1>
+                    <form onSubmit={handleLogIn}>
+                        <fieldset>
+                            <div className="input-fields">
+                                <label htmlFor="email">Email address</label>
+                                <input type="email"
+                                    id="email"
+                                    placeholder="you@yours.com"
+                                    onChange={handleChange} />
+                            </div>
+                            <div className="input-fields">
+                                <label htmlFor="password">Password</label>
+                                <input type="password"
+                                    id="password"
+                                    onChange={handleChange} />
+                            </div>
+                            <div className="login-spacer"></div>
+                            <div className="login-submit">
+                                <div className="login-buttons">
+                                    <button type="submit">Sign in</button>
+                                    <button className="demouser" onClick={handleDemoLogIn}>Demo User</button>
+                                </div>
+                                <div className="login-signup">
+                                    <span>
+                                        <span>Not a member?</span>
+                                        <a href="/signup">Sign up</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </LoginFormWrapper>
+
+        </div>
+    );
 }
 
 export default Login;
