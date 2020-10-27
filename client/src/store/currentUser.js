@@ -1,4 +1,4 @@
-const SET_USER = 'FOODIE/CUURENTUSER/SET_USER';
+const SET_USER = 'FOODIE/CURRENTUSER/SET_USER';
 
 export const setUser = user => {
   return {

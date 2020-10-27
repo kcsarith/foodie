@@ -3,13 +3,14 @@ import Cookies from 'js-cookie'
 const SET_USER = 'FOODIE/AUTH/SET_USER'
 const REMOVE_USER = 'FOODIE/AUTH/REMOVE_USER'
 
+
 export const setUser = (user) => {
-    // debugger;
   return {
-      type: SET_USER,
-      user
+    type: SET_USER,
+    user
   }
 }
+
 
 export const removeUser = (user) => {
   return {
@@ -19,7 +20,7 @@ export const removeUser = (user) => {
 
 export const logout = () => dispatch => {
   fetch(`/api/session`, {
-    method: 'delete'
+    method: 'POST'
   }).then(() => dispatch(removeUser()));
 }
 
@@ -40,15 +41,18 @@ function loadUser() {
 }
 
 export const login = (email, password) => {
-  return async dispatch => {
-    const res = await fetch('/api/session/', {
+  return async (dispatch, getState) => {
+    const fetchWithCSRF = getState().authentication.csrf;
+    const res = await fetchWithCSRF('/api/session/', {
       method: "POST",
       headers: {"Content-Type": "application/json"},
+      credentials: 'include',
       body: JSON.stringify({ email, password })
     })
     if(res.ok) {
       const { user } = await res.json();
-      dispatch(setUser(user))
+      user.csrf = fetchWithCSRF;
+      dispatch(setUser(user));
     }
   }
 }
@@ -67,8 +71,12 @@ export const signup = (name, email, password) => {
   }
 }
 
+const initialState = {
+  ...loadUser(),
+  csrf: null,
+}
 
-export default function reducer(state=loadUser(), action){
+export default function reducer(state=initialState, action){
   switch(action.type){
     case SET_USER:
         return action.user
