@@ -10,19 +10,13 @@ const NavBarButtonsWrapper = styled.div`
 `;
 
 const NavBarButtons = () => {
-  return (
-    <NavBarButtonsWrapper>
-      <NavBarLink
-        path={'/'}
-        text={"Home"}/>
-      <NavBarLink
-        path={'/users'}
-        text={"Customers"}/>
-      <NavBarLink
-        path={'/restaurants'}
-        text={"Browse"}/>
-    </NavBarButtonsWrapper>
-  )
+    return (
+        <NavBarButtonsWrapper>
+            <NavBarLink
+                path={'/'}
+                text={"Home"} />
+        </NavBarButtonsWrapper>
+    )
 }
 
 export default NavBarButtons;

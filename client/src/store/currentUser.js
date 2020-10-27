@@ -20,8 +20,8 @@ export const getUserInfo = (id) => {
   }
 }
 
-export default function reducer(state = {}, action){
-  switch(action.type){
+export default function reducer(state = {}, action) {
+  switch (action.type) {
     case SET_USER:
       return action.user;
     default:

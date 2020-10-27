@@ -22,75 +22,70 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 }
 
 function App() {
-  let currentUserId = useSelector(state => state.authentication.id);
-  let location = useLocation();
-  let dispatch = useDispatch();
-  // useEffect(() => {
-  //     dispatch(getUserInfo(currentUserId));
-  // }, [currentUserId, dispatch])
-  const [fetchWithCSRF, setFetchWithCSRF] = useState(() => fetch);
+    let currentUserId = useSelector(state => state.authentication.id);
+    let location = useLocation();
+    let dispatch = useDispatch();
+    // useEffect(() => {
+    //     dispatch(getUserInfo(currentUserId));
+    // }, [currentUserId, dispatch])
+    const [fetchWithCSRF, setFetchWithCSRF] = useState(() => fetch);
 
-  useEffect(() => {
-      async function restoreCSRF() {
-          const response = await fetch('/api/csrf/restore', {
-              method: 'GET',
-              credentials: 'include'
-          });
-          if (response.ok) {
-              const authData = await response.json();
-              setFetchWithCSRF(() => {
-                  return (resource, init) => {
-                      if (init.headers) {
-                          init.headers['X-CSRFToken'] = authData.csrf_token;
-                      } else {
-                          init.headers = {
-                              'X-CSRFToken': authData.csrf_token
-                          }
-                      }
-                      return fetch(resource, init);
-                  }
-              });
-          }
-      }
-      restoreCSRF();
-  }, []);
+    useEffect(() => {
+        async function restoreCSRF() {
+            const response = await fetch('/api/csrf/restore', {
+                method: 'GET',
+                credentials: 'include'
+            });
+            if (response.ok) {
+                const authData = await response.json();
+                setFetchWithCSRF(() => {
+                    return (resource, init) => {
+                        if (init.headers) {
+                            init.headers['X-CSRFToken'] = authData.csrf_token;
+                        } else {
+                            init.headers = {
+                                'X-CSRFToken': authData.csrf_token
+                            }
+                        }
+                        return fetch(resource, init);
+                    }
+                });
+            }
+        }
+        restoreCSRF();
+    }, []);
 
 
-  useEffect(() => {
-    dispatch(setCsrfFunc(fetchWithCSRF));
-  }, [fetchWithCSRF]);
+    useEffect(() => {
+        dispatch(setCsrfFunc(fetchWithCSRF));
+    }, [fetchWithCSRF]);
 
-  return (
-    <>
-        {location.pathname !== '/login' && location.pathname !== '/signup' ?
-            <NavBar />
-            : null}
-        <Switch>
-            <Route path="/login" component={LoginPanel} />
-            <PrivateRoute
-                path="/users"
-                exact={true}
-                component={UserList}
-            />
-            <PrivateRoute
-                path="/profile"
-                exact={true}
-                component={Profile}
-            />
-            <Route
-                path="/signup"
-                exact={true}
-                component={SignUp}
-            />
-            <Route
-                path="/"
-                exact={true}
-                component={HomePage}
-            />
+    return (
+        <>
+            {location.pathname !== '/login' && location.pathname !== '/signup' ?
+                <NavBar />
+                : null}
+            <Switch>
+                <Route path="/login" component={LoginPanel} />
+                <PrivateRoute
+                    path="/profile"
+                    exact={true}
+                    component={Profile}
+                />
+                <Route
+                    path="/signup"
+                    exact={true}
+                    component={SignUp}
+                />
+                <Route
+                    path="/"
+                    exact={true}
+                    component={HomePage}
+                />
 
-        </Switch>
-    </>
-  );
+            </Switch>
+        </>
+    );
 }
 
 export default App;

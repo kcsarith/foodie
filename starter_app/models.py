@@ -63,6 +63,18 @@ class Restaurant(db.Model):
     reviews = db.relationship('Review', backref='restaurant', lazy=True)
     reservations = db.relationship('Reservation', backref='restaurant', lazy=True)
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "address": self.address,
+            "city": self.city,
+            "state": self.state,
+            "avg_rating": self.avg_rating,
+            "min_price": self.min_price,
+            "max_price": self.max_price,
+        }
+
 class Reservation(db.Model):
 
     __tablename__ = 'reservations'
@@ -72,6 +84,15 @@ class Reservation(db.Model):
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
     group_num = db.Column(db.Integer, nullable=False)
     start_time = db.Column(db.DateTime(timezone=True), nullable=False)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "restaurant_id": self.restaurant_id,
+            "group_num": self.group_num,
+            "start_time": self.start_time,
+        }
 
 
 class Review(db.Model):
@@ -83,3 +104,12 @@ class Review(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     content = db.Column(db.Text, nullable=False)
     rating = db.Column(db.Integer, nullable=False)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "restaurant_id": self.restaurant_id,
+            "user_id": self.user_id,
+            "content": self.content,
+            "rating": self.rating,
+        }
