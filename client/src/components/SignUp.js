@@ -1,29 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelecor } from 'react-redux';
+import ReactDOM from 'react-dom';
 import styled from "styled-components";
+import back_img from "../foodie-apps.jpg";
+import './LoginPanel.css';
 
-//import { userAction } from '../actions';
 
 const SignUpFormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  width: 600px;
   padding: 28px 10px 34px 10px;
-  border: 1px solid #d0d0c8;
-  border-radius: 4px;
-  box-shadow: 0px 1px 1px #d0d0c8;
   margin: 0 auto;
-  background-color: white;
   text-align: center;
   h1 {
     display: block;
     width: 100%;
     text-align: center;
-    color: #382110;
+    color: #111111;
     background-color: transparent;
-    font-size: 20px;
+    font-size: 48px;
     font-family: "Merriweather", Georgia, 'Times New Roman', serif;
     font-weight: bold;
     margin-bottom: 15px;
@@ -34,7 +29,8 @@ const SignUpFormWrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: auto;
-    color: #030303
+    padding: 20px
+    margin: 20px
   }
   fieldset {
     border: none;
@@ -47,6 +43,7 @@ const SignUpFormWrapper = styled.div`
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    padding: 10px 0px;
     margin-top: 8px;
     font-family: "Lato", "Helvetica Neue", Arial, Helvetica, sans-serif;
     color: #030303;
@@ -101,8 +98,8 @@ const SignUpFormWrapper = styled.div`
     cursor: pointer;
   }
   select {
-    font-size: 15px;   
-    padding: 10px 4px; 
+    font-size: 13px;   
+    padding: 9px 4px; 
   }
 `;
 
@@ -114,17 +111,20 @@ function SignUp(props) {
         location:"Las Vegas, NV"
     })
 
+    const [location, setLocation] = useState({city:'', state:''})
+
     function handleChange(e){
         const { name, value } = e.target;
         setPerson(person => ({ ...person, [name]:value }))
     }
 
+    let error=''
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('person:::::', person)
         const { name, email, password,location } = person;
-        const city=location.substring(0, location.length-4);
-        const state=location.substring(location.length-2);
+        // const city=location.substring(0, location.length-4);
+        // const state=location.substring(location.length-2);
+        const {city, state} = location
         const response = await fetch("/api/session/signup", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -136,28 +136,51 @@ function SignUp(props) {
                 state
              }),
         })
-        
+
         if (response.ok) {
             props.history.push("/")
         }
+        
+        console.log("response::::", response);
+        // Response {type: "basic", url: "http://localhost:3000/api/session/signup", redirected: false, status: 400, ok: false, …}
+        if(response.status === 400){
+            console.log('aaaa')
+            error = 'Error message'   
+        }
+
+        ReactDOM.render(
+                <React.StrictMode>
+                <div>{error}</div>
+            </React.StrictMode>,
+            document.getElementById('error')
+        );
+     
     }
 
-    const options = [
-        "Las Vegas, NV", "Birmingham, AL", "Huntsville , AL", "Montgomery, AL","Los Angeles, CA", "San Diego, CA", "San Jose, CA","San Francisco, CA",
-        "Boise, ID", "Meridian, ID", "Nampa, ID","Idaho Falls, ID", "New York City, NY"
-        ]
+    // const options = [
+    //     "Las Vegas, NV", "Birmingham, AL", "Huntsville , AL", "Montgomery, AL","Los Angeles, CA", "San Diego, CA", 
+    //     "San Jose, CA","San Francisco, CA", "Newark, DE","Albuquerque, NM","Santa Fe, NM",
+    //     "Boise, ID", "Meridian, ID", "Nampa, ID","Idaho Falls, ID", "New York City, NY","Dallas TX", "Houston, TX"
+    //     ]
 
+    const options = [
+        {city:'', state:'NV'},
+        {}
+    ]
 
     return (
-        <div>
+        <div  className="loginandsignup">
+            <img className='login__image' src={back_img} alt="signup-image" />
             <SignUpFormWrapper>
-            <h2>Welcome To Foodie!</h2>
+            <h1>Welcome To Foodie!</h1>
+            <div id="error"></div>
             <form name='form' onSubmit={handleSubmit}>
                 <fieldset>
                      <div className="input-fields">
                         <label htmlFor="name">Name</label>
                         <input type="txt"
                                 name= "name"
+                                id = "name"
                                 value={person.name}
                                 placeholder="Please enter your name"
                                 onChange={handleChange} />
@@ -166,6 +189,7 @@ function SignUp(props) {
                         <label htmlFor="email">Email</label>
                         <input type="email"
                                 name= "email"
+                                id ="email"
                                 value={person.email}
                                 placeholder="Please enter Email"
                                 onChange={handleChange} />
@@ -174,19 +198,24 @@ function SignUp(props) {
                         <label htmlFor="password">Password</label>
                         <input type="password"
                                 name="password"
+                                id="password"
                                 placeholder="Please enter password"
                                 value={person.password}
                         onChange={handleChange} />
                     </div>
                     <div className="input-fields">
                         <label htmlFor="location">Primary Dining Location</label>
-                        <select value={person.location} name="location" placeholder="Select Side" onChange={handleChange}>
+                        <select value={person.location} name="location" id="location" onChange={handleChange}>
                             {options.map((value) => <option key={value} location={value}>{value}</option>)}
                         </select>
                     </div>
                     <br />
                     <div className="login-buttons">
-                        <button type="submit">Register</button>
+                        <button type="submit">Register</button>    
+                    <div>   
+                        <div>Already a member?</div>
+                        <a href="/login">Log In</a>
+                    </div>
                     </div>
                 </fieldset>
             </form>
