@@ -6,7 +6,7 @@ import SignUp from './components/SignUp';
 import NavBar from './components/NavBar';
 import Profile from './components/Profile';
 import UserList from './components/UsersList';
-import { getUserInfo } from './store/currentUser';
+//import { getUserInfo } from './store/currentUser';
 import HomePage from './components/HomePage/HomePage'
 import { setCsrfFunc } from './store/authentication';
 
@@ -22,7 +22,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 }
 
 function App() {
-  let currentUserId = useSelector(state => state.authentication.id);
+  //let currentUserId = useSelector(state => state.authentication.id);
   let location = useLocation();
   let dispatch = useDispatch();
   // useEffect(() => {
@@ -58,7 +58,7 @@ function App() {
 
   useEffect(() => {
     dispatch(setCsrfFunc(fetchWithCSRF));
-  }, [fetchWithCSRF]);
+  }, [fetchWithCSRF, dispatch]);
 
   return (
     <>

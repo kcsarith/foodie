@@ -149,7 +149,7 @@ const Login = () => {
     return (
 
         <div className="loginandsignup">
-            <img className='login__image' src='https://images.unsplash.com/photo-1508213824875-83a3d36e72a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80' />
+            <img className='login__image' src='https://images.unsplash.com/photo-1508213824875-83a3d36e72a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80' alt='' />
             <LoginFormWrapper>
                 <div className="login">
                     <h1>Sign in</h1>
