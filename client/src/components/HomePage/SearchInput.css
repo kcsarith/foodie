@@ -1,0 +1,24 @@
+.home-search {
+    display: flex;
+    align-items: center;
+}
+
+
+.home-search input {
+    height: 50px;
+    text-align: center;
+    padding: 2px;
+    font-size: 18px;
+    width: 200px;
+    border-top: none;
+    border-bottom: none;
+    margin-left: 15px;
+    border-radius: 5px;
+    border: none;
+}
+
+.home-search__icon {
+    position: absolute;
+    padding-left: 20px;
+    font-size: large;
+}
