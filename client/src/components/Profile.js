@@ -9,8 +9,8 @@ const Profile = () => {
   const authSelector = useSelector(state => state.authentication)
   return (
     <>
-      <ProfileLayout username={authSelector.name} />
-      <Container padding="very">
+      <ProfileLayout username={authSelector.name} testPoints={845} />
+      <Container>
         <ProfileTabs />
       </Container>
     </>
