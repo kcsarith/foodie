@@ -47,7 +47,7 @@ export default function RestaurantCard({ rest }) {
         setExpanded(!expanded);
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         async function fetchData() {
             const res = await fetch(`/api/home/restaurant/${rest.id}`)
             const data = await res.json()
