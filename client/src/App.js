@@ -60,37 +60,32 @@ function App() {
     dispatch(setCsrfFunc(fetchWithCSRF));
   }, [fetchWithCSRF, dispatch]);
 
-  return (
-    <>
-        {location.pathname !== '/login' && location.pathname !== '/signup' ?
-            <NavBar />
-            : null}
-        <Switch>
-            <Route path="/login" component={LoginPanel} />
-            <PrivateRoute
-                path="/users"
-                exact={true}
-                component={UserList}
-            />
-            <PrivateRoute
-                path="/profile"
-                exact={true}
-                component={Profile}
-            />
-            <Route
-                path="/signup"
-                exact={true}
-                component={SignUp}
-            />
-            <Route
-                path="/"
-                exact={true}
-                component={HomePage}
-            />
+    return (
+        <>
+            {location.pathname !== '/login' && location.pathname !== '/signup' ?
+                <NavBar />
+                : null}
+            <Switch>
+                <Route path="/login" component={LoginPanel} />
+                <PrivateRoute
+                    path="/profile"
+                    exact={true}
+                    component={Profile}
+                />
+                <Route
+                    path="/signup"
+                    exact={true}
+                    component={SignUp}
+                />
+                <Route
+                    path="/"
+                    exact={true}
+                    component={HomePage}
+                />
 
-        </Switch>
-    </>
-  );
+            </Switch>
+        </>
+    );
 }
 
 export default App;

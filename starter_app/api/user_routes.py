@@ -1,7 +1,10 @@
 from flask import Blueprint, jsonify
-from starter_app.models import User
+from starter_app.models import User, Restaurant
 from flask_login import login_required
+
+
 user_routes = Blueprint('users', __name__)
+
 
 
 @user_routes.route('/')
