@@ -17,8 +17,8 @@ const AuthNavButtonsWrapper = styled.div`
     cursor: pointer;
     display: inline-block;
     text-decoration: none;
-    color: #382110;
-    background-color: #f4f1ea;
+    background-color: #da3743;
+    color: white;
     line-height: 50px;
     font-weight: bold;
     font-family: "Lato", "Helvetica Neue", "Helvetica", sans-serif;
@@ -27,32 +27,33 @@ const AuthNavButtonsWrapper = styled.div`
   }
   .button:hover {
     color: #FFFFFF;
-    background-color: #382110;
+    background-color: black;
+    opactiy: 0.8;
     outline: 0;
   }
 `;
 
 const AuthNavButtons = () => {
-  const loggedOut = useSelector(state => !state.authentication.id);
-  const dispatch = useDispatch();
+    const loggedOut = useSelector(state => !state.authentication.id);
+    const dispatch = useDispatch();
 
-  const handleLogout = async () => {
-    dispatch(logout());
-  }
+    const handleLogout = async () => {
+        dispatch(logout());
+    }
 
-  if (loggedOut) {
-    return <Redirect to="/login" />;
-  }
+    if (loggedOut) {
+        return <Redirect to="/login" />;
+    }
 
-  return (
-    <AuthNavButtonsWrapper>
-      <NavBarLink
-        path = {'/profile'}
-        text = {'Profile'}
-      />
-      <button className="button" onClick={handleLogout}>Logout</button>
-    </AuthNavButtonsWrapper>
-  )
+    return (
+        <AuthNavButtonsWrapper>
+            <NavBarLink
+                path={'/profile'}
+                text={'Profile'}
+            />
+            <button className="button" onClick={handleLogout}>Logout</button>
+        </AuthNavButtonsWrapper>
+    )
 };
 
 export default AuthNavButtons;
