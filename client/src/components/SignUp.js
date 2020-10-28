@@ -117,8 +117,9 @@ function SignUp() {
 
     const dispatch = useDispatch();
     const currentUserId = useSelector(state => state.authentication.id);
+    const error_msg = useSelector(state => state.authentication.error);
 
-    const [location, setLocation] = useState({city:'', state:''})
+    // const [location, setLocation] = useState({city:'', state:''})
 
     function handleChange(e){
         const { id, value } = e.target;
@@ -149,7 +150,6 @@ function SignUp() {
         dispatch(signup(name, email, password, city, state));
     }
 
-
     if (currentUserId) {
       return <Redirect to="/" />;
     }
@@ -168,7 +168,6 @@ function SignUp() {
             <img className='login__image' src={back_img} alt="signup-image" />
             <SignUpFormWrapper>
             <h1>Welcome To Foodie!</h1>
-            <div id="error"></div>
             <form name='form' onSubmit={handleSubmit}>
                 <fieldset>
                      <div className="input-fields">
@@ -220,7 +219,9 @@ function SignUp() {
                         <div>Already a member?</div>
                         <a href="/login">Log In</a>
                     </div>
+                    
                     </div>
+                    <div id="error">{error_msg}</div>
                 </fieldset>
             </form>
             </SignUpFormWrapper>
