@@ -16,6 +16,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './RestaurantCard.css'
 import { useHistory } from 'react-router-dom';
+import RestReviews from './RestReviews';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,7 +43,6 @@ export default function RestaurantCard({ rest }) {
     const [reviews, setReviews] = useState([])
     const history = useHistory()
 
-
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -61,7 +61,8 @@ export default function RestaurantCard({ rest }) {
         fetchData()
     }, [])
 
-    console.log(reviews)
+    const restReviews = reviews.map(item => <RestReviews key={item.id} review={item} />)
+
     return (
         <div className='rest-card'>
             <Card className={classes.root}>
@@ -98,26 +99,8 @@ export default function RestaurantCard({ rest }) {
                     <CardContent>
                         <Typography paragraph>Reviews:</Typography>
                         <Typography paragraph>
-                            {reviews === undefined ? reviews[0].content : 'No reviews yet!'}
+                            {restReviews}
                         </Typography>
-                        <Typography paragraph>
-                            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-                            heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-                            browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken
-                            and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
-                            pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
-                            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-          </Typography>
-                        <Typography paragraph>
-                            Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-                            without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-                            medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
-                            again without stirring, until mussels have opened and rice is just tender, 5 to 7
-                            minutes more. (Discard any mussels that don’t open.)
-          </Typography>
-                        <Typography>
-                            Set aside off of the heat to let rest for 10 minutes, and then serve.
-          </Typography>
                     </CardContent>
                 </Collapse>
             </Card>

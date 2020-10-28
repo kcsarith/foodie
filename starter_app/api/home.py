@@ -26,3 +26,11 @@ def profile(rest_id):
     response = Restaurant.query.filter_by(id=rest_id).first()
 
     return {'restaurant': response.to_dict()}
+
+
+@bp.route('/reviews/<int:rev_id>')
+def rev(rev_id):
+
+    response = User.query.filter_by(id=rev_id).first()
+
+    return {'user': response.to_dict()}
