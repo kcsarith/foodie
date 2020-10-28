@@ -20,6 +20,9 @@ def reviews(rest_id):
     return {'reviews': [review.to_dict() for review in response]}
 
 
-@bp.route('/restaurant/profile/<int:id>')
-def profile(id):
-    pass
+@bp.route('/restaurant/profile/<int:rest_id>')
+def profile(rest_id):
+
+    response = Restaurant.query.filter_by(id=rest_id).first()
+
+    return {'restaurant': response.to_dict()}
