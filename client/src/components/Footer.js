@@ -3,8 +3,8 @@ import { Segment, Header, Divider, Grid, Container, List } from 'semantic-ui-rea
 import FooterSignup from './FooterSignup'
 const Footer = () => {
     const discoverFooterItems = ["Dining Rewards", "Private Dining", "Top 100 Restaurants", "Reserve for Others", "Cuisines Near Me", "Restaurants Near Me", "Delivery Near Me", "Cuisines", "Restaurants Open Now"]
-    const opentableFooterItems = ["About Us", "Blog", "Careers", "Press"]
-    const moreFooterItems = ["OpenTable for iOS", "OpenTable for Android", "Affiliate Program", "Contact Us"]
+    const foodieFooterItems = ["About Us", "Blog", "Careers", "Press"]
+    const moreFooterItems = ["Foodie for iOS", "Foodie for Android", "Affiliate Program", "Contact Us"]
     const imageFooterUrls = ['https://cdn.otstatic.com/cfe/5/images/booking_logo@2x-1b5fc1.png', 'https://cdn.otstatic.com/cfe/5/images/priceline_logo@2x-4241e6.png', 'https://cdn.otstatic.com/cfe/5/images/kayak_logo@2x-93a54d.png', 'https://cdn.otstatic.com/cfe/5/images/agoda_logo@2x-1b3b14.png', 'https://cdn.otstatic.com/cfe/5/images/rentalcars_logo@2x-6c0316.png', 'https://cdn.otstatic.com/cfe/5/images/opentable@2x-b4630f.png']
     return (
         <>
@@ -29,9 +29,9 @@ const Footer = () => {
                                 </List>
                             </Grid.Column>
                             <Grid.Column width={5}>
-                                <Header inverted as='h4' content='OPENTABLE' />
+                                <Header inverted as='h4' content='FOODIE' />
                                 <List link inverted>
-                                    {opentableFooterItems.map(footerItem =>
+                                    {foodieFooterItems.map(footerItem =>
                                         <List.Item as='a'>{footerItem}</List.Item>
                                     )}
                                 </List>
@@ -47,12 +47,12 @@ const Footer = () => {
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width={15}>
-                                Copyright © 2020 OpenTable, Inc. 1 Montgomery St Ste 700, San Francisco CA 94104 - All rights reserved.
+                                Copyright © 2020 Foodie, Inc. 1 Washington St Ste 100, San Anton GA 34104 - All rights reserved.
                             <Divider />
                             </Grid.Column>
 
                             <Grid.Column width={15}>
-                                OpenTable is part of Booking Holdings, the world leader in online travel and related services.
+                                Foodie is part of Fantasizing Holdings, the world leader in online travel and related services.
                                 <div className="ui small images">
                                     {imageFooterUrls.map(image => <img src={image} alt='' />)}
                                 </div>
