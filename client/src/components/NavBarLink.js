@@ -10,8 +10,7 @@ const NavBarLinkWrapper = styled.div`
     cursor: pointer;
     display: inline-block;
     text-decoration: none;
-    color: #382110;
-    background-color: #f4f1ea;
+    color: white;
     line-height: 50px;
     font-weight: bold;
     font-family: "Lato", "Helvetica Neue", "Helvetica", sans-serif;
@@ -19,7 +18,8 @@ const NavBarLinkWrapper = styled.div`
   }
   .link:hover {
     color: #FFFFFF;
-    background-color: #382110;
+    background-color: black;
+    opacity: 0.8;
     outline: 0;
   }
 `;
