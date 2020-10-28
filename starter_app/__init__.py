@@ -56,4 +56,4 @@ def load_user(id):
 
 @app.route('/api/csrf/restore')
 def restore_csrf():
-  return {"csrf_token": generate_csrf()}
+    return {"csrf_token": generate_csrf()}

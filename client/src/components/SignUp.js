@@ -1,30 +1,27 @@
+import ReactDOM from 'react-dom';
 import React, { useState } from "react";
 import { signup } from '../store/authentication';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import styled from "styled-components";
-
+import back_img from "../foodie-apps.jpg";
+import './LoginPanel.css';
 
 
 const SignUpFormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  width: 600px;
   padding: 28px 10px 34px 10px;
-  border: 1px solid #d0d0c8;
-  border-radius: 4px;
-  box-shadow: 0px 1px 1px #d0d0c8;
   margin: 0 auto;
-  background-color: white;
   text-align: center;
   h1 {
     display: block;
     width: 100%;
     text-align: center;
-    color: #382110;
+    color: #111111;
     background-color: transparent;
-    font-size: 20px;
+    font-size: 48px;
     font-family: "Merriweather", Georgia, 'Times New Roman', serif;
     font-weight: bold;
     margin-bottom: 15px;
@@ -35,7 +32,8 @@ const SignUpFormWrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: auto;
-    color: #030303
+    padding: 20px
+    margin: 20px
   }
   fieldset {
     border: none;
@@ -48,6 +46,7 @@ const SignUpFormWrapper = styled.div`
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    padding: 10px 0px;
     margin-top: 8px;
     font-family: "Lato", "Helvetica Neue", Arial, Helvetica, sans-serif;
     color: #030303;
@@ -102,8 +101,8 @@ const SignUpFormWrapper = styled.div`
     cursor: pointer;
   }
   select {
-    font-size: 15px;
-    padding: 10px 4px;
+    font-size: 13px;   
+    padding: 9px 4px; 
   }
 `;
 
@@ -113,10 +112,13 @@ function SignUp() {
     const [email, setEmail]= useState('');
     const [password, setPassword]= useState('');
     const [city, setCity]= useState('');
-    const [state, setState]= useState('');
+    const [state, setState]= useState('')
+    const [submitted, setSubmitted] = useState(false);
 
     const dispatch = useDispatch();
     const currentUserId = useSelector(state => state.authentication.id);
+
+    const [location, setLocation] = useState({city:'', state:''})
 
     function handleChange(e){
         const { id, value } = e.target;
@@ -143,6 +145,7 @@ function SignUp() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSubmitted(true);
         dispatch(signup(name, email, password, city, state));
     }
 
@@ -161,9 +164,11 @@ function SignUp() {
         ]
 
     return (
-        <div>
+        <div  className="loginandsignup">
+            <img className='login__image' src={back_img} alt="signup-image" />
             <SignUpFormWrapper>
-            <h2>Welcome To Foodie!</h2>
+            <h1>Welcome To Foodie!</h1>
+            <div id="error"></div>
             <form name='form' onSubmit={handleSubmit}>
                 <fieldset>
                      <div className="input-fields">
@@ -173,6 +178,8 @@ function SignUp() {
                                 value={name}
                                 placeholder="Please enter your name"
                                 onChange={handleChange} />
+                        {submitted && !name &&
+                        <div className="invalid-feedback">Name is required</div>}
                     </div>
                     <div className="input-fields">
                         <label htmlFor="email">Email</label>
@@ -181,6 +188,8 @@ function SignUp() {
                                 value={email}
                                 placeholder="Please enter Email"
                                 onChange={handleChange} />
+                        {submitted && !email &&
+                        <div className="invalid-feedback">Email is required</div>}
                     </div>
                     <div className="input-fields">
                         <label htmlFor="password">Password</label>
@@ -188,7 +197,9 @@ function SignUp() {
                                 id="password"
                                 placeholder="Please enter password"
                                 value={password}
-                        onChange={handleChange} />
+                                onChange={handleChange} />
+                        {submitted && !password &&
+                        <div className="invalid-feedback">Password is required</div>}
                     </div>
                     <div className="input-fields">
                         <label htmlFor="city">Primary Dining City</label>
@@ -204,7 +215,11 @@ function SignUp() {
                     </div>
                     <br />
                     <div className="login-buttons">
-                        <button type="submit">Register</button>
+                        <button type="submit">Register</button>    
+                    <div>   
+                        <div>Already a member?</div>
+                        <a href="/login">Log In</a>
+                    </div>
                     </div>
                 </fieldset>
             </form>
