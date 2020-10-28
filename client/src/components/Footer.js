@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Header, Divider, Grid, Container, List, Image } from 'semantic-ui-react';
+import { Segment, Header, Divider, Grid, Container, List } from 'semantic-ui-react';
 import FooterSignup from './FooterSignup'
 const Footer = () => {
     const discoverFooterItems = ["Dining Rewards", "Private Dining", "Top 100 Restaurants", "Reserve for Others", "Cuisines Near Me", "Restaurants Near Me", "Delivery Near Me", "Cuisines", "Restaurants Open Now"]
@@ -54,7 +54,7 @@ const Footer = () => {
                             <Grid.Column width={15}>
                                 OpenTable is part of Booking Holdings, the world leader in online travel and related services.
                                 <div className="ui small images">
-                                    {imageFooterUrls.map(image => <img src={image} />)}
+                                    {imageFooterUrls.map(image => <img src={image} alt='' />)}
                                 </div>
                             </Grid.Column>
                         </Grid.Row>

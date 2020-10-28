@@ -15,7 +15,7 @@ function HomeBody() {
             setRestData(data.restaurants)
         }
         fetchData();
-    }, []);
+    }, [userId]);
 
     const restComponents = restData.map((rest) => <RestaurantCard key={rest.id} rest={rest} />)
 

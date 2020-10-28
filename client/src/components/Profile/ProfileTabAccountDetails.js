@@ -8,7 +8,7 @@ const options = usStatesDictionary.map(function (state) {
     return { key: state.name, text: state.name, value: state.abbreviation };
 });
 
-console.log(options)
+//console.log(options)
 
 const ProfileTabAccountDetail = () => {
     const authSelector = useSelector(state => state.authentication);

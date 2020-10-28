@@ -1,4 +1,3 @@
-import ReactDOM from 'react-dom';
 import React, { useState } from "react";
 import { signup } from '../store/authentication';
 import { useDispatch, useSelector } from 'react-redux';
@@ -101,8 +100,8 @@ const SignUpFormWrapper = styled.div`
     cursor: pointer;
   }
   select {
-    font-size: 13px;   
-    padding: 9px 4px; 
+    font-size: 13px;
+    padding: 9px 4px;
   }
 `;
 
@@ -118,7 +117,6 @@ function SignUp() {
     const dispatch = useDispatch();
     const currentUserId = useSelector(state => state.authentication.id);
 
-    const [location, setLocation] = useState({city:'', state:''})
 
     function handleChange(e){
         const { id, value } = e.target;
@@ -165,7 +163,7 @@ function SignUp() {
 
     return (
         <div  className="loginandsignup">
-            <img className='login__image' src={back_img} alt="signup-image" />
+            <img className='login__image' src={back_img} alt="" />
             <SignUpFormWrapper>
             <h1>Welcome To Foodie!</h1>
             <div id="error"></div>
@@ -215,8 +213,8 @@ function SignUp() {
                     </div>
                     <br />
                     <div className="login-buttons">
-                        <button type="submit">Register</button>    
-                    <div>   
+                        <button type="submit">Register</button>
+                    <div>
                         <div>Already a member?</div>
                         <a href="/login">Log In</a>
                     </div>
