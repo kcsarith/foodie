@@ -6,7 +6,7 @@ function SearchInput() {
 
     return (
         <div className='home-search'>
-            <input type='text' />
+            <input type='text' placeholder='City, State' />
             <span className='home-search__icon'>
                 <SearchSharpIcon />
             </span>
