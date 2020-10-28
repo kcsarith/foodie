@@ -6,7 +6,7 @@ import SignUp from './components/SignUp';
 import NavBar from './components/NavBar';
 import Profile from './components/Profile';
 import UserList from './components/UsersList';
-import { getUserInfo } from './store/currentUser';
+//import { getUserInfo } from './store/currentUser';
 import HomePage from './components/HomePage/HomePage'
 import { setCsrfFunc } from './store/authentication';
 
@@ -22,43 +22,43 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 }
 
 function App() {
-    let currentUserId = useSelector(state => state.authentication.id);
-    let location = useLocation();
-    let dispatch = useDispatch();
-    // useEffect(() => {
-    //     dispatch(getUserInfo(currentUserId));
-    // }, [currentUserId, dispatch])
-    const [fetchWithCSRF, setFetchWithCSRF] = useState(() => fetch);
+  //let currentUserId = useSelector(state => state.authentication.id);
+  let location = useLocation();
+  let dispatch = useDispatch();
+  // useEffect(() => {
+  //     dispatch(getUserInfo(currentUserId));
+  // }, [currentUserId, dispatch])
+  const [fetchWithCSRF, setFetchWithCSRF] = useState(() => fetch);
 
-    useEffect(() => {
-        async function restoreCSRF() {
-            const response = await fetch('/api/csrf/restore', {
-                method: 'GET',
-                credentials: 'include'
-            });
-            if (response.ok) {
-                const authData = await response.json();
-                setFetchWithCSRF(() => {
-                    return (resource, init) => {
-                        if (init.headers) {
-                            init.headers['X-CSRFToken'] = authData.csrf_token;
-                        } else {
-                            init.headers = {
-                                'X-CSRFToken': authData.csrf_token
-                            }
-                        }
-                        return fetch(resource, init);
-                    }
-                });
-            }
-        }
-        restoreCSRF();
-    }, []);
+  useEffect(() => {
+      async function restoreCSRF() {
+          const response = await fetch('/api/csrf/restore', {
+              method: 'GET',
+              credentials: 'include'
+          });
+          if (response.ok) {
+              const authData = await response.json();
+              setFetchWithCSRF(() => {
+                  return (resource, init) => {
+                      if (init.headers) {
+                          init.headers['X-CSRFToken'] = authData.csrf_token;
+                      } else {
+                          init.headers = {
+                              'X-CSRFToken': authData.csrf_token
+                          }
+                      }
+                      return fetch(resource, init);
+                  }
+              });
+          }
+      }
+      restoreCSRF();
+  }, []);
 
 
-    useEffect(() => {
-        dispatch(setCsrfFunc(fetchWithCSRF));
-    }, [fetchWithCSRF]);
+  useEffect(() => {
+    dispatch(setCsrfFunc(fetchWithCSRF));
+  }, [fetchWithCSRF, dispatch]);
 
     return (
         <>
