@@ -8,6 +8,7 @@ import Profile from './components/Profile';
 import UserList from './components/UsersList';
 //import { getUserInfo } from './store/currentUser';
 import HomePage from './components/HomePage/HomePage'
+import RestaurantProfile from './components/RestaurantProfile/RestaurantProfile';
 import { setCsrfFunc } from './store/authentication';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -82,6 +83,12 @@ function App() {
                     exact={true}
                     component={HomePage}
                 />
+                <Route
+                    path='/restaurant/profile/:id'
+                    exact={true}
+                    component={RestaurantProfile}
+                />
+
 
             </Switch>
         </>
