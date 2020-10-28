@@ -26,17 +26,17 @@ const NavBarLinkWrapper = styled.div`
 
 
 const NavBarLink = (props) => {
-  return (
-    <NavBarLinkWrapper>
-      <NavLink
-          className='link'
-          onClick={props.handle}
-          to = {props.path ? props.path : null}
-      >
-        {props.text}
-      </NavLink>
-    </NavBarLinkWrapper>
-  )
+    return (
+        <NavBarLinkWrapper>
+            <NavLink
+                className='link'
+                onClick={props.handle}
+                to={props.path ? props.path : null}
+            >
+                {props.text}
+            </NavLink>
+        </NavBarLinkWrapper >
+    )
 }
 
 export default NavBarLink;
