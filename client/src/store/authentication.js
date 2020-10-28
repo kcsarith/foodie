@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 const SET_USER = 'FOODIE/AUTH/SET_USER'
 const REMOVE_USER = 'FOODIE/AUTH/REMOVE_USER'
 const SET_CSRF = 'FOODIE/AUTH/SET_CSRF'
+const ERROR_MSG = 'ERROR_MSG'
 
 export const setUser = (user) => {
   return {
@@ -67,6 +68,12 @@ export const login = (email, password) => {
   }
 }
 
+
+// yongho
+export const error = (message) => {
+    return { type: ERROR_MSG, message };
+}
+
 export const signup = (name, email, password, city, state) => {
     return async (dispatch, getState) => {
         const fetchWithCSRF = getState().authentication.csrf;
@@ -75,10 +82,18 @@ export const signup = (name, email, password, city, state) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, email, password, city, state })
         })
-        if (res.ok) {
-            const { user } = await res.json();
-            dispatch(setUser(user))
+
+         //Yongho
+        if (res.status === 400) {
+          const { errors } = await res.json();
+          dispatch(error(errors))
         }
+
+        if (res.ok) {
+          const { user } = await res.json();
+          dispatch(setUser(user))
+        }
+       
     }
 }
 
@@ -95,6 +110,8 @@ export default function reducer(state=initialState, action) {
       return {...state, csrf: action.cb}
     case REMOVE_USER:
         return { csrf: state.csrf }
+    case ERROR_MSG:
+        return { error: action.message }
     default:
         return state
   }
