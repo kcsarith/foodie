@@ -10,7 +10,6 @@ import UserList from './components/UsersList';
 import HomePage from './components/HomePage/HomePage'
 import RestaurantProfile from './components/RestaurantProfile/RestaurantProfile';
 import { setCsrfFunc } from './store/authentication';
-import RestaurantProfile from './components/RestaurantProfile/RestaurantProfile';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
     let needLogin = useSelector(state => !state.authentication.id);

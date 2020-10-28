@@ -15,10 +15,6 @@ import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './RestaurantCard.css'
-<<<<<<< HEAD
-import { Redirect } from 'react-router-dom';
-=======
->>>>>>> main
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -65,15 +61,8 @@ export default function RestaurantCard({ rest }) {
         fetchData()
     }, [])
 
-<<<<<<< HEAD
-
-    console.log(reviews)
-    return (
-        <div className='rest-card' onClick={routeChange} >
-=======
     return (
         <div className='rest-card' onClick={routeChange}>
->>>>>>> main
             <Card className={classes.root}>
                 <CardHeader
                     avatar={
