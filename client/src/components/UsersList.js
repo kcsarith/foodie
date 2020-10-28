@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 import User from './User';
 
-function UsersList (props) {
+function UsersList(props) {
+    console.log('props::::', props);
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
-            const response = await fetch('/api/users/');
+            const response = await fetch('/api');
             const responseData = await response.json();
             setUsers(responseData.users);
         }
@@ -20,7 +21,7 @@ function UsersList (props) {
             <h1>User List: </h1>
             {userComponents}
         </>
-        );
+    );
 }
 
 export default UsersList;

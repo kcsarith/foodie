@@ -1,0 +1,20 @@
+import React from 'react'
+import { Container, Segment } from 'semantic-ui-react'
+import ProfileTabs from './Profile/ProfileTabs';
+import ProfileLayout from './Profile/ProfileLayout';
+import { useSelector } from 'react-redux'
+
+
+const Profile = () => {
+  const authSelector = useSelector(state => state.authentication)
+  return (
+    <>
+      <ProfileLayout username={authSelector.name} />
+      <Container padding="very">
+        <ProfileTabs />
+      </Container>
+    </>
+  )
+}
+
+export default Profile;
