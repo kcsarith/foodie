@@ -15,7 +15,10 @@ import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './RestaurantCard.css'
+<<<<<<< HEAD
 import { Redirect } from 'react-router-dom';
+=======
+>>>>>>> main
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +46,6 @@ export default function RestaurantCard({ rest }) {
     const [reviews, setReviews] = useState([])
     const history = useHistory()
 
-    console.log('these are the props', rest)
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -58,16 +60,20 @@ export default function RestaurantCard({ rest }) {
         async function fetchData() {
             const res = await fetch(`/api/home/restaurant/${rest.id}`)
             const data = await res.json()
-            console.log(data)
             setReviews(data.reviews)
         }
         fetchData()
     }, [])
 
+<<<<<<< HEAD
 
     console.log(reviews)
     return (
         <div className='rest-card' onClick={routeChange} >
+=======
+    return (
+        <div className='rest-card' onClick={routeChange}>
+>>>>>>> main
             <Card className={classes.root}>
                 <CardHeader
                     avatar={
