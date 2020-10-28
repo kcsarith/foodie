@@ -23,6 +23,7 @@ function HomeBody() {
         <div className='restaurants-list'>
             {restComponents}
         </div>
+
     );
 };
 
