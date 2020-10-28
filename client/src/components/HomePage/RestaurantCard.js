@@ -61,24 +61,21 @@ export default function RestaurantCard({ rest }) {
         fetchData()
     }, [])
 
+    console.log(reviews)
     return (
-        <div className='rest-card' onClick={routeChange}>
+        <div className='rest-card'>
             <Card className={classes.root}>
                 <CardHeader
                     avatar={
-                        <Avatar aria-label="recipe" className={classes.avatar}>
+                        <Avatar aria-label="recipe" className={classes.avatar} onClick={routeChange}>
                             R
           </Avatar>
                     }
                     title={rest.name}
                     subheader={rest.address}
+                    onClick={routeChange}
                 />
-                <CardMedia
-                    className={classes.media}
-                    image="https://images.unsplash.com/photo-1498654896293-37aacf113fd9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-                    title="Paella dish"
-                />
-                <CardContent>
+                <CardContent onClick={routeChange}>
                     <Typography variant="body2" color="textSecondary" component="p">
                     </Typography>
                 </CardContent>
@@ -101,9 +98,8 @@ export default function RestaurantCard({ rest }) {
                     <CardContent>
                         <Typography paragraph>Reviews:</Typography>
                         <Typography paragraph>
-                            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-                            minutes.
-          </Typography>
+                            {reviews === undefined ? reviews[0].content : 'No reviews yet!'}
+                        </Typography>
                         <Typography paragraph>
                             Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
                             heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
