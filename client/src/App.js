@@ -84,7 +84,7 @@ function App() {
                     component={HomePage}
                 />
                 <Route
-                    path='/restaurant/profile'
+                    path='/restaurant/profile/:id'
                     exact={true}
                     component={RestaurantProfile}
                 />
