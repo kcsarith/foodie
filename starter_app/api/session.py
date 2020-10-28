@@ -36,7 +36,7 @@ def signup():
     user = User.query.filter(User.email == email).first()
     print(user)
     if user:
-        # return {"errors":["The email you've entered has been already registed"]}, 400
+        # return {"errors":["The email you've entered has been already registered"]}, 400
         return jsonify({"errors": "The email you've entered has been already registered"}), 400
     name = request.json.get("name", None)
     password = request.json.get("password", None)
