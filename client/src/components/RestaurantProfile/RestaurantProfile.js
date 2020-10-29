@@ -10,7 +10,6 @@ function RestaurantProfile() {
     const [restData, setRestData] = useState([])
     const history = useHistory()
     const idStr = history.location.pathname.split('/')[3]
-    console.log("history.location",history)
     const id = parseInt(idStr, 10)
     useEffect(() => {
         async function fetchData() {
@@ -22,25 +21,24 @@ function RestaurantProfile() {
     }, [])
 
 
-    console.log('rest data for profiel-------', restData)
     return (
         <>
-        <div className='container'>
-            <div className ='left'>
-                <h1> {restData.name}</h1>
-                <h2> {restData,id}</h2>
+            <div className='container'>
+                <div className='left'>
+                    <h1> {restData.name}</h1>
+                    <h2> {restData, id}</h2>
 
-            </div>
-            <div className ='right'>
-                <div className='reservation'>
-                    <Reservation/>
                 </div>
-            </div>
-            <div>
-                <Review id={id}/>
-            </div>
+                <div className='right'>
+                    <div className='reservation'>
+                        <Reservation />
+                    </div>
+                </div>
+                <div>
+                    <Review id={id} />
+                </div>
 
-        </div>
+            </div>
         </>
     )
 

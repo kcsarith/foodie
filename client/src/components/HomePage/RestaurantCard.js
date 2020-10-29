@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const images = ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+    'https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80']
+
 export default function RestaurantCard({ rest }) {
     const classes = useStyles();
     const [expanded, setExpanded] = useState(false);
@@ -62,15 +65,15 @@ export default function RestaurantCard({ rest }) {
     }, [])
 
     const restReviews = reviews.map(item => <RestReviews key={item.id} review={item} />)
-
+    const firstLetter = rest.name.slice(0, 1)
     return (
         <div className='rest-card'>
             <Card className={classes.root}>
                 <CardHeader
                     avatar={
                         <Avatar aria-label="recipe" className={classes.avatar}>
-                            R
-          </Avatar>
+                            {firstLetter}
+                        </Avatar>
                     }
                     title={rest.name}
                     subheader={rest.address}
@@ -78,6 +81,7 @@ export default function RestaurantCard({ rest }) {
                 />
                 <CardContent onClick={routeChange}>
                     <Typography variant="body2" color="textSecondary" component="p">
+                        <img src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' />
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
@@ -97,7 +101,7 @@ export default function RestaurantCard({ rest }) {
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
-                        <Typography paragraph>Reviews:</Typography>
+                        <Typography paragraph>{restReviews.length === 0 ? 'No reviews yet!' : 'Reviews:'}</Typography>
                         <Typography paragraph>
                             {restReviews}
                         </Typography>
