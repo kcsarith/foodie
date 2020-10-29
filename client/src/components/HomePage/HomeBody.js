@@ -20,8 +20,6 @@ function HomeBody({ data }) {
 
     useEffect(() => {
         setRestData(data)
-        console.log('--------*******-------', data)
-
     }, [data])
 
     return (
