@@ -7,17 +7,16 @@ const Logo = () => {
         <NavLink
             to="/"
             style={{
-                color: 'black',
+                color: 'white',
                 textDecoration: 'none',
                 fontSize: '15px',
-                width: '140px',
                 height: '50px',
-                margin: "0 0 0 15px",
+                margin: "0 0 0 10px",
                 display: "inline-block",
                 fontWeight: "bold",
                 fontFamily: '"Lato", "Helvetica Neue", "Helvetica", sans-serif',
                 textAlign: "center",
-                lineHeight: "50px"
+                lineHeight: "50px",
             }}
         >
             <FastfoodIcon />

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from starter_app.models import User, Restaurant
+from starter_app.models import db, User, Restaurant
 from flask_login import login_required
 
 user_routes = Blueprint('users', __name__)
@@ -12,15 +12,17 @@ def index():
     response = User.query.all()
     return {"users": [user.to_dict() for user in response]}
 
-@user_routes.route("/<int:userId>/update", methods=["GET", "PATCH"])
+@user_routes.route("/<int:userId>/patch", methods=["GET", "PATCH"])
 def update(userId):
-    user = User.query.get(userId)
+    print('ROUTE REACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCHED')
+    user = User.query.get_or_404(userId)
+    # print(user)
+    user.name = request.json.get("name")
+    user.email = request.json.get("email")
+    user.city = request.json.get("city")
+    user.state = request.json.get("state")
     print(user)
-    name = request.json.get("name", None)
-    email = request.json.get("email", None)
-    city = request.json.get("city", None)
-    state = request.json.get("state", None)
-    user.name = name
+    db.session.commit()
     return {"user": user.to_dict()}
 
 @user_routes.route('/<int:id>', methods=["GET", "POST"])

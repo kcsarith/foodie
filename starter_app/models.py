@@ -7,7 +7,8 @@ db = SQLAlchemy()
 favorites = db.Table(
     'favorites', db.Column(
         'user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True
-    ), db.Column('restaurant_id', db.Integer, db.ForeignKey('restaurants.id'), primary_key=True)
+    ), db.Column('restaurant_id', db.Integer,
+                 db.ForeignKey('restaurants.id'), primary_key=True)
 )
 
 
@@ -22,7 +23,9 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(100), nullable=False)
     reservations = db.relationship('Reservation', backref='user', lazy=True)
     reviews = db.relationship('Review', backref='user', lazy=True)
-    favorites = db.relationship('Restaurant', secondary=favorites, lazy='subquery', backref=db.backref('users', lazy=True))
+    favorites = db.relationship('Restaurant', secondary=favorites,
+                                lazy='subquery',
+                                backref=db.backref('users', lazy=True))
 
     @property
     def password(self):
@@ -46,8 +49,6 @@ class User(db.Model, UserMixin):
         }
 
 
-
-
 class Restaurant(db.Model):
 
     __tablename__ = 'restaurants'
@@ -61,7 +62,8 @@ class Restaurant(db.Model):
     min_price = db.Column(db.Integer, nullable=True)
     max_price = db.Column(db.Integer, nullable=True)
     reviews = db.relationship('Review', backref='restaurant', lazy=True)
-    reservations = db.relationship('Reservation', backref='restaurant', lazy=True)
+    reservations = db.relationship('Reservation',
+                                   backref='restaurant', lazy=True)
 
     def to_dict(self):
         return {
@@ -75,13 +77,15 @@ class Restaurant(db.Model):
             "max_price": self.max_price,
         }
 
+
 class Reservation(db.Model):
 
     __tablename__ = 'reservations'
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
+    restaurant_id = db.Column(db.Integer,
+                              db.ForeignKey('restaurants.id'), nullable=False)
     group_num = db.Column(db.Integer, nullable=False)
     start_time = db.Column(db.DateTime(timezone=True), nullable=False)
 
@@ -100,7 +104,8 @@ class Review(db.Model):
     __tablename__ = 'reviews'
 
     id = db.Column(db.Integer, primary_key=True)
-    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
+    restaurant_id = db.Column(db.Integer,
+                              db.ForeignKey('restaurants.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     content = db.Column(db.Text, nullable=False)
     rating = db.Column(db.Integer, nullable=False)
