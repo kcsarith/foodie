@@ -52,6 +52,9 @@ const NavBar = () => {
     const handleLogout = async () => {
         dispatch(logout());
     }
+    const handleClickHome = () => {
+        history.push('/')
+    }
 
     const handleProfile = (e, { name }) => {
         if (name === 'Reservations') history.push('/profile')
@@ -69,9 +72,9 @@ const NavBar = () => {
         <NavBarWrapper>
             <Menu fixed='top' inverted >
                 <Container className="nav-bar-content">
-                    <Menu.Item as='a'>
+                    <Menu.Item onClick={handleClickHome}>
                         <Logo />  Home</Menu.Item>
-                    <Menu.Item as='a' header>
+                    <Menu.Item onClick={handleClickHome} header>
                         <Image size='mini' src='https://cdn2.iconfinder.com/data/icons/flat-pro-word-processing-set-5/32/table-512.png' style={{ marginRight: '1.5em' }} />
                         FOODIE
                     </Menu.Item>
