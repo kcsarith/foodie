@@ -18,12 +18,12 @@ function RestaurantProfile() {
             setRestData(data.restaurant)
         }
         fetchData()
-    }, [])
+    }, [id])
 
 
     return (
         <>
-            <div className='container'>
+            <div className='profile-container'>
                 <div className='left'>
                     <h1> {restData.name}</h1>
                     <h2> {restData, id}</h2>

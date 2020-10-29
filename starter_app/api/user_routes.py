@@ -14,7 +14,6 @@ def index():
 
 @user_routes.route("/<int:userId>/patch", methods=["GET", "PATCH"])
 def update(userId):
-    print('ROUTE REACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCHED')
     user = User.query.get_or_404(userId)
     # print(user)
     user.name = request.json.get("name")

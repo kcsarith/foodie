@@ -3,7 +3,7 @@ import RestaurantCard from './RestaurantCard'
 import './HomeBody.css'
 import { useSelector } from 'react-redux';
 
-function HomeBody() {
+function HomeBody({ data }) {
 
     const userId = useSelector(state => state.authentication.id)
     const [restData, setRestData] = useState([])
@@ -16,6 +16,12 @@ function HomeBody() {
         }
         fetchData();
     }, [userId]);
+
+
+    console.log(data)
+    if (data.length !== 0) {
+        setRestData(data)
+    }
 
     const restComponents = restData.map((rest) => <RestaurantCard key={rest.id} rest={rest} />)
 

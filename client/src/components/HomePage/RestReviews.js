@@ -10,7 +10,6 @@ function RestReviews({ review }) {
 
             const res = await fetch(`/api/home/reviews/${review.user_id}`)
             const data = await res.json()
-            console.log(data)
             setUser(data.user)
         }
         fetchData()

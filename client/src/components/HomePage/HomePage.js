@@ -1,53 +1,65 @@
 
-import React from 'react';
-import TimePickers from './TimePicker'
+import React, { useState } from 'react';
 import './HomePage.css'
-import SearchInput from './SearchInput'
 import Footer from '../Footer';
 import 'semantic-ui-css/semantic.min.css'
 import HomeBody from './HomeBody';
+import { useSelector } from 'react-redux';
+import './SearchInput.css'
+import SearchSharpIcon from '@material-ui/icons/SearchSharp';
 
 
 function HomePage() {
+
+    const fetchWithCSRF = useSelector(state => state.authentication.csrf);
+
+    const [term, setTerm] = useState([]);
+    const [restData, setRestData] = useState([])
+
+    const updateTerm = (e) => {
+        setTerm(e.target.value);
+    }
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        searchRestaurants();
+    }
+
+    async function searchRestaurants() {
+
+        const res = await fetchWithCSRF("/api/home/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ term }),
+        });
+        if (res.ok) {
+            const data = await res.json()
+            console.log('----------', data.restaurants, '----------')
+            setRestData(data.restaurants)
+            return
+        }
+    }
 
     return (
         <>
             <div className='home'>
                 <div className='home__selectors'>
-                    <div className='home__date'>
-                        <input className="home__dateInput" type="date" />
+                    <div className='home-search'>
+                        <form onSubmit={handleSubmit} className='home-search__form'>
+                            <input onChange={updateTerm} type='text' name="search" value={term} placeholder='Name, Address, City, State' />
+                            <button className='home__button' type='submit'>Let's Go!</button>
+                        </form>
+                        <span className='home-search__icon'>
+                            <SearchSharpIcon />
+                        </span>
                     </div>
-                    <div className='home__time'>
-                        <TimePickers />
-                    </div>
-                    <div className='home__group'>
-                        <select className='home__groupSelect' label='2 People' defaultValue='2 People' >
-                            <option> 1 Person</option>
-                            <option> 2 People</option>
-                            <option> 3 People</option>
-                            <option> 4 People</option>
-                            <option> 5 People</option>
-                            <option> 6 People</option>
-                            <option> 7 People</option>
-                            <option> 8 People</option>
-                            <option> 9 People</option>
-                            <option> 10 People</option>
-                            <option> 11 People</option>
-                            <option> 12 People</option>
-                            <option> 13 People</option>
-                            <option> 14 People</option>
-                            <option> 15 People</option>
-                            <option> More than 15</option>
-
-                        </select>
-                    </div>
-                    <SearchInput />
                 </div>
                 <div className='home__img'>
                     <img src='https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80' alt='' />
                 </div>
                 <div className='home__body'>
-                    <HomeBody />
+                    <HomeBody data={restData} />
                 </div>
                 <Footer />
             </div>
