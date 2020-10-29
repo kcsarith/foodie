@@ -5,7 +5,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 db = SQLAlchemy()
 
 favorites = db.Table(
-    'favorites', db.Column(
+    'favorites',
+    db.Model.metadata,
+    db.Column(
         'user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True
     ), db.Column('restaurant_id', db.Integer,
                  db.ForeignKey('restaurants.id'), primary_key=True)
@@ -23,9 +25,7 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(100), nullable=False)
     reservations = db.relationship('Reservation', backref='user', lazy=True)
     reviews = db.relationship('Review', backref='user', lazy=True)
-    favorites = db.relationship('Restaurant', secondary=favorites,
-                                lazy='subquery',
-                                backref=db.backref('users', lazy=True))
+    restaurants = db.relationship('Restaurant', secondary=favorites)
 
     @property
     def password(self):
@@ -64,6 +64,9 @@ class Restaurant(db.Model):
     reviews = db.relationship('Review', backref='restaurant', lazy=True)
     reservations = db.relationship('Reservation',
                                    backref='restaurant', lazy=True)
+    users = db.relationship('User', secondary=favorites,
+                            lazy='subquery',
+                            )
 
     def to_dict(self):
         return {
