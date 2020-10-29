@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
-import Review from './Review.js';
+import './RestaurantProfile.css'
+import '../HomePage/HomePage.css'
+import Reservation from './Reservation'
 
 function RestaurantProfile() {
 
     const [restData, setRestData] = useState([])
     const history = useHistory()
     const idStr = history.location.pathname.split('/')[3]
+    console.log("history.location",history)
     const id = parseInt(idStr, 10)
     useEffect(() => {
         async function fetchData() {
@@ -16,11 +19,25 @@ function RestaurantProfile() {
         }
         fetchData()
     }, [])
+
+
+    console.log('rest data for profiel-------', restData)
     return (
-      <>
-        <h1> {restData.name}</h1>
-        <Review id={id} />
-      </>
+        <>
+        <div className='container'>
+            <div className ='left'>
+                <h1> {restData.name}</h1>
+                <h2> {restData,id}</h2>
+
+            </div>
+            <div className ='right'>
+                <div className='reservation'>
+                    <Reservation/>
+                </div> 
+            </div>
+       
+        </div> 
+        </>
     )
 
 }

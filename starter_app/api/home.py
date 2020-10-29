@@ -1,6 +1,11 @@
+<<<<<<< HEAD
+from flask import Blueprint, jsonify, request
+from starter_app.models import User, Restaurant, Review, Reservation, db
+=======
 from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required
 from starter_app.models import db, User, Restaurant, Review
+>>>>>>> main
 
 bp = Blueprint("home", __name__)
 
@@ -53,6 +58,23 @@ def profile(rest_id):
 
     return {'restaurant': response.to_dict()}
 
+<<<<<<< HEAD
+# yongho
+@bp.route('/restaurant/reserve', methods=["GET", "POST"])
+def reserveRes():
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 400
+    user_id = request.json.get("user_id", None)
+    restaurant_id = request.json.get("restaurant_id", None)
+    group_num = request.json.get("group_num", None)
+    start_time = request.json.get("start_time", None)
+    newReserve = Reservation(user_id=user_id, restaurant_id=restaurant_id, group_num=group_num, start_time=start_time )
+    db.session.add(newReserve)
+    db.session.commit()
+    return {}, 200
+
+    
+=======
 
 @bp.route('/reviews/<int:rev_id>')
 def rev(rev_id):
@@ -60,3 +82,4 @@ def rev(rev_id):
     response = User.query.filter_by(id=rev_id).first()
 
     return {'user': response.to_dict()}
+>>>>>>> main

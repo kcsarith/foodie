@@ -34,7 +34,6 @@ def signup():
         return jsonify({"msg": "Missing JSON in request"}), 400
     email = request.json.get("email", None)
     user = User.query.filter(User.email == email).first()
-    print(user)
     if user:
         return jsonify({"errors":
                        "The email you've entered has been already registered"}
