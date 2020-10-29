@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required
-from starter_app.models import db, User, Restaurant, Review
+from starter_app.models import db, User, Restaurant, Review, Reservation
 
 bp = Blueprint("home", __name__)
 
