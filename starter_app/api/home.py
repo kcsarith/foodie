@@ -50,7 +50,6 @@ def reviews(rest_id):
 def profile(rest_id):
 
     response = Restaurant.query.filter_by(id=rest_id).first()
-
     return {'restaurant': response.to_dict()}
 
 # yongho
@@ -66,7 +65,6 @@ def reserveRes():
     db.session.add(newReserve)
     db.session.commit()
     return {}, 200
-
 
 
 @bp.route('/reviews/<int:rev_id>')
