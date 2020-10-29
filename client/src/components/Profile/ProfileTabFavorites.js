@@ -11,7 +11,6 @@ const ProfileTabFavorites = () => {
                 <Item.Group divided>
                     <Item>
                         <Item.Image src='/images/wireframe/image.png' />
-
                         <Item.Content>
                             <Item.Header as='a'>Test Rest4</Item.Header>
                             <Item.Meta>

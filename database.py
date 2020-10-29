@@ -25,13 +25,13 @@ with app.app_context():
                 state="NY", password='password')
 
     fork = Restaurant(name='Fork', address='1234 N. 8th Street New York, NY 83703', city='NY',
-                      state='NY', avg_rating=4.4, min_price=0, max_price=5)
+                      state='NY', avg_rating=4.4, min_price=0, max_price=5, users=[demo, alissa, soonmi])
 
     riverside_grill = Restaurant(name='Riverside Grill', address='2051 S. 9th Street New Your, Ny 83686', city='NY',
-                                 state='NY')
+                                 state='NY', users=[demo, dean, angela, javier])
 
     pf_changs = Restaurant(name='P.F. Chang\'s', address='0987 N. 6th Street New York, Ny 83686', city='NY',
-                           state='NY')
+                           state='NY', users=[demo, alissa, soonmi, dean, ian])
 
     Ian_reservation = Reservation(user_id=1, restaurant_id=1, group_num=3, start_time=date(2020, 6, 28))
 

@@ -23,7 +23,6 @@ const Review = ({ id }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("here")
         handleReviews();
     }
 
