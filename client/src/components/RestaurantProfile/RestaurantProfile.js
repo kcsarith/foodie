@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
-
+import Review from './Review.js';
 
 function RestaurantProfile() {
 
@@ -16,9 +16,11 @@ function RestaurantProfile() {
         }
         fetchData()
     }, [])
-    console.log('rest data for profiel-------', restData)
     return (
+      <>
         <h1> {restData.name}</h1>
+        <Review id={id} />
+      </>
     )
 
 }

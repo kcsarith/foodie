@@ -1,2 +1,2 @@
 FLASK_APP=starter_app
-FLASK_ENV=development
+WTF_CSRF_TIME_LIMIT=None
