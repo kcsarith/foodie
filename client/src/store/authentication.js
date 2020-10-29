@@ -109,12 +109,14 @@ export const patchUser = (formState) => {
     if (res.status === 400) {
       const { errors } = await res.json();
       dispatch(error(errors))
+      return res;
     }
 
     if (res.ok) {
-      const { user } = await res.json();
+      const { user, errors } = await res.json();
       console.log(user)
       dispatch(setUser(user))
+      return { res, user, errors };
     }
 
   }
