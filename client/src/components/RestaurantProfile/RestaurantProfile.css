@@ -1,4 +1,4 @@
-.container {
+.restaurant__container{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,18 +7,13 @@
     margin: 30px;
 }
 
-.left {
+.restaurant__left {
      flex-grow:4;
      justify-self:start;
 
 }
 
-.right {
+.restaurant__right {
     flex-grow:0;
     justify-self: end;
 }
-
-.reserv__result {
-    font: black 14px;
-}
-

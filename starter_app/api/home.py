@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required
 from starter_app.models import db, User, Restaurant, Review, Reservation
+from sqlalchemy.orm import joinedload
 
 bp = Blueprint("home", __name__)
 
@@ -66,6 +67,17 @@ def reserveRes():
     db.session.commit()
     return {}, 200
 
+
+@bp.route('/restaurant/reservationlist/<int:user_id>')
+def reservationlist(user_id):
+
+    response = db.session.query(Reservation) \
+                      .join(Restaurant) \
+                      .options(joinedload(Reservation.restaurant)) \
+                      .filter(Reservation.user_id == user_id)
+    return {'reservation': [reservation.to_dict() for reservation in response]}
+
+     
 
 @bp.route('/reviews/<int:rev_id>')
 def rev(rev_id):

@@ -89,6 +89,7 @@ class Reservation(db.Model):
     group_num = db.Column(db.Integer, nullable=False)
     start_time = db.Column(db.DateTime(timezone=True), nullable=False)
 
+
     def to_dict(self):
         return {
             "id": self.id,
@@ -96,6 +97,7 @@ class Reservation(db.Model):
             "restaurant_id": self.restaurant_id,
             "group_num": self.group_num,
             "start_time": self.start_time,
+            "restaurant_name":self.restaurant.name
         }
 
 
