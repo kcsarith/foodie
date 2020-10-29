@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify, request
-from starter_app.models import User, Restaurant, Review, Reservation, db
+from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required
+from starter_app.models import db, User, Restaurant, Review, Reservation
 
 bp = Blueprint("home", __name__)
 
@@ -66,7 +66,6 @@ def reserveRes():
     db.session.commit()
     return {}, 200
 
-    
 
 @bp.route('/reviews/<int:rev_id>')
 def rev(rev_id):
