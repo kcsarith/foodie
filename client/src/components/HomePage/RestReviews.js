@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
+import './RestReviews.css'
 
 function RestReviews({ review }) {
 
@@ -18,15 +18,15 @@ function RestReviews({ review }) {
 
     return (
         <div className='reviews'>
-            {user.name}
-            <br />
-            <br />
-            {review.content}
-            <br />
-            <br />
-            Rating: {review.rating}
-            <br />
-            <br />
+            <div className='reviews__user'>
+                {user.name}
+            </div>
+            <div className='reviews__content'>
+                {review.content}
+            </div>
+            <div className='reviews__rating'>
+                Rating: {review.rating}
+            </div>
         </div>
     )
 }
