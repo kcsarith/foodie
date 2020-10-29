@@ -53,7 +53,6 @@ def profile(rest_id):
 
     return {'restaurant': response.to_dict()}
 
-<<<<<<< HEAD
 # yongho
 @bp.route('/restaurant/reserve', methods=["GET", "POST"])
 def reserveRes():
@@ -69,7 +68,6 @@ def reserveRes():
     return {}, 200
 
 
-=======
 
 @bp.route('/reviews/<int:rev_id>')
 def rev(rev_id):
@@ -77,4 +75,3 @@ def rev(rev_id):
     response = User.query.filter_by(id=rev_id).first()
 
     return {'user': response.to_dict()}
->>>>>>> main
