@@ -34,13 +34,17 @@
 }
 .home_date {
     width:100%;
-    font-size: 26px;
-    border: white;
-    
+    /* font-size: 26px; */
+    border: white; 
+}
+
+.date {
+    font-size: 25px;
 }
 
 .home_time {
     width: 100%;
+    height: 100%;
     border: white;
     font-size: 16px;
 
