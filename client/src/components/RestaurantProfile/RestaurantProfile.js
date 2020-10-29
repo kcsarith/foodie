@@ -4,6 +4,7 @@ import './RestaurantProfile.css'
 import '../HomePage/HomePage.css'
 import Reservation from './Reservation'
 import Review from './Review';
+import ReservationList from './ReservationList'
 
 function RestaurantProfile() {
 
@@ -23,21 +24,23 @@ function RestaurantProfile() {
 
     return (
         <>
-            <div className='profile-container'>
-                <div className='left'>
+            <div className='restaurant__container'>
+                <div className='restaurant__left'>
                     <h1> {restData.name}</h1>
                     <h2> {restData, id}</h2>
+                    <div>
+                        <Review id={id} />
+                    </div>
 
                 </div>
-                <div className='right'>
-                    <div className='reservation'>
+                <div className='restaurant__right'>
+                    <div className='restaurant__reservation'>
                         <Reservation />
                     </div>
+                    <div>
+                        <ReservationList />
+                    </div>
                 </div>
-                <div>
-                    <Review id={id} />
-                </div>
-
             </div>
         </>
     )
