@@ -42,6 +42,9 @@ with app.app_context():
     mcdonalds = Restaurant(name='McDonald\'s', address='343 N. 1st Ave. New York, Ny 83686', city='NY',
                            state='NY')
 
+    the_perch = Restaurant(name='The Perch', address=' 727 Elm st, Ny 83686', city='NY',
+                           state='NY')
+
     Ian_reservation = Reservation(user_id=1, restaurant_id=1, group_num=3, start_time=date(2020, 6, 28))
 
     Ian_review = Review(restaurant_id=1, user_id=1,
@@ -70,5 +73,6 @@ with app.app_context():
     db.session.add(trillium)
     db.session.add(kona_grill)
     db.session.add(mcdonalds)
+    db.session.add(the_perch)
 
     db.session.commit()
