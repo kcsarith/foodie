@@ -18,16 +18,15 @@ function HomeBody({ data }) {
     }, [userId]);
 
 
-    console.log(data)
-    if (data.length !== 0) {
+    useEffect(() => {
         setRestData(data)
-    }
+        console.log('--------*******-------', data)
 
-    const restComponents = restData.map((rest) => <RestaurantCard key={rest.id} rest={rest} />)
+    }, [data])
 
     return (
         <div className='restaurants-list'>
-            {restComponents}
+            {restData.map((rest) => <RestaurantCard key={rest.id} rest={rest} />)}
         </div>
 
     );
