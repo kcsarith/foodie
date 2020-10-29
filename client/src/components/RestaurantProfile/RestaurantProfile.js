@@ -6,6 +6,7 @@ import Reservation from './Reservation'
 import Review from './Review';
 import ReservationList from './ReservationList'
 
+
 function RestaurantProfile() {
 
     const [restData, setRestData] = useState([])
@@ -33,7 +34,6 @@ function RestaurantProfile() {
                 <div>
                 <Review id={id}/>
                 </div>
-
             </div>
             <div className ='restaurant__right'>
                 <div className='restaurant__reservation'>
