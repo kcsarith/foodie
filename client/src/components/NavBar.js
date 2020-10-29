@@ -57,9 +57,7 @@ const NavBar = () => {
     }
 
     const handleProfile = (e, { name }) => {
-        if (name === 'Reservations') history.push('/profile')
-        else if (name === 'Saved Restaurants') history.push('/profile')
-        else if (name === 'Account Details') history.push('/profile')
+        history.push('/profile')
     }
 
     const history = useHistory()
@@ -83,10 +81,9 @@ const NavBar = () => {
                             <Dropdown.Header>You have 845/2000 points!</Dropdown.Header>
                             <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                             <Dropdown.Divider />
-                            <Dropdown.Header>Profile</Dropdown.Header>
                             {/* <Dropdown.Item name='Reservations' onClick={handleProfile}>Reservations</Dropdown.Item>
                             <Dropdown.Item name='Saved Restaurants' onClick={handleProfile}>Favorites</Dropdown.Item> */}
-                            <Dropdown.Item name='Account Details' onClick={handleProfile}>Account Details</Dropdown.Item>
+                            <Dropdown.Item onClick={handleProfile}>Profile</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>}
                     {!authSelector.name && <Menu.Item>Login</Menu.Item>}

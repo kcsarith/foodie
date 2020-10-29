@@ -4,6 +4,11 @@ import { Button, Header, Label, Item, Icon, Progress, Segment, Transition } from
 
 const paragraph = 'This is a test'
 const tempImageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
+const reservedRestaraunts = [
+    { name: 'test1', address: 'nothing here', city: 'New York', state: 'NY', image: tempImageUrl, averageRating: 4.4, date: 'soon', time: 'soon' },
+    { name: 'test2', address: 'nothing here', city: 'New York', state: 'NY', image: tempImageUrl, averageRating: 4.4, date: 'soon', time: 'soon' },
+    { name: 'test2', address: 'nothing here', city: 'New York', state: 'NY', image: tempImageUrl, averageRating: 4.4, date: 'soon', time: 'soon' },
+]
 const Points = ({ tabState, setTabState }) => {
     return (
         <>
@@ -16,30 +21,19 @@ const Points = ({ tabState, setTabState }) => {
 }
 
 const UpcomingReservations = () => {
+
     return (
         <>
             <Header as='h2' attached='top'>UpcomingReservations</Header>
             <Segment attached>
                 <Transition animation='fade' duration={200}>
                     <Item.Group divided>
-                        <Item>
+                        {reservedRestaraunts.length > 0 ? reservedRestaraunts.map(ele => (<Item>
                             <Item.Image src={tempImageUrl} />
-
                             <Item.Content>
-                                <Item.Header as='a'>Test Rest1</Item.Header>
+                                <Item.Header as='a'>{ele.name}</Item.Header>
                                 <Item.Meta>
-                                    <span className='cinema'>Union Square 14</span>
-                                </Item.Meta>
-                                <Item.Description>{paragraph}</Item.Description>
-                            </Item.Content>
-                        </Item>
-                        <Item>
-                            <Item.Image src={tempImageUrl} />
-
-                            <Item.Content>
-                                <Item.Header as='a'>Test Rest1</Item.Header>
-                                <Item.Meta>
-                                    <span className='cinema'>IFC Cinema</span>
+                                    <span className='cinema'>{ele.address}, {ele.city}, {ele.state}</span>
                                 </Item.Meta>
                                 <Item.Description>{paragraph}</Item.Description>
                                 <Item.Extra>
@@ -47,23 +41,8 @@ const UpcomingReservations = () => {
                                     <Label>Limited</Label>
                                 </Item.Extra>
                             </Item.Content>
-                        </Item>
-
-                        <Item>
-                            <Item.Image src={tempImageUrl} />
-
-                            <Item.Content>
-                                <Item.Header as='a'>Test Rest1</Item.Header>
-                                <Item.Meta>
-                                    <span className='cinema'>IFC</span>
-                                </Item.Meta>
-                                <Item.Description>{paragraph}</Item.Description>
-                                <Item.Extra>
-                                    <Button primary floated='right'>Cancel Reservation<Icon name='right chevron' />
-                                    </Button>
-                                </Item.Extra>
-                            </Item.Content>
-                        </Item>
+                        </Item>)) : ''
+                        }
                     </Item.Group>
                 </Transition>
             </Segment>
