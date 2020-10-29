@@ -9,9 +9,9 @@ bp = Blueprint("home", __name__)
 def search():
     term = request.get_json()
     search_args = [col.ilike('%%%s%%' % term) for col in
-                    ['name', 'address', 'city', 'avg_rating', 'max_price']]
+                   ['name', 'address', 'city', 'avg_rating', 'max_price']]
     restaurants = Restaurant.query.filter(or_(*search_args)).all()
-    ordered_rests = restaurants.order_by(Restaurant.avg_rating)
+    ordered_rests = restaurants.order_by(Restaurant.avg_rating.desc())
     return {'restaurants': [rest.to_dict() for rest in ordered_rests]}
 
 

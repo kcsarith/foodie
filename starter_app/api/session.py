@@ -27,7 +27,7 @@ def logout():
     logout_user()
     return {'msg': "you've been logged out"}, 200
 
-# yongho
+
 @bp.route("/signup", methods=["GET", "POST"])
 def signup():
     if not request.is_json:
@@ -36,13 +36,15 @@ def signup():
     user = User.query.filter(User.email == email).first()
     print(user)
     if user:
-        # return {"errors":["The email you've entered has been already registered"]}, 400
-        return jsonify({"errors": "The email you've entered has been already registered"}), 400
+        return jsonify({"errors":
+                       "The email you've entered has been already registered"}
+                       ), 400
     name = request.json.get("name", None)
     password = request.json.get("password", None)
     city = request.json.get("city", None)
     state = request.json.get("state", None)
-    newUser = User(name=name, email=email, password=password, city=city, state=state)
+    newUser = User(name=name, email=email, password=password,
+                   city=city, state=state)
     db.session.add(newUser)
     db.session.commit()
     return {"user": newUser.to_dict()}
