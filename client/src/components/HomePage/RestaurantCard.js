@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
@@ -17,6 +16,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './RestaurantCard.css'
 import { useHistory } from 'react-router-dom';
 import RestReviews from './RestReviews';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,6 +49,8 @@ export default function RestaurantCard({ rest }) {
     const [expanded, setExpanded] = useState(false);
     const [reviews, setReviews] = useState([])
     const history = useHistory()
+    const userId = useSelector(state => state.authentication.id)
+    const fetchWithCSRF = useSelector(state => state.authentication.csrf);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -57,6 +59,19 @@ export default function RestaurantCard({ rest }) {
     const routeChange = () => {
         let path = `restaurant/profile/${rest.id}`
         history.push(path)
+    }
+
+    async function handleFavorite() {
+        const id = userId
+        const restId = rest.id
+        await fetchWithCSRF('/api/home/restaurant/favorite', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_id: id,
+                restaurant_id: restId
+            })
+        })
     }
 
     useEffect(() => {
@@ -90,7 +105,7 @@ export default function RestaurantCard({ rest }) {
                 </CardContent>
                 <CardActions disableSpacing>
                     <IconButton aria-label="add to favorites">
-                        <FavoriteIcon />
+                        <FavoriteIcon onClick={handleFavorite} />
                     </IconButton>
                     <IconButton
                         className={clsx(classes.expand, {

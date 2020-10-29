@@ -27,13 +27,8 @@ with app.app_context():
     fork = Restaurant(name='Fork', address='1234 N. 8th Street New York, NY 83703', city='NY',
                       state='NY', avg_rating=4.4, min_price=0, max_price=5, users=[demo, alissa, soonmi])
 
-<<<<<<< HEAD
-    riverside_grill = Restaurant(name='Riverside Grill', address='2051 S. 9th Street New Youk, Ny 83686', city='NY',
-                                 state='NY')
-=======
     riverside_grill = Restaurant(name='Riverside Grill', address='2051 S. 9th Street New Your, Ny 83686', city='NY',
                                  state='NY', users=[demo, dean, angela, javier])
->>>>>>> main
 
     pf_changs = Restaurant(name='P.F. Chang\'s', address='0987 N. 6th Street New York, Ny 83686', city='NY',
                            state='NY', users=[demo, alissa, soonmi, dean, ian])
