@@ -68,7 +68,7 @@ export default function RestaurantCard({ rest }) {
             <Card className={classes.root}>
                 <CardHeader
                     avatar={
-                        <Avatar aria-label="recipe" className={classes.avatar} onClick={routeChange}>
+                        <Avatar aria-label="recipe" className={classes.avatar}>
                             R
           </Avatar>
                     }

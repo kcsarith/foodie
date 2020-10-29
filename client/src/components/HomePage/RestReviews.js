@@ -25,6 +25,8 @@ function RestReviews({ review }) {
             <br />
             <br />
             Rating: {review.rating}
+            <br />
+            <br />
         </div>
     )
 }
