@@ -165,7 +165,7 @@ function SignUp() {
         <div  className="loginandsignup">
             <img className='login__image' src={back_img} alt="" />
             <SignUpFormWrapper>
-            <h1>Welcome To Foodie!</h1>
+            <h2>Welcome To Foodie!</h2>
             <form name='form' onSubmit={handleSubmit}>
                 <fieldset>
                      <div className="input-fields">
@@ -217,7 +217,7 @@ function SignUp() {
                         <div>Already a member?</div>
                         <a href="/login">Log In</a>
                     </div>
-                    
+
                     </div>
                     <div id="error">{error_msg}</div>
                 </fieldset>

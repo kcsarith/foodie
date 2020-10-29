@@ -5,11 +5,11 @@ import LoginPanel from './components/LoginPanel';
 import SignUp from './components/SignUp';
 import NavBar from './components/NavBar';
 import Profile from './components/Profile';
-import UserList from './components/UsersList';
+//import UserList from './components/UsersList';
 //import { getUserInfo } from './store/currentUser';
 import HomePage from './components/HomePage/HomePage'
-import { setCsrfFunc } from './store/authentication';
 import RestaurantProfile from './components/RestaurantProfile/RestaurantProfile';
+import { setCsrfFunc } from './store/authentication';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
     let needLogin = useSelector(state => !state.authentication.id);
