@@ -5,6 +5,17 @@ from starter_app.models import db, User, Restaurant, Review
 bp = Blueprint("home", __name__)
 
 
+@bp.route('/', methods=["POST"])
+def search():
+    term = request.get_json()
+    search_args = [col.ilike('%%%s%%' % term) for col in
+                    ['name', 'address', 'city', 'avg_rating', 'max_price']]
+    restaurants = Restaurant.query.filter(or_(*search_args)).all()
+    ordered_rests = restaurants.order_by(Restaurant.avg_rating)
+    return {'restaurants': [rest.to_dict() for rest in ordered_rests]}
+
+
+@login_required
 @bp.route('/<int:id>')
 def index(id):
     response = User.query.get(id)
@@ -34,6 +45,7 @@ def reviews(rest_id):
     return {'reviews': [review.to_dict() for review in response]}
 
 
+@login_required
 @bp.route('/restaurant/profile/<int:rest_id>')
 def profile(rest_id):
 
