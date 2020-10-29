@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import './RestaurantProfile.css'
 import '../HomePage/HomePage.css'
 import Reservation from './Reservation'
+import Review from './Review';
 
 function RestaurantProfile() {
 
@@ -33,10 +34,13 @@ function RestaurantProfile() {
             <div className ='right'>
                 <div className='reservation'>
                     <Reservation/>
-                </div> 
+                </div>
             </div>
-       
-        </div> 
+            <div>
+                <Review id={id}/>
+            </div>
+
+        </div>
         </>
     )
 
