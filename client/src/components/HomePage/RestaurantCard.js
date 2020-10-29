@@ -38,7 +38,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const images = ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-    'https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80']
+    'https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80',
+    'https://images.unsplash.com/photo-1579027989536-b7b1f875659b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60']
+
+const random = Math.floor(Math.random() * images.length);
+const randomImg = images[random]
 
 export default function RestaurantCard({ rest }) {
     const classes = useStyles();
@@ -80,8 +84,8 @@ export default function RestaurantCard({ rest }) {
                     onClick={routeChange}
                 />
                 <CardContent onClick={routeChange}>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        <img src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' />
+                    <Typography variant="body2" color="textSecondary" className='rest-card__body-img'>
+                        <img src={randomImg} />
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
