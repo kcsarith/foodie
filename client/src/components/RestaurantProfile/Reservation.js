@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import TimePickers from '../HomePage/TimePicker'
 import { useHistory } from 'react-router-dom';
 import './Reservation.css'
-//import '../HomePage/HomePage.css'
-
 
 
 export default function Reservation(props) {
@@ -25,10 +23,16 @@ function handleChange(e){
     const {id, value} = e.target;
     setReserv( reserv => ({ ...reserv, [id]:value}))
 }
+
 let res = ''
+
 const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
+    handleReservation();
+}
+
+async function handleReservation() {
     const { date, time, group } = reserv;
     const group_num =parseInt(group.substring(0,2));
     const start_time = date + ' '+ time;
@@ -42,15 +46,17 @@ const handleSubmit = async (e) => {
             start_time
             }),
     })
-    
+
     // if (response.ok) {
     //     res = 'The reservation has been made successfully.'
     //     window.alert(res);
     // }
-}
+    
+}    
+    
 // useEffect(() => {
 //      document.getElementById("result").value = res
-//     }, [res])
+//     }, [])
 
 
 
