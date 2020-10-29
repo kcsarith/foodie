@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 from flask import Blueprint, jsonify, request
 from starter_app.models import User, Restaurant, Review, Reservation, db
-=======
-from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required
-from starter_app.models import db, User, Restaurant, Review
->>>>>>> main
 
 bp = Blueprint("home", __name__)
 
@@ -55,10 +50,8 @@ def reviews(rest_id):
 def profile(rest_id):
 
     response = Restaurant.query.filter_by(id=rest_id).first()
-
     return {'restaurant': response.to_dict()}
 
-<<<<<<< HEAD
 # yongho
 @bp.route('/restaurant/reserve', methods=["GET", "POST"])
 def reserveRes():
@@ -74,7 +67,6 @@ def reserveRes():
     return {}, 200
 
     
-=======
 
 @bp.route('/reviews/<int:rev_id>')
 def rev(rev_id):
@@ -82,4 +74,3 @@ def rev(rev_id):
     response = User.query.filter_by(id=rev_id).first()
 
     return {'user': response.to_dict()}
->>>>>>> main
