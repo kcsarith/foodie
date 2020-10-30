@@ -64,7 +64,7 @@ export default function RestaurantCard({ rest }) {
     async function handleFavorite() {
         const id = userId
         const restId = rest.id
-        await fetchWithCSRF('/api/home/restaurant/favorite', {
+        await fetchWithCSRF(`/api/users/${userId}/favorites`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

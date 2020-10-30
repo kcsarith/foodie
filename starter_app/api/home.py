@@ -96,16 +96,3 @@ def rev(rev_id):
 
     response = User.query.filter_by(id=rev_id).first()
     return {'user': response.to_dict()}
-
-
-@bp.route('/restaurant/favorite', methods=['GET', 'POST'])
-def favorite():
-
-    if not request.is_json:
-        return jsonify({"msg": "Missing JSON in request"}), 400
-    user_id = request.json.get('user_id', None)
-    restaurant_id = request.json.get("restaurant_id", None)
-    newFavorite = favorites(user_id=user_id, restaurant_id=restaurant_id)
-    db.session.add(newFavorite)
-    db.session.commit()
-    return {'Restaurant added to favorites!'}, 200
