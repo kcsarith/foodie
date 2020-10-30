@@ -1,9 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { Button, Icon, Image, Item, Header, Label, Segment } from 'semantic-ui-react'
 
 const paragraph = <Image src='/images/wireframe/short-paragraph.png' />
 
 const ProfileTabFavorites = () => {
+    const id = useSelector(state => state.authentication.id);
+    const [myFavoriates, setMyFavorites] = useState([])
+
+    useEffect(() => {
+        async function fetchFavorites() {
+            const res = await fetch(`/api/users/${id}/favorites`)
+            const data = await res.json()
+            setMyFavorites(data.favorites)
+        }
+        fetchFavorites()
+    }, [])
+
+
+
     return (
         <>
             <Header as='h2' attached='top'>Favorites</Header>
