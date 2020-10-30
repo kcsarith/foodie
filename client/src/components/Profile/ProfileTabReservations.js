@@ -71,7 +71,7 @@ const UpcomingReservations = (props) => {
                                 <Item.Meta>
                                     <span className='cinema'>{reserv.restaurant_address}</span>
                                 </Item.Meta>
-                                <Item.Description>Reservation Date and Time:  {reserv.start_time}</Item.Description>
+                                <Item.Description>Reservation Date and Time :  {new Date(reserv.start_time).toLocaleString()}</Item.Description>
                                 <Item.Description>Party of {reserv.group_num}</Item.Description>
                                 <Item.Extra>
                                     <Button type="submit" value={reserv.id} onClick={handleSubmit} primary floated='right'>Cancel Reservation<Icon name='right chevron' /></Button>
