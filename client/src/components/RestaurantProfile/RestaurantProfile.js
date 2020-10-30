@@ -51,10 +51,7 @@ const RestaurantProfile = () => {
     });
     const history = useHistory()
     const idStr = history.location.pathname.split('/')[3]
-<<<<<<< HEAD
-=======
     console.log("history.location", history)
->>>>>>> main
     const id = parseInt(idStr, 10)
     useEffect(() => {
         async function fetchData() {
@@ -63,9 +60,6 @@ const RestaurantProfile = () => {
             setRestData(data.restaurant)
         }
         fetchData()
-<<<<<<< HEAD
-    }, [id])
-=======
     }, [])
     const leftWidth = 10;
     const rightWidth = 6;
@@ -128,33 +122,10 @@ Ryan Richardson, General Manager and Partner`;
             </div>
         </>
     )
->>>>>>> main
 
 }
 function RestaurantProfile2() {
 
-<<<<<<< HEAD
-    return (
-        <>
-            <div className='restaurant__container'>
-                <div className='restaurant__left'>
-                    <h1> {restData.name}</h1>
-                    <h2> {restData, id}</h2>
-                    <div>
-                        <Review id={id} />
-                    </div>
-
-                </div>
-                <div className='restaurant__right'>
-                    <div className='restaurant__reservation'>
-                        <Reservation />
-                    </div>
-                    <div>
-                        <ReservationList />
-                    </div>
-                </div>
-            </div>
-=======
     const [restData, setRestData] = useState([])
     const history = useHistory()
     const idStr = history.location.pathname.split('/')[3]
@@ -173,7 +144,6 @@ function RestaurantProfile2() {
     return (
         <>
             <img src={restarauntImageUrl} fluid />
->>>>>>> main
         </>
     )
 

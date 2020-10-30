@@ -17,12 +17,9 @@ def index():
 @user_routes.route("/<int:userId>/patch", methods=["GET", "PATCH"])
 @login_required
 def update(userId):
-<<<<<<< HEAD
-=======
     # print(user)
     errors = []
 
->>>>>>> main
     user = User.query.get_or_404(userId)
 
     new_name = request.json.get("name")

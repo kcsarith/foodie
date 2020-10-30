@@ -79,8 +79,6 @@ def reservationlist(user_id):
                       .filter(Reservation.user_id == user_id)
     return {'reservation': [reservation.to_dict() for reservation in response]}
 
-<<<<<<< HEAD
-=======
 
 
 @bp.route('/restaurant/reservationcancel/<int:reserv_id>', methods=["DELETE", "GET"])
@@ -92,7 +90,6 @@ def reservationcancel(reserv_id):
         return {}, 200
     return {}, 404
 
->>>>>>> main
 
 @bp.route('/reviews/<int:rev_id>')
 def rev(rev_id):
