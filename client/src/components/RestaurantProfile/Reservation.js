@@ -2,19 +2,22 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import TimePickers from '../HomePage/TimePicker'
 import { useHistory } from 'react-router-dom';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Confirm, Message } from 'semantic-ui-react';
 import './Reservation.css'
 
 
-export default function Reservation(props) {
-
+export default function Reservation({ restaurantName }) {
     let now = new Date().toISOString().substring(0, 10)
-    const [reserv, setReserv] = useState({
+    const [reservationState, setReservationState] = useState({
+        submitted: false,
+        openConfirmModal: false,
+        messageVisibility: false,
+        restaurantName: 'Untitled',
         date: now,
-        time: "19:30",
-        group: "2 People"
+        time: '19:30',
+        group: '2 People'
     });
-    const [submitted, setSubmitted] = useState(false);
+
     const user_id = useSelector(state => state.authentication.id);
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
     const history = useHistory()
@@ -22,19 +25,25 @@ export default function Reservation(props) {
     const restaurant_id = parseInt(idStr, 10)
     function handleChange(e) {
         const { id, value } = e.target;
-        setReserv(reserv => ({ ...reserv, [id]: value }))
+        setReservationState({ ...reservationState, [id]: value })
     }
 
     let res = ''
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setSubmitted(true);
+        setReservationState({ ...reservationState, openConfirmModal: true });
+    }
+    const handleCancel = async (e) => {
+        setReservationState({ ...reservationState, openConfirmModal: false });
+    }
+    const handleConfirm = async (e) => {
+        setReservationState({ ...reservationState, messageVisibility: true, submitted: true, openConfirmModal: false });
         handleReservation();
     }
 
     async function handleReservation() {
-        const { date, time, group } = reserv;
+        const { date, time, group } = reservationState;
         const group_num = parseInt(group.substring(0, 2));
         const start_time = date + ' ' + time;
         const response = await fetchWithCSRF("/api/home/restaurant/reserve", {
@@ -47,11 +56,12 @@ export default function Reservation(props) {
                 start_time
             }),
         })
-
-        // if (response.ok) {
-        //     res = 'The reservation has been made successfully.'
-        //     window.alert(res);
-        // }
+        console.log(response)
+        if (response.ok) {
+            setTimeout(() => {
+                setReservationState({ ...reservationState, openConfirmModal: false, messageVisibility: false });
+            }, 2000)
+        }
 
     }
 
@@ -93,7 +103,7 @@ export default function Reservation(props) {
                         </div>
                         <div className="reserv__date__time">
                             <div className='reserv__date'>
-                                <label htmlFor="date">Date</label><br /><br />
+                                <label htmlFor="date">Date</label>
                                 <input type="date" id="date" defaultValue={now} onChange={handleChange} />
                             </div>
                             <div className='reserv__time' id="time" onChange={handleChange}>
@@ -103,12 +113,27 @@ export default function Reservation(props) {
                         </div>
                         <div>
                             <button className='reserv__button' type='submit'>Find a table</button>
+                            {reservationState.messageVisibility &&
+                                <Message
+                                    success
+                                    header='Reserve Success'
+                                    content={`Book ${restaurantName} on ${reservationState.date} for ${reservationState.group}`}
+                                />
+                            }
                         </div>
                         <div className="reserv__result" id="result">{res}</div>
                     </form>
                 </div>
                 {/* container--finish */}
             </Segment>
+            <Confirm
+                open={reservationState.openConfirmModal}
+                content={`Reserved ${restaurantName} for ${reservationState.group}`}
+                cancelButton='Never mind'
+                confirmButton="Let's do it"
+                onCancel={handleCancel}
+                onConfirm={handleConfirm}
+            />
         </>
     )
 }

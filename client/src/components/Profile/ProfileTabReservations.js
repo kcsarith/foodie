@@ -64,7 +64,6 @@ const UpcomingReservations = (props) => {
         })
 
         if (response.ok) {
-            alert('Canceled Reservation');
             fetchReservData()
         }
     }
