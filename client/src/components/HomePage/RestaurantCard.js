@@ -100,7 +100,7 @@ export default function RestaurantCard({ rest }) {
                 />
                 <CardContent onClick={routeChange}>
                     <Typography variant="body2" color="textSecondary" className='rest-card__body-img'>
-                        <img src={randomImg} />
+                        <img src={rest.img} />
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
