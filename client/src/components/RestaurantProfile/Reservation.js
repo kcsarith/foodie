@@ -123,6 +123,12 @@ export default function Reservation({ restaurantName }) {
                     </form>
                 </div>
                 {/* container--finish */}
+              <Message
+                    success
+                    header='Your user registration was successful'
+                    content='You may now log-in with the username you have chosen'
+                />
+                                
             </Segment>
             <Confirm
                 open={reservationState.openConfirmModal}

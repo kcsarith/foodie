@@ -56,6 +56,7 @@ def profile(rest_id):
     return {'restaurant': response.to_dict()}
 
 
+@login_required
 @bp.route('/restaurant/reserve', methods=["GET", "POST"])
 def reserveRes():
     if not request.is_json:
@@ -80,8 +81,8 @@ def reservationlist(user_id):
     return {'reservation': [reservation.to_dict() for reservation in response]}
 
 
-@bp.route('/restaurant/reservationcancel/<int:reserv_id>',
-          methods=["DELETE", "GET"])
+@login_required
+@bp.route('/restaurant/reservationcancel/<int:reserv_id>', methods=["DELETE", "GET"])
 def reservationcancel(reserv_id):
     reserv = Reservation.query.filter(Reservation.id == reserv_id).first()
     if reserv:

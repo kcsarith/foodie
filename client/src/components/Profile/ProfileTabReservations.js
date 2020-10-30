@@ -22,15 +22,6 @@ const UpcomingReservations = (props) => {
     const user_id = useSelector(state => state.authentication.id);
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
-    //         const data = await res.json()
-    //         setReserveList(data.reservation)
-    //     }
-    //     fetchData()
-    // }, [])
-
     async function fetchReservData() {
         const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
         const data = await res.json()
@@ -44,20 +35,20 @@ const UpcomingReservations = (props) => {
     const [tabReservationState, setTabReservationState] = useState({
         open: false,
         confirm: false,
-        reserv_id: null
+        reservId: null
     });
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setTabReservationState({ ...tabReservationState, open: true, reserv_id: e.target.value })
-        console.log("e.target.value", e.target.value)
+        setTabReservationState({ ...tabReservationState, open: true, reservId: e.target.value })
     }
     const handleCancel = () => {
         setTabReservationState({ ...tabReservationState, open: false, confirm: false })
     }
     const handleConfirm = async () => {
         setTabReservationState({ ...tabReservationState, open: false, confirm: false })
-        console.log(tabReservationState.reserv_id)
-        const response = await fetchWithCSRF(`/api/home/restaurant/reservationcancel/${tabReservationState.reserv_id}`, {
+        console.log(tabReservationState.reservId)
+        const response = await fetchWithCSRF(`/api/home/restaurant/reservationcancel/${tabReservationState.reservId}`, {
+
             method: "DELETE"
         })
 
@@ -72,13 +63,13 @@ const UpcomingReservations = (props) => {
                 <Transition animation='fade' duration={200}>
                     <Item.Group divided>
                         {reserveList.length > 0 ? reserveList.map((reserv, index) => (<Item key={`${index}-${reserv.restaurant_id}-${reserv.user_id}`}>
-                            <Item.Image src={tempImageUrl} />
+                            <Item.Image src={reserv.restaurant_img} alt={reserv.restaurant_img}/>
                             <Item.Content>
                                 <Item.Header as='a'>{reserv.restaurant_name}</Item.Header>
                                 <Item.Meta>
                                     <span className='cinema'>{reserv.restaurant_address}</span>
                                 </Item.Meta>
-                                <Item.Description>Reservation Date and Time:  {reserv.start_time}</Item.Description>
+                                <Item.Description>Reservation Date and Time :  {new Date(reserv.start_time).toLocaleString()}</Item.Description>
                                 <Item.Description>Party of {reserv.group_num}</Item.Description>
                                 <Item.Extra>
                                     <Button type="submit" value={reserv.id} onClick={handleSubmit} primary floated='right'>Cancel Reservation<Icon name='right chevron' /></Button>
@@ -106,6 +97,7 @@ const ProfileTabReservations = () => {
         pointsUntilReward: 2000
     });
 
+    
     return (
         <>
             <Points tabState={tabState} setTabState={setTabState} />
