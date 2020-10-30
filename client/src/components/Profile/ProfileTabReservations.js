@@ -45,12 +45,12 @@ const UpcomingReservations = (props) => {
 
     const handleSubmit = async (e) => {
          e.preventDefault();
-         console.log("e.target.value", e.target.value)
          const reserv_id = e.target.value;
          const response = await fetchWithCSRF(`/api/home/restaurant/reservationcancel/${reserv_id}`, {
             method: "DELETE"
         })
         if (response.ok) {
+
             fetchReservData()
         }
     }
@@ -91,6 +91,7 @@ const ProfileTabReservations = () => {
         pointsUntilReward: 2000
     });
 
+    
     return (
         <>
             <Points tabState={tabState} setTabState={setTabState} />
