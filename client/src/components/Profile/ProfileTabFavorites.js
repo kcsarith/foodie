@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Button, Icon, Item, Header, Segment } from 'semantic-ui-react'
+import { useHistory } from 'react-router-dom';
 
 
 const ProfileTabFavorites = () => {
     const id = useSelector(state => state.authentication.id);
     const [myFavorites, setMyFavorites] = useState([])
+    const history = useHistory()
 
     useEffect(() => {
         async function fetchFavorites() {
@@ -15,8 +17,6 @@ const ProfileTabFavorites = () => {
         }
         fetchFavorites()
     }, [id])
-
-
 
     return (
         <>
@@ -34,7 +34,11 @@ const ProfileTabFavorites = () => {
                                     </Item.Meta>
                                     <Item.Description>Rating:  {myFavorite.avg_rating},     Max_Price: ${myFavorite.max_price}</Item.Description>
                                     <Item.Extra>
-                                        <Button primary floated='right'>Make Revervation<Icon name='right chevron' />
+                                        <Button primary floated='right' onClick={() => {
+                                            let path = `restaurant/profile/${myFavorite.restaurant_id}`
+                                            history.push(path)
+                                        }}
+                                        >Make Revervation<Icon name='right chevron' />
                                         </Button>
                                     </Item.Extra>
                                 </Item.Content>
