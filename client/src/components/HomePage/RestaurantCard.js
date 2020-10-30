@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         color: 'red'
     },
     likeNone: {
-        color: 'lightgray'
+        color: 'none'
     }
 }));
 
@@ -105,9 +105,11 @@ export default function RestaurantCard({ rest }) {
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                    <FavoriteIcon onClick={handleFavorite} className={clsx(classes.likeNone, {
-                        [classes.likeRed]: color,
-                    })} />
+                    <IconButton aria-label="add to favorites" onClick={handleFavorite}>
+                        <FavoriteIcon className={clsx(classes.likeNone, {
+                            [classes.likeRed]: color,
+                        })} />
+                    </IconButton>
                     <IconButton
                         className={clsx(classes.expand, {
                             [classes.expandOpen]: expanded,
