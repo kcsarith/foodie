@@ -80,6 +80,7 @@ def reservationlist(user_id):
     return {'reservation': [reservation.to_dict() for reservation in response]}
 
 
+
 @bp.route('/restaurant/reservationcancel/<int:reserv_id>', methods=["DELETE", "GET"])
 def reservationcancel(reserv_id):
     reserv = Reservation.query.filter(Reservation.id == reserv_id).first()
