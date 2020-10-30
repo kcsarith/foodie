@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Header, Label, Item, Icon, Progress, Segment, Transition } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
 
 const tempImageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
@@ -18,12 +17,11 @@ const Points = ({ tabState, setTabState }) => {
 }
 
 const UpcomingReservations = (props) => {
-    
+
     const [reserveList, setReserveList] = useState([])
     const user_id = useSelector(state => state.authentication.id);
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
-    const history = useHistory()
-    
+
     // useEffect(() => {
     //     async function fetchData() {
     //         const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
@@ -32,22 +30,22 @@ const UpcomingReservations = (props) => {
     //     }
     //     fetchData()
     // }, [])
-    
+
     async function fetchReservData() {
-            const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
-            const data = await res.json()
-            setReserveList(data.reservation)
-        }
+        const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
+        const data = await res.json()
+        setReserveList(data.reservation)
+    }
 
     useEffect(() => {
         fetchReservData()
     }, [])
 
     const handleSubmit = async (e) => {
-         e.preventDefault();
-         console.log("e.target.value", e.target.value)
-         const reserv_id = e.target.value;
-         const response = await fetchWithCSRF(`/api/home/restaurant/reservationcancel/${reserv_id}`, {
+        e.preventDefault();
+        console.log("e.target.value", e.target.value)
+        const reserv_id = e.target.value;
+        const response = await fetchWithCSRF(`/api/home/restaurant/reservationcancel/${reserv_id}`, {
             method: "DELETE"
         })
         if (response.ok) {
@@ -71,7 +69,7 @@ const UpcomingReservations = (props) => {
                                 <Item.Description>Reservation Date and Time:  {reserv.start_time}</Item.Description>
                                 <Item.Description>Party of {reserv.group_num}</Item.Description>
                                 <Item.Extra>
-                                    <Button type= "submit" value={reserv.id} onClick={handleSubmit} primary floated='right'>Cancel Reservation<Icon name='right chevron' /></Button>
+                                    <Button type="submit" value={reserv.id} onClick={handleSubmit} primary floated='right'>Cancel Reservation<Icon name='right chevron' /></Button>
                                     <Label>Limited</Label>
                                 </Item.Extra>
                             </Item.Content>

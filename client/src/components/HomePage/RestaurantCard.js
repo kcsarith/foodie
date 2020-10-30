@@ -10,7 +10,6 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './RestaurantCard.css'
@@ -39,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         color: 'red'
     },
     likeNone: {
-        color: 'none'
+        color: 'lightgray'
     }
 }));
 
@@ -83,7 +82,7 @@ export default function RestaurantCard({ rest }) {
             setReviews(data.reviews)
         }
         fetchData()
-    }, [])
+    }, [rest.id])
 
     const restReviews = reviews.map(item => <RestReviews key={item.id} review={item} />)
     const firstLetter = rest.name.slice(0, 1)
@@ -102,15 +101,13 @@ export default function RestaurantCard({ rest }) {
                 />
                 <CardContent onClick={routeChange}>
                     <Typography variant="body2" color="textSecondary" className='rest-card__body-img'>
-                        <img src={rest.img} />
+                        <img src={rest.img} alt='' />
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                        <FavoriteIcon onClick={handleFavorite} className={clsx(classes.likeNone, {
-                            [classes.likeRed]: color,
-                        })} />
-                    </IconButton>
+                    <FavoriteIcon onClick={handleFavorite} className={clsx(classes.likeNone, {
+                        [classes.likeRed]: color,
+                    })} />
                     <IconButton
                         className={clsx(classes.expand, {
                             [classes.expandOpen]: expanded,

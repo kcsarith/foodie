@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 import TimePickers from '../HomePage/TimePicker'
 import { useHistory } from 'react-router-dom';
 import { Segment } from 'semantic-ui-react';
@@ -14,7 +14,6 @@ export default function Reservation(props) {
         time: "19:30",
         group: "2 People"
     });
-    const [submitted, setSubmitted] = useState(false);
     const user_id = useSelector(state => state.authentication.id);
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
     const history = useHistory()
@@ -29,7 +28,6 @@ export default function Reservation(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setSubmitted(true);
         handleReservation();
     }
 
@@ -37,7 +35,7 @@ export default function Reservation(props) {
         const { date, time, group } = reserv;
         const group_num = parseInt(group.substring(0, 2));
         const start_time = date + ' ' + time;
-        const response = await fetchWithCSRF("/api/home/restaurant/reserve", {
+        await fetchWithCSRF("/api/home/restaurant/reserve", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

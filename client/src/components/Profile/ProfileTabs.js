@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
-import { Grid, Menu, Rail, Segment, Sticky } from 'semantic-ui-react'
+import { Grid, Menu } from 'semantic-ui-react'
 import ProfileTabReservations from './ProfileTabReservations';
 import ProfileTabFavorites from './ProfileTabFavorites';
 import ProfileTabAccountDetails from './ProfileTabAccountDetails';
 
-import { useHistory, Switch, Route, NavLink, Redirect } from 'react-router-dom';
-
 const ProfileTabs = () => {
     const [activeItem, setActiveItem] = useState('Reservations');
-    const history = useHistory()
     const handleItemClick = (e, { name }) => {
         // if (name === 'Reservations') history.push('/profile')
         // else if (name === 'Saved Restaurants') history.push('/profile/favorites')
