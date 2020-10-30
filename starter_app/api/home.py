@@ -80,7 +80,6 @@ def reservationlist(user_id):
     return {'reservation': [reservation.to_dict() for reservation in response]}
 
 
-
 @bp.route('/reviews/<int:rev_id>')
 def rev(rev_id):
 
