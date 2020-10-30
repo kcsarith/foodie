@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request
 from starter_app.models import db, User, Restaurant
 from flask_login import login_required
+from sqlalchemy.orm import joinedload
+
 
 user_routes = Blueprint('users', __name__)
 
@@ -31,16 +33,19 @@ def user_profile(id):
     return {}
 
 
-@user_routes.route("/<int:userId>/favorite", methods=["GET", "POST"])
+@user_routes.route("/<int:user_id>/favorites", methods=["GET", "POST"])
 @login_required
-def user_favorite(userId):
-    if not request.is_json:
-        return jsonify({"msg": "Missing JSON in request"}), 400
-    user = User.query.get_or_404(userId)
-    user.name = request.json.get("name")
-    user.email = request.json.get("email")
-    user.city = request.json.get("city")
-    user.state = request.json.get("state")
-    print(user)
-    db.session.commit()
-    return {"user": user.to_dict()}
+def user_favorites(user_id):
+    if request.method == "POST":
+        if not request.is_json:
+            return jsonify({"msg": "Missing JSON in request"}), 400
+        user = User.query.get_or_404(user_id)
+        restaurant_id = request.json.get("restaurant_id", None)
+        rest = Restaurant.query.get(restaurant_id)
+        user.restaurants.append(rest)
+        db.session.add(user)
+        db.session.commit()
+    response = db.session.query(Restaurant).order_by(Restaurant.name).options(
+                      joinedload(Restaurant.users)
+                      ).filter(Restaurant.users.any(id=user_id)).all()
+    return {'favorites': [rest.to_dict() for rest in response]}

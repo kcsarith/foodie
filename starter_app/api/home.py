@@ -75,12 +75,11 @@ def reserveRes():
 def reservationlist(user_id):
 
     response = db.session.query(Reservation) \
-                      .join(Restaurant) \
                       .options(joinedload(Reservation.restaurant)) \
                       .filter(Reservation.user_id == user_id)
     return {'reservation': [reservation.to_dict() for reservation in response]}
 
-     
+
 
 @bp.route('/reviews/<int:rev_id>')
 def rev(rev_id):
