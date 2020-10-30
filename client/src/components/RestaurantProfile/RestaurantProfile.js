@@ -49,7 +49,6 @@ const RestaurantProfile = () => {
     });
     const history = useHistory()
     const idStr = history.location.pathname.split('/')[3]
-    console.log("history.location", history)
     const id = parseInt(idStr, 10)
     useEffect(() => {
         async function fetchData() {

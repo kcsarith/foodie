@@ -22,7 +22,6 @@ const NavBarWrapper = styled.div`
 
 const NavBar = () => {
     const authSelector = useSelector(state => state.authentication)
-    console.log(authSelector)
     const loggedOut = authSelector.id;
     const dispatch = useDispatch();
 

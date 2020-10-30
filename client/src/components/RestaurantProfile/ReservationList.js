@@ -12,7 +12,6 @@ export default function ReservationList(props) {
         async function fetchData() {
             const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
             const data = await res.json()
-            console.log("data::::::", data)
             setReserveList(data.reservation)
         }
         fetchData()
