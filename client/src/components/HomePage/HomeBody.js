@@ -26,7 +26,7 @@ function HomeBody({ data }) {
 
     return (
         <div className='restaurants-list'>
-            { restData.length === 0 ? <p>Sorry we couldn't find any Restaurants in that area</p> : restComponents}
+            { restData.length === 0 ? <h3>Sorry we couldn't find any Restaurants in that area</h3> : restComponents}
         </div>
 
     );

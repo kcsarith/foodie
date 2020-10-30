@@ -35,18 +35,18 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         backgroundColor: '#da3743',
     },
+    likeRed: {
+        color: 'red'
+    },
+    likeNone: {
+        color: 'none'
+    }
 }));
-
-const images = ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-    'https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80',
-    'https://images.unsplash.com/photo-1579027989536-b7b1f875659b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60']
-
-const random = Math.floor(Math.random() * images.length);
-const randomImg = images[random]
 
 export default function RestaurantCard({ rest }) {
     const classes = useStyles();
     const [expanded, setExpanded] = useState(false);
+    const [color, setColor] = useState(false)
     const [reviews, setReviews] = useState([])
     const history = useHistory()
     const userId = useSelector(state => state.authentication.id)
@@ -56,6 +56,7 @@ export default function RestaurantCard({ rest }) {
         setExpanded(!expanded);
     };
 
+
     const routeChange = () => {
         let path = `restaurant/profile/${rest.id}`
         history.push(path)
@@ -64,6 +65,7 @@ export default function RestaurantCard({ rest }) {
     async function handleFavorite() {
         const id = userId
         const restId = rest.id
+        setColor(!color)
         await fetchWithCSRF(`/api/users/${userId}/favorites`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -105,7 +107,9 @@ export default function RestaurantCard({ rest }) {
                 </CardContent>
                 <CardActions disableSpacing>
                     <IconButton aria-label="add to favorites">
-                        <FavoriteIcon onClick={handleFavorite} />
+                        <FavoriteIcon onClick={handleFavorite} className={clsx(classes.likeNone, {
+                            [classes.likeRed]: color,
+                        })} />
                     </IconButton>
                     <IconButton
                         className={clsx(classes.expand, {
