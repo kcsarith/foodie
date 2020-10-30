@@ -5,7 +5,6 @@ const Footer = () => {
     const discoverFooterItems = ["Dining Rewards", "Private Dining", "Top 100 Restaurants", "Reserve for Others", "Cuisines Near Me", "Restaurants Near Me", "Delivery Near Me", "Cuisines", "Restaurants Open Now"]
     const foodieFooterItems = ["About Us", "Blog", "Careers", "Press"]
     const moreFooterItems = ["Foodie for iOS", "Foodie for Android", "Affiliate Program", "Contact Us"]
-    const imageFooterUrls = ['https://cdn.otstatic.com/cfe/5/images/booking_logo@2x-1b5fc1.png', 'https://cdn.otstatic.com/cfe/5/images/priceline_logo@2x-4241e6.png', 'https://cdn.otstatic.com/cfe/5/images/kayak_logo@2x-93a54d.png', 'https://cdn.otstatic.com/cfe/5/images/agoda_logo@2x-1b3b14.png', 'https://cdn.otstatic.com/cfe/5/images/rentalcars_logo@2x-6c0316.png', 'https://cdn.otstatic.com/cfe/5/images/opentable@2x-b4630f.png']
     return (
         <>
             <Segment inverted vertical style={{

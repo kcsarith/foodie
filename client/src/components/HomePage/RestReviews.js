@@ -13,7 +13,7 @@ function RestReviews({ review }) {
             setUser(data.user)
         }
         fetchData()
-    }, [])
+    }, [review.user_id])
 
     return (
         <div className='reviews'>

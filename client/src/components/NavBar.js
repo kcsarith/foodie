@@ -1,9 +1,7 @@
 import React from 'react';
-import AuthNavButtons from './AuthNavButtons';
 import Logo from './Logo';
-import NavBarButtons from './NavBarButtons';
 import styled from 'styled-components';
-import { Container, Dropdown, Image, Header, Menu } from 'semantic-ui-react';
+import { Container, Dropdown, Image, Menu } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../store/authentication';
 import { useHistory, Redirect } from 'react-router-dom';
@@ -22,30 +20,8 @@ const NavBarWrapper = styled.div`
   }
 `;
 
-const NavBar2 = () => {
-    return (
-        <nav>
-            <NavBarWrapper>
-                <div className="nav-bar-content">
-                    <div>
-                        <Logo />
-                        <NavBarButtons />
-                    </div>
-                    {/* <Header as='h2' icon textAlign='center'>
-                        <Image src='https://cdn2.iconfinder.com/data/icons/flat-pro-word-processing-set-5/32/table-512.png' size='mini' circular />
-                        <Header.Content>Foodie</Header.Content>
-                    </Header> */}
-                    FOODIE
-                    <AuthNavButtons />
-                </div>
-            </NavBarWrapper>
-        </nav>
-    )
-};
-
 const NavBar = () => {
     const authSelector = useSelector(state => state.authentication)
-    console.log(authSelector)
     const loggedOut = authSelector.id;
     const dispatch = useDispatch();
 
@@ -81,8 +57,6 @@ const NavBar = () => {
                             <Dropdown.Header>You have 845/2000 points!</Dropdown.Header>
                             <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                             <Dropdown.Divider />
-                            {/* <Dropdown.Item name='Reservations' onClick={handleProfile}>Reservations</Dropdown.Item>
-                            <Dropdown.Item name='Saved Restaurants' onClick={handleProfile}>Favorites</Dropdown.Item> */}
                             <Dropdown.Item onClick={handleProfile}>Profile</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Header, Confirm, Label, Item, Icon, Progress, Segment, Transition } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
 
 const tempImageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
@@ -22,7 +21,6 @@ const UpcomingReservations = (props) => {
     const [reserveList, setReserveList] = useState([])
     const user_id = useSelector(state => state.authentication.id);
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
-    const history = useHistory()
 
     async function fetchReservData() {
         const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)

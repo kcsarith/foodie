@@ -10,7 +10,6 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './RestaurantCard.css'
@@ -33,20 +32,20 @@ const useStyles = makeStyles((theme) => ({
         transform: 'rotate(180deg)',
     },
     avatar: {
-        backgroundColor: red[500],
+        backgroundColor: '#da3743',
     },
+    likeRed: {
+        color: 'red'
+    },
+    likeNone: {
+        color: 'lightgray'
+    }
 }));
-
-const images = ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-    'https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80',
-    'https://images.unsplash.com/photo-1579027989536-b7b1f875659b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60']
-
-const random = Math.floor(Math.random() * images.length);
-const randomImg = images[random]
 
 export default function RestaurantCard({ rest }) {
     const classes = useStyles();
     const [expanded, setExpanded] = useState(false);
+    const [color, setColor] = useState(false)
     const [reviews, setReviews] = useState([])
     const history = useHistory()
     const userId = useSelector(state => state.authentication.id)
@@ -56,6 +55,7 @@ export default function RestaurantCard({ rest }) {
         setExpanded(!expanded);
     };
 
+
     const routeChange = () => {
         let path = `restaurant/profile/${rest.id}`
         history.push(path)
@@ -64,6 +64,7 @@ export default function RestaurantCard({ rest }) {
     async function handleFavorite() {
         const id = userId
         const restId = rest.id
+        setColor(!color)
         await fetchWithCSRF(`/api/users/${userId}/favorites`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -81,7 +82,7 @@ export default function RestaurantCard({ rest }) {
             setReviews(data.reviews)
         }
         fetchData()
-    }, [])
+    }, [rest.id])
 
     const restReviews = reviews.map(item => <RestReviews key={item.id} review={item} />)
     const firstLetter = rest.name.slice(0, 1)
@@ -100,13 +101,13 @@ export default function RestaurantCard({ rest }) {
                 />
                 <CardContent onClick={routeChange}>
                     <Typography variant="body2" color="textSecondary" className='rest-card__body-img'>
-                        <img src={rest.img} />
+                        <img src={rest.img} alt='' />
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                        <FavoriteIcon onClick={handleFavorite} />
-                    </IconButton>
+                    <FavoriteIcon onClick={handleFavorite} className={clsx(classes.likeNone, {
+                        [classes.likeRed]: color,
+                    })} />
                     <IconButton
                         className={clsx(classes.expand, {
                             [classes.expandOpen]: expanded,

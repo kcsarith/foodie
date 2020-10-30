@@ -1,16 +1,13 @@
 import React, { createRef, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
-// import './RestaurantProfile.css'
-// import '../HomePage/HomePage.css'
 import Reservation from './Reservation'
 import Review from './Review';
-import ReservationList from './ReservationList'
+import RestaurantSafetyPrecautions from './RestaurantSafetyPrecautions'
 import { Image, Container, Divider, Icon, Tab, Grid, List, Rating, Message, Rail, Header, Sticky, Input, Ref, Segment, Visibility } from 'semantic-ui-react'
 
 
 const panes = [
     { menuItem: 'Overview' },
-    { menuItem: 'Photos' },
     { menuItem: 'Menu' },
     { menuItem: 'Reviews' },
 ]
@@ -47,11 +44,10 @@ const RestaurantProfile = () => {
     const contextRef = createRef()
     const [restData, setRestData] = useState([])
     const [profileVisualState, setProfileVisualState] = useState({
-        visible: true
+        visible: true,
     });
     const history = useHistory()
     const idStr = history.location.pathname.split('/')[3]
-    console.log("history.location", history)
     const id = parseInt(idStr, 10)
     useEffect(() => {
         async function fetchData() {
@@ -60,7 +56,7 @@ const RestaurantProfile = () => {
             setRestData(data.restaurant)
         }
         fetchData()
-    }, [])
+    }, [id])
     const leftWidth = 10;
     const rightWidth = 6;
     const restarauntImageUrl = 'https://www.tripsavvy.com/thmb/1gJhZ3yzuQF1rwJOIY-FJxFlres=/800x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/lagobellagio-56a447b53df78cf772818bdb.jpg'
@@ -78,7 +74,8 @@ Thank you to all of our loyal guests who have supported us through this time. We
 \n
 Ryan Richardson, General Manager and Partner`;
     const handleDismissTopMessage = () => {
-        setProfileVisualState({ ...setProfileVisualState, visible: false });
+        setProfileVisualState({ ...profileVisualState, visible: false });
+
     }
     return (
         <>
@@ -102,19 +99,22 @@ Ryan Richardson, General Manager and Partner`;
                                 }
                                 <h1> {restData.name}</h1>
                                 <Divider />
-                                <Rating defaultRating={Math.round(restData.avg_rating)} maxRating={5} disabled />
-                                <span>{restData.avg_rating}</span>
+                                <Rating rating={Math.round(restData.avg_rating)} maxRating={5} disabled />
+                                {restData.avg_rating ?
+                                    <span>{restData.avg_rating}</span> :
+                                    <span>No Ratings</span>
+                                }
                                 {placeholderText.split('\n').map(ele => <p>{ele}</p>)}
+                                <RestaurantSafetyPrecautions />
                                 <div>
-                                    <Review id={id} />
+                                    <Review id={id} restData={restData} />
                                 </div>
                             </Grid.Column>
                             <Grid.Column width={rightWidth}>
                                 <Sticky context={contextRef} offset={50}>
-                                    <Reservation />
+                                    <Reservation restaurantName={restData.name} />
                                 </Sticky>
                                 <ListExampleIcon />
-                                <ReservationList />
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
@@ -124,28 +124,5 @@ Ryan Richardson, General Manager and Partner`;
     )
 
 }
-function RestaurantProfile2() {
 
-    const [restData, setRestData] = useState([])
-    const history = useHistory()
-    const idStr = history.location.pathname.split('/')[3]
-    console.log("history.location", history)
-    const id = parseInt(idStr, 10)
-    useEffect(() => {
-        async function fetchData() {
-            const res = await fetch(`/api/home/restaurant/profile/${id}`)
-            const data = await res.json()
-            setRestData(data.restaurant)
-        }
-        fetchData()
-    }, [])
-    const restarauntImageUrl = 'https://www.tripsavvy.com/thmb/1gJhZ3yzuQF1rwJOIY-FJxFlres=/800x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/lagobellagio-56a447b53df78cf772818bdb.jpg'
-    console.log('rest data for profiel-------', restData)
-    return (
-        <>
-            <img src={restarauntImageUrl} fluid />
-        </>
-    )
-
-}
 export default RestaurantProfile
