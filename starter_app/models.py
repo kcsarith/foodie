@@ -104,7 +104,8 @@ class Reservation(db.Model):
             "restaurant_address": self.restaurant.address,
             "restaurant_avg_rating": self.restaurant.avg_rating,
             "restaurant_city": self.restaurant.city,
-            "restaurant_state": self.restaurant.state
+            "restaurant_state": self.restaurant.state,
+            "restaurant_img": self.restaurant.img
         }
 
 

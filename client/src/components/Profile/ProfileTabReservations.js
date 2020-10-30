@@ -65,7 +65,7 @@ const UpcomingReservations = (props) => {
                 <Transition animation='fade' duration={200}>
                     <Item.Group divided>
                         {reserveList.length > 0 ? reserveList.map((reserv, index) => (<Item key={`${index}-${reserv.restaurant_id}-${reserv.user_id}`}>
-                            <Item.Image src={tempImageUrl} />
+                            <Item.Image src={reserv.restaurant_img} alt={reserv.restaurant_img}/>
                             <Item.Content>
                                 <Item.Header as='a'>{reserv.restaurant_name}</Item.Header>
                                 <Item.Meta>
