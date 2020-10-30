@@ -2,12 +2,20 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Button, Icon, Item, Header, Segment } from 'semantic-ui-react'
 import { useHistory } from 'react-router-dom';
+import './ProfileTabFavorites.css';
 
 
 const ProfileTabFavorites = () => {
     const id = useSelector(state => state.authentication.id);
     const [myFavorites, setMyFavorites] = useState([])
     const history = useHistory()
+    const fetchWithCSRF = useSelector(state => state.authentication.csrf);
+
+    async function removeFavorite(rest_id) {
+        await fetchWithCSRF(`/api/users/${id}/favorites/delete/${rest_id}`, {
+            method: 'DELETE'
+        })
+    }
 
     useEffect(() => {
         async function fetchFavorites() {
@@ -34,12 +42,12 @@ const ProfileTabFavorites = () => {
                                     </Item.Meta>
                                     <Item.Description>Rating:  {myFavorite.avg_rating},     Max_Price: ${myFavorite.max_price}</Item.Description>
                                     <Item.Extra>
-                                        <Button primary floated='right' onClick={() => {
+                                        <button className='reserve-btn' primary floated='right' onClick={() => {
                                             let path = `restaurant/profile/${myFavorite.restaurant_id}`
                                             history.push(path)
-                                        }}
-                                        >Make Revervation<Icon name='right chevron' />
-                                        </Button>
+                                        }}>
+                                            Make Revervation<Icon name='right chevron' />
+                                        </button>
                                     </Item.Extra>
                                 </Item.Content>
                             </Item>
