@@ -1,11 +1,8 @@
 import React, { createRef, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
-// import './RestaurantProfile.css'
-// import '../HomePage/HomePage.css'
 import Reservation from './Reservation'
 import Review from './Review';
 import RestaurantSafetyPrecautions from './RestaurantSafetyPrecautions'
-// import ReservationList from './ReservationList'
 import { Image, Container, Divider, Icon, Tab, Grid, List, Rating, Message, Rail, Header, Sticky, Input, Ref, Segment, Visibility } from 'semantic-ui-react'
 
 
@@ -51,7 +48,6 @@ const RestaurantProfile = () => {
     });
     const history = useHistory()
     const idStr = history.location.pathname.split('/')[3]
-    console.log("history.location", history)
     const id = parseInt(idStr, 10)
     useEffect(() => {
         async function fetchData() {
@@ -60,7 +56,7 @@ const RestaurantProfile = () => {
             setRestData(data.restaurant)
         }
         fetchData()
-    }, [])
+    }, [id])
     const leftWidth = 10;
     const rightWidth = 6;
     const restarauntImageUrl = 'https://www.tripsavvy.com/thmb/1gJhZ3yzuQF1rwJOIY-FJxFlres=/800x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/lagobellagio-56a447b53df78cf772818bdb.jpg'
@@ -128,28 +124,5 @@ Ryan Richardson, General Manager and Partner`;
     )
 
 }
-function RestaurantProfile2() {
 
-    const [restData, setRestData] = useState([])
-    const history = useHistory()
-    const idStr = history.location.pathname.split('/')[3]
-    console.log("history.location", history)
-    const id = parseInt(idStr, 10)
-    useEffect(() => {
-        async function fetchData() {
-            const res = await fetch(`/api/home/restaurant/profile/${id}`)
-            const data = await res.json()
-            setRestData(data.restaurant)
-        }
-        fetchData()
-    }, [])
-    const restarauntImageUrl = 'https://www.tripsavvy.com/thmb/1gJhZ3yzuQF1rwJOIY-FJxFlres=/800x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/lagobellagio-56a447b53df78cf772818bdb.jpg'
-    console.log('rest data for profiel-------', restData)
-    return (
-        <>
-            <img src={restarauntImageUrl} fluid />
-        </>
-    )
-
-}
 export default RestaurantProfile

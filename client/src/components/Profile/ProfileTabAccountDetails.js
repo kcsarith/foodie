@@ -17,20 +17,19 @@ const MessageExampleDismissibleBlock = ({ header, content, status, errors }) => 
         content: content,
         errors: errors
     });
-    console.log(errors)
     const handleDismiss = () => {
         setMessageState({ ...messageState, visible: false })
     }
     return (
         <>
-            { status != 'success' && <Message
+            { status !== 'success' && <Message
                 warning
                 onDismiss={handleDismiss}
                 content={messageState.content}
             >
                 <Message.Header>{messageState.header}</Message.Header>
                 <Message.List>
-                    {messageState.errors != undefined && messageState.errors.map(error => (
+                    {messageState.errors !== undefined && messageState.errors.map(error => (
                         < Message.Item >{error}</Message.Item>)
                     )}
                 </Message.List>
@@ -74,9 +73,8 @@ const ProfileTabAccountDetail = () => {
         e.preventDefault();
         async function fetchData() {
             const res = await dispatch(patchUser(formState));
-            console.log(res)
             if (res.res.ok) {
-                if (res.errors != undefined) {
+                if (res.errors !== undefined) {
                     let errorsContent = '';
                     setMessageState({ ...messageState, errors: res.errors })
                     for (let i = 0; i < res.errors.length; i++) {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Container, Divider, Header, Image, Grid, List, Segment } from 'semantic-ui-react'
+import { Divider, Header, Image, Grid, Segment } from 'semantic-ui-react'
 const tempImageUrl = 'https://previews.123rf.com/images/avectors/avectors1810/avectors181000027/110914215-yummy-smile-vector-cartoon-emoticon-with-tongue-lick-mouth-delicious-tasty-food-eating-emoji-line-fa.jpg'
 const ProfileLayout = ({ username, testPoints }) => (
     <>

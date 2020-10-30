@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 import TimePickers from '../HomePage/TimePicker'
 import { useHistory } from 'react-router-dom';
 import { Segment, Confirm, Message } from 'semantic-ui-react';
@@ -17,7 +17,6 @@ export default function Reservation({ restaurantName }) {
         time: '19:30',
         group: '2 People'
     });
-
     const user_id = useSelector(state => state.authentication.id);
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
     const history = useHistory()
@@ -56,7 +55,6 @@ export default function Reservation({ restaurantName }) {
                 start_time
             }),
         })
-        console.log(response)
         if (response.ok) {
             setTimeout(() => {
                 setReservationState({ ...reservationState, openConfirmModal: false, messageVisibility: false });
