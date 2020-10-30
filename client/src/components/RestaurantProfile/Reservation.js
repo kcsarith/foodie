@@ -45,7 +45,7 @@ export default function Reservation({ restaurantName }) {
         const { date, time, group } = reservationState;
         const group_num = parseInt(group.substring(0, 2));
         const start_time = date + ' ' + time;
-        await fetchWithCSRF("/api/home/restaurant/reserve", {
+        const response = await fetchWithCSRF("/api/home/restaurant/reserve", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -55,7 +55,6 @@ export default function Reservation({ restaurantName }) {
                 start_time
             }),
         })
-        console.log(response)
         if (response.ok) {
             setTimeout(() => {
                 setReservationState({ ...reservationState, openConfirmModal: false, messageVisibility: false });

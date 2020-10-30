@@ -2,7 +2,8 @@ import React, { createRef, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import Reservation from './Reservation'
 import Review from './Review';
-import { Image, Container, Divider, Icon, Tab, Grid, List, Rating, Message, Sticky } from 'semantic-ui-react'
+import RestaurantSafetyPrecautions from './RestaurantSafetyPrecautions'
+import { Image, Container, Divider, Icon, Tab, Grid, List, Rating, Message, Rail, Header, Sticky, Input, Ref, Segment, Visibility } from 'semantic-ui-react'
 
 
 const panes = [

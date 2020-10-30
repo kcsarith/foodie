@@ -21,10 +21,6 @@ const UpcomingReservations = (props) => {
     const [reserveList, setReserveList] = useState([])
     const user_id = useSelector(state => state.authentication.id);
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
-<<<<<<< HEAD
-=======
-    const history = useHistory()
->>>>>>> main
 
     // useEffect(() => {
     //     async function fetchData() {
