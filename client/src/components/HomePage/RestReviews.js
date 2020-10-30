@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
+import './RestReviews.css'
 
 function RestReviews({ review }) {
 
@@ -10,7 +10,6 @@ function RestReviews({ review }) {
 
             const res = await fetch(`/api/home/reviews/${review.user_id}`)
             const data = await res.json()
-            console.log(data)
             setUser(data.user)
         }
         fetchData()
@@ -18,13 +17,15 @@ function RestReviews({ review }) {
 
     return (
         <div className='reviews'>
-            {user.name}
-            <br />
-            <br />
-            {review.content}
-            <br />
-            <br />
-            Rating: {review.rating}
+            <div className='reviews__user'>
+                {user.name}
+            </div>
+            <div className='reviews__content'>
+                {review.content}
+            </div>
+            <div className='reviews__rating'>
+                Rating: {review.rating}
+            </div>
         </div>
     )
 }

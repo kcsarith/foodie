@@ -86,6 +86,7 @@ def user_favorites(user_id):
         user.restaurants.append(rest)
         db.session.add(user)
         db.session.commit()
+        return 'Restaurant added to favorites', 200
     else:
         response = db.session.query(Restaurant).order_by(
                       Restaurant.name).options(

@@ -1,0 +1,18 @@
+
+.reviews__user, .reviews__content, .reviews__rating {
+    padding: 5px;
+}
+
+.reviews {
+    border-bottom: 1px lightgray solid;
+    border-top: 1px lightgray solid;
+    padding-top: 10px;
+}
+
+.reviews__content, .reviews__rating {
+    margin-left: 10px;
+}
+
+.reviews__user {
+    font-weight: 700;
+}

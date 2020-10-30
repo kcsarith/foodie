@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required
 from sqlalchemy import or_
-from starter_app.models import db, User, Restaurant, Review, Reservation
+from starter_app.models import db, User, Restaurant, Review, Reservation, favorites
 from sqlalchemy.orm import joinedload
 
 bp = Blueprint("home", __name__)
