@@ -26,7 +26,7 @@ const ProfileTabFavorites = () => {
                     {myFavorites.map((myFavorite, index) =>
                         <div key={`${index}-${myFavorite.restaurant_id}`}>
                             <Item>
-                                <Item.Image src='https://www.tripsavvy.com/thmb/1gJhZ3yzuQF1rwJOIY-FJxFlres=/800x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/lagobellagio-56a447b53df78cf772818bdb.jpg' />
+                                <Item.Image src={myFavorite.img} />
                                 <Item.Content>
                                     <Item.Header as='a'>{myFavorite.name}</Item.Header>
                                     <Item.Meta>
