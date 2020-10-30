@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Header, Label, Item, Icon, Progress, Segment, Transition } from 'semantic-ui-react';
+import { Button, Header, Confirm, Label, Item, Icon, Progress, Segment, Transition } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 
 
@@ -21,6 +21,10 @@ const UpcomingReservations = (props) => {
     const [reserveList, setReserveList] = useState([])
     const user_id = useSelector(state => state.authentication.id);
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
+<<<<<<< HEAD
+=======
+    const history = useHistory()
+>>>>>>> main
 
     // useEffect(() => {
     //     async function fetchData() {
@@ -41,17 +45,30 @@ const UpcomingReservations = (props) => {
         fetchReservData()
     }, [])
 
+    const [tabReservationState, setTabReservationState] = useState({
+        open: false,
+        confirm: false,
+        reserv_id: null
+    });
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const reserv_id = e.target.value;
-        const response = await fetchWithCSRF(`/api/home/restaurant/reservationcancel/${reserv_id}`, {
+        setTabReservationState({ ...tabReservationState, open: true, reserv_id: e.target.value })
+        console.log("e.target.value", e.target.value)
+    }
+    const handleCancel = () => {
+        setTabReservationState({ ...tabReservationState, open: false, confirm: false })
+    }
+    const handleConfirm = async () => {
+        setTabReservationState({ ...tabReservationState, open: false, confirm: false })
+        console.log(tabReservationState.reserv_id)
+        const response = await fetchWithCSRF(`/api/home/restaurant/reservationcancel/${tabReservationState.reserv_id}`, {
             method: "DELETE"
         })
+
         if (response.ok) {
             fetchReservData()
         }
     }
-
     return (
         <>
             <Header as='h2' attached='top'>Upcoming Reservations</Header>
@@ -77,6 +94,11 @@ const UpcomingReservations = (props) => {
                     </Item.Group>
                 </Transition>
             </Segment>
+            <Confirm
+                open={tabReservationState.open}
+                onCancel={handleCancel}
+                onConfirm={handleConfirm}
+            />
         </>
     )
 }

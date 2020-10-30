@@ -2,13 +2,11 @@ import React, { createRef, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import Reservation from './Reservation'
 import Review from './Review';
-import ReservationList from './ReservationList'
 import { Image, Container, Divider, Icon, Tab, Grid, List, Rating, Message, Sticky } from 'semantic-ui-react'
 
 
 const panes = [
     { menuItem: 'Overview' },
-    { menuItem: 'Photos' },
     { menuItem: 'Menu' },
     { menuItem: 'Reviews' },
 ]
@@ -45,7 +43,7 @@ const RestaurantProfile = () => {
     const contextRef = createRef()
     const [restData, setRestData] = useState([])
     const [profileVisualState, setProfileVisualState] = useState({
-        visible: true
+        visible: true,
     });
     const history = useHistory()
     const idStr = history.location.pathname.split('/')[3]
@@ -75,7 +73,8 @@ Thank you to all of our loyal guests who have supported us through this time. We
 \n
 Ryan Richardson, General Manager and Partner`;
     const handleDismissTopMessage = () => {
-        setProfileVisualState({ ...setProfileVisualState, visible: false });
+        setProfileVisualState({ ...profileVisualState, visible: false });
+
     }
     return (
         <>
@@ -99,19 +98,22 @@ Ryan Richardson, General Manager and Partner`;
                                 }
                                 <h1> {restData.name}</h1>
                                 <Divider />
-                                <Rating defaultRating={Math.round(restData.avg_rating)} maxRating={5} disabled />
-                                <span>{restData.avg_rating}</span>
+                                <Rating rating={Math.round(restData.avg_rating)} maxRating={5} disabled />
+                                {restData.avg_rating ?
+                                    <span>{restData.avg_rating}</span> :
+                                    <span>No Ratings</span>
+                                }
                                 {placeholderText.split('\n').map(ele => <p>{ele}</p>)}
+                                <RestaurantSafetyPrecautions />
                                 <div>
-                                    <Review id={id} />
+                                    <Review id={id} restData={restData} />
                                 </div>
                             </Grid.Column>
                             <Grid.Column width={rightWidth}>
                                 <Sticky context={contextRef} offset={50}>
-                                    <Reservation />
+                                    <Reservation restaurantName={restData.name} />
                                 </Sticky>
                                 <ListExampleIcon />
-                                <ReservationList />
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>

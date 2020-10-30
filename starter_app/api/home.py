@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required
 from sqlalchemy import or_
-from starter_app.models import db, User, Restaurant, Review, Reservation, favorites
+from starter_app.models import db, User, Restaurant, Review, Reservation
 from sqlalchemy.orm import joinedload
 
 bp = Blueprint("home", __name__)
@@ -68,7 +68,7 @@ def reserveRes():
                              group_num=group_num, start_time=start_time)
     db.session.add(newReserve)
     db.session.commit()
-    return {}, 200
+    return {'reservation': newReserve.to_dict()}, 200
 
 
 @bp.route('/restaurant/reservationlist/<int:user_id>')
@@ -80,8 +80,8 @@ def reservationlist(user_id):
     return {'reservation': [reservation.to_dict() for reservation in response]}
 
 
-
-@bp.route('/restaurant/reservationcancel/<int:reserv_id>', methods=["DELETE", "GET"])
+@bp.route('/restaurant/reservationcancel/<int:reserv_id>',
+          methods=["DELETE", "GET"])
 def reservationcancel(reserv_id):
     reserv = Reservation.query.filter(Reservation.id == reserv_id).first()
     if reserv:
