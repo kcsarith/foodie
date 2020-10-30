@@ -65,8 +65,7 @@ class Restaurant(db.Model):
     reservations = db.relationship('Reservation',
                                    backref='restaurant', lazy=True)
     users = db.relationship('User', secondary=favorites,
-                            lazy='subquery',
-                            )
+                            lazy='subquery')
 
     def to_dict(self):
         return {
@@ -92,7 +91,6 @@ class Reservation(db.Model):
     group_num = db.Column(db.Integer, nullable=False)
     start_time = db.Column(db.DateTime(timezone=True), nullable=False)
 
-
     def to_dict(self):
         return {
             "id": self.id,
@@ -100,7 +98,11 @@ class Reservation(db.Model):
             "restaurant_id": self.restaurant_id,
             "group_num": self.group_num,
             "start_time": self.start_time,
-            "restaurant_name":self.restaurant.name
+            "restaurant_name": self.restaurant.name,
+            "restaurant_address": self.restaurant.address,
+            "restaurant_avg_rating": self.restaurant.avg_rating,
+            "restaurant_city": self.restaurant.city,
+            "restaurant_state": self.restaurant.state
         }
 
 

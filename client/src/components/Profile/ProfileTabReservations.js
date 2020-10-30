@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Header, Label, Item, Icon, Progress, Segment, Transition } from 'semantic-ui-react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 
-const paragraph = 'This is a test'
 const tempImageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
+
 const Points = ({ tabState, setTabState }) => {
     return (
         <>
@@ -15,55 +17,66 @@ const Points = ({ tabState, setTabState }) => {
     )
 }
 
-const UpcomingReservations = () => {
+const UpcomingReservations = (props) => {
+    
+    const [reserveList, setReserveList] = useState([])
+    const user_id = useSelector(state => state.authentication.id);
+    const fetchWithCSRF = useSelector(state => state.authentication.csrf);
+    const history = useHistory()
+    
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
+    //         const data = await res.json()
+    //         setReserveList(data.reservation)
+    //     }
+    //     fetchData()
+    // }, [])
+    
+    async function fetchReservData() {
+            const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
+            const data = await res.json()
+            setReserveList(data.reservation)
+        }
+
+    useEffect(() => {
+        fetchReservData()
+    }, [])
+
+    const handleSubmit = async (e) => {
+         e.preventDefault();
+         console.log("e.target.value", e.target.value)
+         const reserv_id = e.target.value;
+         const response = await fetchWithCSRF(`/api/home/restaurant/reservationcancel/${reserv_id}`, {
+            method: "DELETE"
+        })
+        if (response.ok) {
+            fetchReservData()
+        }
+    }
+
     return (
         <>
-            <Header as='h2' attached='top'>UpcomingReservations</Header>
+            <Header as='h2' attached='top'>Upcoming Reservations</Header>
             <Segment attached>
                 <Transition animation='fade' duration={200}>
                     <Item.Group divided>
-                        <Item>
+                        {reserveList.length > 0 ? reserveList.map((reserv, index) => (<Item key={`${index}-${reserv.restaurant_id}-${reserv.user_id}`}>
                             <Item.Image src={tempImageUrl} />
-
                             <Item.Content>
-                                <Item.Header as='a'>Test Rest1</Item.Header>
+                                <Item.Header as='a'>{reserv.restaurant_name}</Item.Header>
                                 <Item.Meta>
-                                    <span className='cinema'>Union Square 14</span>
+                                    <span className='cinema'>{reserv.restaurant_address}</span>
                                 </Item.Meta>
-                                <Item.Description>{paragraph}</Item.Description>
-                            </Item.Content>
-                        </Item>
-                        <Item>
-                            <Item.Image src={tempImageUrl} />
-
-                            <Item.Content>
-                                <Item.Header as='a'>Test Rest1</Item.Header>
-                                <Item.Meta>
-                                    <span className='cinema'>IFC Cinema</span>
-                                </Item.Meta>
-                                <Item.Description>{paragraph}</Item.Description>
+                                <Item.Description>Reservation Date and Time:  {reserv.start_time}</Item.Description>
+                                <Item.Description>Party of {reserv.group_num}</Item.Description>
                                 <Item.Extra>
-                                    <Button primary floated='right'>Cancel Reservation<Icon name='right chevron' /></Button>
+                                    <Button type= "submit" value={reserv.id} onClick={handleSubmit} primary floated='right'>Cancel Reservation<Icon name='right chevron' /></Button>
                                     <Label>Limited</Label>
                                 </Item.Extra>
                             </Item.Content>
-                        </Item>
-
-                        <Item>
-                            <Item.Image src={tempImageUrl} />
-
-                            <Item.Content>
-                                <Item.Header as='a'>Test Rest1</Item.Header>
-                                <Item.Meta>
-                                    <span className='cinema'>IFC</span>
-                                </Item.Meta>
-                                <Item.Description>{paragraph}</Item.Description>
-                                <Item.Extra>
-                                    <Button primary floated='right'>Cancel Reservation<Icon name='right chevron' />
-                                    </Button>
-                                </Item.Extra>
-                            </Item.Content>
-                        </Item>
+                        </Item>)) : ''
+                        }
                     </Item.Group>
                 </Transition>
             </Segment>
@@ -77,6 +90,7 @@ const ProfileTabReservations = () => {
         pointsCurrent: 845,
         pointsUntilReward: 2000
     });
+
     return (
         <>
             <Points tabState={tabState} setTabState={setTabState} />

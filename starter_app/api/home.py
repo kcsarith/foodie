@@ -75,17 +75,29 @@ def reserveRes():
 def reservationlist(user_id):
 
     response = db.session.query(Reservation) \
-                      .join(Restaurant) \
                       .options(joinedload(Reservation.restaurant)) \
                       .filter(Reservation.user_id == user_id)
     return {'reservation': [reservation.to_dict() for reservation in response]}
 
+<<<<<<< HEAD
+=======
+
+
+@bp.route('/restaurant/reservationcancel/<int:reserv_id>', methods=["DELETE", "GET"])
+def reservationcancel(reserv_id):
+    reserv = Reservation.query.filter(Reservation.id == reserv_id).first()
+    if reserv:
+        db.session.delete(reserv)
+        db.session.commit()
+        return {}, 200
+    return {}, 404
+
+>>>>>>> main
 
 @bp.route('/reviews/<int:rev_id>')
 def rev(rev_id):
 
     response = User.query.filter_by(id=rev_id).first()
-
     return {'user': response.to_dict()}
 
 
