@@ -98,7 +98,11 @@ class Reservation(db.Model):
             "restaurant_id": self.restaurant_id,
             "group_num": self.group_num,
             "start_time": self.start_time,
-            "restaurant_name": self.restaurant.name
+            "restaurant_name": self.restaurant.name,
+            "restaurant_address": self.restaurant.address,
+            "restaurant_avg_rating": self.restaurant.avg_rating,
+            "restaurant_city": self.restaurant.city,
+            "restaurant_state": self.restaurant.state
         }
 
 
