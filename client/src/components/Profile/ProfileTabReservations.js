@@ -48,7 +48,6 @@ const UpcomingReservations = (props) => {
         setTabReservationState({ ...tabReservationState, open: false, confirm: false })
         console.log(tabReservationState.reservId)
         const response = await fetchWithCSRF(`/api/home/restaurant/reservationcancel/${tabReservationState.reservId}`, {
-
             method: "DELETE"
         })
 
@@ -92,8 +91,10 @@ const UpcomingReservations = (props) => {
 
 
 const ProfileTabReservations = () => {
+    const authSelector = useSelector(state => state.authentication)
+
     const [tabState, setTabState] = useState({
-        pointsCurrent: 845,
+        pointsCurrent: authSelector.points,
         pointsUntilReward: 2000
     });
 

@@ -143,10 +143,10 @@ function SignUp() {
     }
 
     const handleSubmit = async (e) => {
-        console.log("Handle Submit ----");
+        let points = 200;
         e.preventDefault();
         setSubmitted(true);
-        dispatch(signup(name, email, password, city, state));
+        dispatch(signup(name, email, password, city, state, points));
     }
 
     if (currentUserId) {

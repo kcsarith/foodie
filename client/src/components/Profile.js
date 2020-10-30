@@ -7,9 +7,10 @@ import { useSelector } from 'react-redux'
 
 const Profile = () => {
     const authSelector = useSelector(state => state.authentication)
+
     return (
         <>
-            <ProfileLayout username={authSelector.name} testPoints={845} />
+            <ProfileLayout username={authSelector.name} points={authSelector.points} />
             <Container>
                 <ProfileTabs />
             </Container>

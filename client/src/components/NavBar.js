@@ -54,7 +54,7 @@ const NavBar = () => {
                     </Menu.Item>
                     {authSelector.name && <Dropdown item simple text={`Hi ${authSelector.name}`}>
                         <Dropdown.Menu>
-                            <Dropdown.Header>You have 845/2000 points!</Dropdown.Header>
+                            <Dropdown.Header>You have {authSelector.points}/2000 points!</Dropdown.Header>
                             <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                             <Dropdown.Divider />
                             <Dropdown.Item onClick={handleProfile}>Profile</Dropdown.Item>

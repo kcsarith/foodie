@@ -22,6 +22,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     city = db.Column(db.String(50), nullable=False)
     state = db.Column(db.String(50), nullable=False)
+    points = db.Column(db.Integer, nullable=True)
     hashed_password = db.Column(db.String(100), nullable=False)
     reservations = db.relationship('Reservation', backref='user', lazy=True)
     reviews = db.relationship('Review', backref='user', lazy=True)
@@ -46,6 +47,7 @@ class User(db.Model, UserMixin):
           "city": self.city,
           "state": self.state,
           "hashed_password": self.hashed_password,
+          "points": self.points
         }
 
 
