@@ -22,9 +22,11 @@ function HomeBody({ data }) {
         setRestData(data)
     }, [data])
 
+    const restComponents = restData.map((rest) => <RestaurantCard key={rest.id} rest={rest} />)
+
     return (
         <div className='restaurants-list'>
-            {restData.map((rest) => <RestaurantCard key={rest.id} rest={rest} />)}
+            { restData.length === 0 ? <p>Sorry we couldn't find any Restaurants in that area</p> : restComponents}
         </div>
 
     );

@@ -4,3 +4,9 @@
     overflow-x: auto;
     overflow-y: hidden;
 }
+
+.restaurants-list p {
+    margin: 0 auto;
+    font-size: 30px;
+    padding: 20px;
+}
