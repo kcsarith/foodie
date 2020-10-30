@@ -143,6 +143,7 @@ function SignUp() {
     }
 
     const handleSubmit = async (e) => {
+        console.log("Handle Submit ----");
         e.preventDefault();
         setSubmitted(true);
         dispatch(signup(name, email, password, city, state));

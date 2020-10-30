@@ -136,7 +136,7 @@ export default function reducer(state = initialState, action) {
     case REMOVE_USER:
       return { csrf: state.csrf }
     case ERROR_MSG:
-      return { error: action.message }
+      return { ...state, error: action.message }
     default:
       return state
   }

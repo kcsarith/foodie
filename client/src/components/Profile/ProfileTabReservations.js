@@ -24,15 +24,6 @@ const UpcomingReservations = (props) => {
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
     const history = useHistory()
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
-    //         const data = await res.json()
-    //         setReserveList(data.reservation)
-    //     }
-    //     fetchData()
-    // }, [])
-
     async function fetchReservData() {
         const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
         const data = await res.json()
@@ -46,20 +37,19 @@ const UpcomingReservations = (props) => {
     const [tabReservationState, setTabReservationState] = useState({
         open: false,
         confirm: false,
-        reserv_id: null
+        reservId: null
     });
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setTabReservationState({ ...tabReservationState, open: true, reserv_id: e.target.value })
-        console.log("e.target.value", e.target.value)
+        setTabReservationState({ ...tabReservationState, open: true, reservId: e.target.value })
     }
     const handleCancel = () => {
         setTabReservationState({ ...tabReservationState, open: false, confirm: false })
     }
     const handleConfirm = async () => {
         setTabReservationState({ ...tabReservationState, open: false, confirm: false })
-        console.log(tabReservationState.reserv_id)
-        const response = await fetchWithCSRF(`/api/home/restaurant/reservationcancel/${tabReservationState.reserv_id}`, {
+        console.log(tabReservationState.reservId)
+        const response = await fetchWithCSRF(`/api/home/restaurant/reservationcancel/${tabReservationState.reservId}`, {
 
             method: "DELETE"
         })

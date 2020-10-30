@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import TimePickers from '../HomePage/TimePicker'
 import { useHistory } from 'react-router-dom';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Message } from 'semantic-ui-react';
 import './Reservation.css'
 
 
@@ -48,10 +48,10 @@ export default function Reservation(props) {
             }),
         })
 
-        // if (response.ok) {
-        //     res = 'The reservation has been made successfully.'
-        //     window.alert(res);
-        // }
+        if (response.ok) {
+            res = 'The reservation has been made successfully.'
+            window.alert(res);
+        }
 
     }
 
@@ -93,7 +93,7 @@ export default function Reservation(props) {
                         </div>
                         <div className="reserv__date__time">
                             <div className='reserv__date'>
-                                <label htmlFor="date">Date</label><br /><br />
+                                <label htmlFor="date">Date</label>
                                 <input type="date" id="date" defaultValue={now} onChange={handleChange} />
                             </div>
                             <div className='reserv__time' id="time" onChange={handleChange}>
@@ -108,6 +108,12 @@ export default function Reservation(props) {
                     </form>
                 </div>
                 {/* container--finish */}
+              <Message
+                    success
+                    header='Your user registration was successful'
+                    content='You may now log-in with the username you have chosen'
+                />
+                                
             </Segment>
         </>
     )
