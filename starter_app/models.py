@@ -61,6 +61,7 @@ class Restaurant(db.Model):
     avg_rating = db.Column(db.Float, nullable=True)
     min_price = db.Column(db.Integer, nullable=True)
     max_price = db.Column(db.Integer, nullable=True)
+    img = db.Column(db.String(1000), nullable=False)
     reviews = db.relationship('Review', backref='restaurant', lazy=True)
     reservations = db.relationship('Reservation',
                                    backref='restaurant', lazy=True)
@@ -77,6 +78,7 @@ class Restaurant(db.Model):
             "avg_rating": self.avg_rating,
             "min_price": self.min_price,
             "max_price": self.max_price,
+            'img': self.img
         }
 
 
