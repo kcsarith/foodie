@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { Button, Icon, Item, Header, Segment } from 'semantic-ui-react'
+import { Icon, Item, Header, Segment } from 'semantic-ui-react'
 import { useHistory } from 'react-router-dom';
 import './ProfileTabFavorites.css';
 
@@ -32,25 +32,30 @@ const ProfileTabFavorites = () => {
             <Segment attached>
                 <Item.Group divided>
                     {myFavorites.map((myFavorite, index) =>
-                        <div key={`${index}-${myFavorite.restaurant_id}`}>
-                            <Item>
-                                <Item.Image src={myFavorite.img} />
-                                <Item.Content>
-                                    <Item.Header as='a'>{myFavorite.name}</Item.Header>
-                                    <Item.Meta>
-                                        <span className='cinema'>{myFavorite.address}</span>
-                                    </Item.Meta>
-                                    <Item.Description>Rating:  {myFavorite.avg_rating},     Max_Price: ${myFavorite.max_price}</Item.Description>
-                                    <Item.Extra>
+                        <div key={`${index}-${myFavorite.id}`}>
+                            <div className='profile-favs'>
+                                <div className='profile-favs__img'>
+                                    <img src={myFavorite.img} />
+                                </div>
+                                <div className='profile-favs__stuff'>
+                                    <div className='profile-favs__info'>
+                                        <div className='profile-favs__name'>
+                                            {myFavorite.name}
+                                        </div>
+                                        <div className='profile-favs__address'>
+                                            {myFavorite.address}
+                                        </div>
+                                    </div>
+                                    <div className='profile-favs__btn'>
                                         <button className='reserve-btn' primary floated='right' onClick={() => {
-                                            let path = `restaurant/profile/${myFavorite.restaurant_id}`
+                                            let path = `restaurant/profile/${myFavorite.id}`
                                             history.push(path)
                                         }}>
                                             Make Revervation<Icon name='right chevron' />
                                         </button>
-                                    </Item.Extra>
-                                </Item.Content>
-                            </Item>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     )}
                 </Item.Group>
