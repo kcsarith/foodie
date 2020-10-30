@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Header, Label, Item, Icon, Progress, Segment, Transition } from 'semantic-ui-react';
+import { Button, Header, Confirm, Label, Item, Icon, Progress, Segment, Transition } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -18,12 +18,12 @@ const Points = ({ tabState, setTabState }) => {
 }
 
 const UpcomingReservations = (props) => {
-    
+
     const [reserveList, setReserveList] = useState([])
     const user_id = useSelector(state => state.authentication.id);
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
     const history = useHistory()
-    
+
     // useEffect(() => {
     //     async function fetchData() {
     //         const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
@@ -32,29 +32,42 @@ const UpcomingReservations = (props) => {
     //     }
     //     fetchData()
     // }, [])
-    
+
     async function fetchReservData() {
-            const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
-            const data = await res.json()
-            setReserveList(data.reservation)
-        }
+        const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
+        const data = await res.json()
+        setReserveList(data.reservation)
+    }
 
     useEffect(() => {
         fetchReservData()
     }, [])
 
+    const [tabReservationState, setTabReservationState] = useState({
+        open: false,
+        confirm: false,
+        reserv_id: null
+    });
     const handleSubmit = async (e) => {
-         e.preventDefault();
-         const reserv_id = e.target.value;
-         const response = await fetchWithCSRF(`/api/home/restaurant/reservationcancel/${reserv_id}`, {
+        e.preventDefault();
+        setTabReservationState({ ...tabReservationState, open: true, reserv_id: e.target.value })
+        console.log("e.target.value", e.target.value)
+    }
+    const handleCancel = () => {
+        setTabReservationState({ ...tabReservationState, open: false, confirm: false })
+    }
+    const handleConfirm = async () => {
+        setTabReservationState({ ...tabReservationState, open: false, confirm: false })
+        console.log(tabReservationState.reserv_id)
+        const response = await fetchWithCSRF(`/api/home/restaurant/reservationcancel/${tabReservationState.reserv_id}`, {
+
             method: "DELETE"
         })
-        if (response.ok) {
 
+        if (response.ok) {
             fetchReservData()
         }
     }
-
     return (
         <>
             <Header as='h2' attached='top'>Upcoming Reservations</Header>
@@ -71,7 +84,7 @@ const UpcomingReservations = (props) => {
                                 <Item.Description>Reservation Date and Time:  {reserv.start_time}</Item.Description>
                                 <Item.Description>Party of {reserv.group_num}</Item.Description>
                                 <Item.Extra>
-                                    <Button type= "submit" value={reserv.id} onClick={handleSubmit} primary floated='right'>Cancel Reservation<Icon name='right chevron' /></Button>
+                                    <Button type="submit" value={reserv.id} onClick={handleSubmit} primary floated='right'>Cancel Reservation<Icon name='right chevron' /></Button>
                                     <Label>Limited</Label>
                                 </Item.Extra>
                             </Item.Content>
@@ -80,6 +93,11 @@ const UpcomingReservations = (props) => {
                     </Item.Group>
                 </Transition>
             </Segment>
+            <Confirm
+                open={tabReservationState.open}
+                onCancel={handleCancel}
+                onConfirm={handleConfirm}
+            />
         </>
     )
 }
