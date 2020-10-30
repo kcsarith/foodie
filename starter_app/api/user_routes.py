@@ -45,7 +45,9 @@ def user_favorites(user_id):
         user.restaurants.append(rest)
         db.session.add(user)
         db.session.commit()
-    response = db.session.query(Restaurant).order_by(Restaurant.name).options(
+    else:
+        response = db.session.query(Restaurant).order_by(
+                      Restaurant.name).options(
                       joinedload(Restaurant.users)
                       ).filter(Restaurant.users.any(id=user_id)).all()
-    return {'favorites': [rest.to_dict() for rest in response]}
+        return {'favorites': [rest.to_dict() for rest in response]}
