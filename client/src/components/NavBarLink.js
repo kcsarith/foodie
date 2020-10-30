@@ -5,7 +5,6 @@ import styled from 'styled-components';
 const NavBarLinkWrapper = styled.div`
   .link {
     font-size: 16px;
-    padding: 12px 24px;
     appearance: none;
     cursor: pointer;
     display: inline-block;
@@ -14,7 +13,6 @@ const NavBarLinkWrapper = styled.div`
     line-height: 50px;
     font-weight: bold;
     font-family: "Lato", "Helvetica Neue", "Helvetica", sans-serif;
-    padding: 0 15px;
   }
   .link:hover {
     color: #FFFFFF;

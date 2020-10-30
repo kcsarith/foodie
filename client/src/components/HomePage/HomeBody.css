@@ -1,3 +1,6 @@
 .restaurants-list {
     display: flex;
+    flex-basis: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
 }

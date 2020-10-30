@@ -50,13 +50,6 @@ const Footer = () => {
                                 Copyright © 2020 Foodie, Inc. 1 Washington St Ste 100, San Anton GA 34104 - All rights reserved.
                             <Divider />
                             </Grid.Column>
-
-                            <Grid.Column width={15}>
-                                Foodie is part of Fantasizing Holdings, the world leader in online travel and related services.
-                                <div className="ui small images">
-                                    {imageFooterUrls.map(image => <img src={image} alt='' />)}
-                                </div>
-                            </Grid.Column>
                         </Grid.Row>
                     </Grid>
                 </Container>

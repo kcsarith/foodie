@@ -1,8 +1,19 @@
 .rest-card {
-    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    min-width: 300px;
+    min-height: 400px;
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 .rest-card:hover {
     cursor: pointer;
-    transform: scale(1.05);
+    transform: scale(1.1);
+}
+
+
+.rest-card__body-img img {
+    width: 100%;
+    max-height: 150px;
 }
