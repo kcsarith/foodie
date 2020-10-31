@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Header, Confirm, Item, Icon, Progress, Segment, Transition } from 'semantic-ui-react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import './ProfileTabReservations.css'
+import { setPoints } from '../../store/authentication';
 
 const Points = ({ tabState, setTabState }) => {
     return (
@@ -14,11 +15,13 @@ const Points = ({ tabState, setTabState }) => {
     )
 }
 
+
 const UpcomingReservations = (props) => {
 
     const [reserveList, setReserveList] = useState([])
     const user_id = useSelector(state => state.authentication.id);
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
+    const dispatch = useDispatch();
 
     async function fetchReservData() {
         const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
@@ -49,10 +52,28 @@ const UpcomingReservations = (props) => {
             method: "DELETE"
         })
 
+
         if (response.ok) {
             fetchReservData()
+
+            const set_point = -200;
+            const res = await fetchWithCSRF(`/api/home/restaurant/setpoint/${user_id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    set_point
+                    }),
+                })
+            const data = await res.json();
+            let points = data["user"].points + set_point
+            dispatch(setPoints(points))
         }
+
     }
+
+    
+
+
     return (
         <>
             <Header as='h2' attached='top'>Upcoming Reservations</Header>
