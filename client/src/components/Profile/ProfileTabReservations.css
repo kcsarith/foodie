@@ -1,0 +1,44 @@
+.profile-reserve {
+    margin: 10px;
+    border-bottom: solid 1px black;
+    padding: 20px 0;
+}
+
+.profile-reserve__img img{
+    object-fit: cover;
+    width: 100%;
+    height: 300px;
+}
+
+.profile-reserve__name {
+    font-size: 22px;
+    padding: 10px 0;
+    font-weight: 700;
+}
+
+.profile-reserve__address {
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+.profile-reserve__time {
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+.profile-reserve__group {
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+.profile-reserve__btn {
+    display: flex;
+    justify-content: flex-end;
+    align-self: flex-end;
+}
+
+.profile-reserve__stuff {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Header, Confirm, Label, Item, Icon, Progress, Segment, Transition } from 'semantic-ui-react';
+import { Header, Confirm, Item, Icon, Progress, Segment, Transition } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
-
-
-const tempImageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
+import './ProfileTabReservations.css'
 
 const Points = ({ tabState, setTabState }) => {
     return (
@@ -60,26 +58,33 @@ const UpcomingReservations = (props) => {
         <>
             <Header as='h2' attached='top'>Upcoming Reservations</Header>
             <Segment attached>
-                <Transition animation='fade' duration={200}>
-                    <Item.Group divided>
-                        {reserveList.length > 0 ? reserveList.map((reserv, index) => (<Item key={`${index}-${reserv.restaurant_id}-${reserv.user_id}`}>
-                            <Item.Image src={reserv.restaurant_img} alt={reserv.restaurant_img}/>
-                            <Item.Content>
-                                <Item.Header as='a'>{reserv.restaurant_name}</Item.Header>
-                                <Item.Meta>
-                                    <span className='cinema'>{reserv.restaurant_address}</span>
-                                </Item.Meta>
-                                <Item.Description>Reservation Date and Time :  {new Date(reserv.start_time).toLocaleString()}</Item.Description>
-                                <Item.Description>Party of {reserv.group_num}</Item.Description>
-                                <Item.Extra>
-                                    <Button type="submit" value={reserv.id} onClick={handleSubmit} primary floated='right'>Cancel Reservation<Icon name='right chevron' /></Button>
-                                    <Label>Limited</Label>
-                                </Item.Extra>
-                            </Item.Content>
-                        </Item>)) : ''
-                        }
-                    </Item.Group>
-                </Transition>
+                {reserveList.length > 0 ? reserveList.map((reserv, index) => (<Item key={`${index}-${reserv.restaurant_id}-${reserv.user_id}`}>
+                    <div className='profile-reserve'>
+                        <div className='profile-reserve__img'>
+                            <img src={reserv.restaurant_img} alt='' />
+                        </div>
+                        <div className='profile-reserve__stuff'>
+                            <div className='profile-reserve__info'>
+                                <div className='profile-reserve__name'>
+                                    {reserv.restaurant_name}
+                                </div>
+                                <div className='profile-reserve__address'>
+                                    {reserv.restaurant_address}
+                                </div>
+                                <div className='profile-reserve__time'>
+                                    Reservation Date and Time - {new Date(reserv.start_time).toLocaleString()}
+                                </div>
+                                <div className='profile-reserve__group'>
+                                    Party of - {reserv.group_num}
+                                </div>
+                            </div>
+                            <div className='profile-reserve__btn'>
+                                <button className='reserve-btn' type='submit' value={reserv.id} onClick={handleSubmit}>Cancel Reservation</button>
+                            </div>
+                        </div>
+                    </div>
+                </Item>)) : 'No Reservations yet'
+                }
             </Segment>
             <Confirm
                 open={tabReservationState.open}
@@ -97,7 +102,7 @@ const ProfileTabReservations = () => {
         pointsUntilReward: 2000
     });
 
-    
+
     return (
         <>
             <Points tabState={tabState} setTabState={setTabState} />
