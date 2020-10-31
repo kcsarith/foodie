@@ -65,14 +65,23 @@ export default function RestaurantCard({ rest }) {
         const id = userId
         const restId = rest.id
         setColor(!color)
-        await fetchWithCSRF(`/api/users/${userId}/favorites`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                user_id: id,
-                restaurant_id: restId
+        if (color === true) {
+            await fetchWithCSRF(`/api/users/${id}/favorites/delete/${restId}`, {
+                method: 'DELETE'
             })
-        })
+            alert(`${rest.name} removed from favorites`)
+        }
+        else {
+            await fetchWithCSRF(`/api/users/${userId}/favorites`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_id: id,
+                    restaurant_id: restId
+                })
+            })
+            alert(`${rest.name} added from favorites`)
+        }
     }
 
     useEffect(() => {

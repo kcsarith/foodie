@@ -75,7 +75,7 @@ def user_profile(id):
     return {}
 
 
-@user_routes.route("/<int:user_id>/favorites", methods=["GET", "POST"])
+@user_routes.route("/<int:user_id>/favorites", methods=["GET", "POST", "DELETE"])
 @login_required
 def user_favorites(user_id):
     if request.method == "POST":
@@ -94,3 +94,14 @@ def user_favorites(user_id):
                       joinedload(Restaurant.users)
                       ).filter(Restaurant.users.any(id=user_id)).all()
         return {'favorites': [rest.to_dict() for rest in response]}
+
+
+@user_routes.route("/<int:user_id>/favorites/delete/<int:rest_id>", methods=["DELETE"])
+@login_required
+def delete_favorite(rest_id, user_id):
+    user = User.query.get_or_404(user_id)
+    restaurant = Restaurant.query.filter_by(id=rest_id)
+    user.restaurants.clear(restaurant)
+    db.session.add(user)
+    db.session.commit()
+    return 'Delete worked', 200
