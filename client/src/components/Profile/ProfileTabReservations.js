@@ -72,10 +72,10 @@ const UpcomingReservations = (props) => {
                                     {reserv.restaurant_address}
                                 </div>
                                 <div className='profile-reserve__time'>
-                                    Reservation Date and Time: {new Date(reserv.start_time).toLocaleString()}
+                                    Reservation Date and Time - {new Date(reserv.start_time).toLocaleString()}
                                 </div>
                                 <div className='profile-reserve__group'>
-                                    Party of {reserv.group_num}
+                                    Party of - {reserv.group_num}
                                 </div>
                             </div>
                             <div className='profile-reserve__btn'>

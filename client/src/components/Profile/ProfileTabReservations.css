@@ -13,6 +13,7 @@
 .profile-reserve__name {
     font-size: 22px;
     padding: 10px 0;
+    font-weight: 700;
 }
 
 .profile-reserve__address {
