@@ -9,7 +9,7 @@
 
 .reserve-btn:hover {
     cursor: pointer;
-    border:1px #da3743 solid;
+    border: 2px #da3743 solid;
     color: black;
     background-color: white;
 }
@@ -41,6 +41,7 @@
 .profile-favs__btn {
     display: flex;
     justify-content: flex-end;
+    align-self: flex-end;
 }
 
 .profile-favs__stuff {
