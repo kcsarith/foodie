@@ -102,12 +102,12 @@ def reservationcancel(reserv_id):
 
 
 @login_required
-@bp.route('/restaurant/earnpoint/<int:user_id>', methods=["PATCH"])
+@bp.route('/restaurant/setpoint/<int:user_id>', methods=["PATCH"])
 def earnpoint(user_id):
     user = User.query.filter(User.id == user_id).first()
-    earn_point = request.json.get("earn_point", None)
+    set_point = request.json.get("set_point", None)
     if user:
-        user.points = User.points+ earn_point
+        user.points = User.points + set_point
         db.session.commit()
         return {"user": user.to_dict()}, 200
     return {}, 404

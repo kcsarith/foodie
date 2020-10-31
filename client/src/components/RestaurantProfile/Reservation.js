@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import TimePickers from '../HomePage/TimePicker'
 import { useHistory } from 'react-router-dom';
 import { Segment, Confirm, Message } from 'semantic-ui-react';
 import './Reservation.css'
+import { setPoints } from '../../store/authentication';
 
 
 export default function Reservation({ restaurantName }) {
@@ -17,17 +18,19 @@ export default function Reservation({ restaurantName }) {
         time: '19:30',
         group: '2 People'
     });
+
+    const dispatch = useDispatch();
     const user_id = useSelector(state => state.authentication.id);
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
     const history = useHistory()
     const idStr = history.location.pathname.split('/')[3]
     const restaurant_id = parseInt(idStr, 10)
+    let res = '';
+
     function handleChange(e) {
         const { id, value } = e.target;
         setReservationState({ ...reservationState, [id]: value })
     }
-
-    let res = ''
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -45,7 +48,7 @@ export default function Reservation({ restaurantName }) {
         const { date, time, group } = reservationState;
         const group_num = parseInt(group.substring(0, 2));
         const start_time = date + ' ' + time;
-        const earn_point = 200;
+        
         const response = await fetchWithCSRF("/api/home/restaurant/reserve", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -63,17 +66,20 @@ export default function Reservation({ restaurantName }) {
             }, 2000)
         }
 
-        // earning points
-        const earnpoint = await fetchWithCSRF(`/api/home/restaurant/earnpoint/${user_id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            earn_point
-             }),
-        })
-
+        // set points 
+        const set_point = 200;
+        const res = await fetchWithCSRF(`/api/home/restaurant/setpoint/${user_id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                set_point
+                }),
+            })
+        const data = await res.json();
+        let points = data["user"].points + set_point
+        dispatch(setPoints(points))
     }
-
+    
 
     return (
         <>
