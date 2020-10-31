@@ -129,4 +129,5 @@ class Review(db.Model):
             "user_id": self.user_id,
             "content": self.content,
             "rating": self.rating,
+            "user_name": self.user.name
         }

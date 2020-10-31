@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 
 const Profile = () => {
-    const authSelector = useSelector(state => state.authentication)
+    const authSelector = useSelector(state => state.authentication)    
 
     return (
         <>
