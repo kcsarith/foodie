@@ -5,17 +5,10 @@
     flex-direction: column;
 }
 
-.home__selectors {
-    position: absolute;
-    display: flex;
-    bottom: 0;
-    top: 20%;
-}
-
-
 .home__img {
     width: 100%;
 }
+
 
 .home__img img{
     object-fit: cover;
@@ -23,6 +16,12 @@
     height: 300px;
 }
 
+.home-search {
+    position: absolute;
+    display: flex;
+    bottom: 50%;
+    top: 0;
+}
 .home__button {
     position: relative;
     margin-left: 15px;
@@ -33,13 +32,6 @@
     width: 100px;
     height: 50px;
     margin-bottom: auto;
-}
-
-.home__title {
-    width: 100%;
-    background-color: #1b1c1d;
-    color: white;
-    text-align: center;
 }
 
 .home__body {
