@@ -74,16 +74,15 @@ export const error = (message) => {
     return { type: ERROR_MSG, message };
 }
 
-export const signup = (name, email, password, city, state) => {
+export const signup = (name, email, password, city, state, point) => {
     return async (dispatch, getState) => {
         const fetchWithCSRF = getState().authentication.csrf;
         const res = await fetchWithCSRF('/api/session/signup', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email, password, city, state })
+            body: JSON.stringify({ name, email, password, city, state, point })
         })
 
-        //Yongho
         if (res.status === 400) {
             const { errors } = await res.json();
             dispatch(error(errors))

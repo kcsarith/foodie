@@ -81,6 +81,15 @@ def reservationlist(user_id):
     return {'reservation': [reservation.to_dict() for reservation in response]}
 
 
+@bp.route('/restaurant/review/<int:restaurant_id>')
+def reviewlist(restaurant_id):
+
+    response = db.session.query(Review) \
+                      .options(joinedload(Review.user)) \
+                      .filter(Review.restaurant_id == restaurant_id)
+    return {'reservation': [reservation.to_dict() for reservation in response]}
+
+
 @login_required
 @bp.route('/restaurant/reservationcancel/<int:reserv_id>', methods=["DELETE", "GET"])
 def reservationcancel(reserv_id):
@@ -90,6 +99,19 @@ def reservationcancel(reserv_id):
         db.session.commit()
         return {}, 200
     return {}, 404
+
+
+@login_required
+@bp.route('/restaurant/earnpoint/<int:user_id>', methods=["PATCH"])
+def earnpoint(user_id):
+    user = User.query.filter(User.id == user_id).first()
+    earn_point = request.json.get("earn_point", None)
+    if user:
+        user.points = User.points+ earn_point
+        db.session.commit()
+        return {"user": user.to_dict()}, 200
+    return {}, 404
+
 
 
 @bp.route('/reviews/<int:rev_id>')

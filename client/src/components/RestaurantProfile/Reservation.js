@@ -38,13 +38,14 @@ export default function Reservation({ restaurantName }) {
     }
     const handleConfirm = async (e) => {
         setReservationState({ ...reservationState, messageVisibility: true, submitted: true, openConfirmModal: false });
-        handleReservation();
+        handleReservation(user_id);
     }
 
-    async function handleReservation() {
+    async function handleReservation(user_id) {
         const { date, time, group } = reservationState;
         const group_num = parseInt(group.substring(0, 2));
         const start_time = date + ' ' + time;
+        const earn_point = 200;
         const response = await fetchWithCSRF("/api/home/restaurant/reserve", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -55,19 +56,23 @@ export default function Reservation({ restaurantName }) {
                 start_time
             }),
         })
+
         if (response.ok) {
             setTimeout(() => {
                 setReservationState({ ...reservationState, openConfirmModal: false, messageVisibility: false });
             }, 2000)
         }
 
+        // earning points
+        const earnpoint = await fetchWithCSRF(`/api/home/restaurant/earnpoint/${user_id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            earn_point
+             }),
+        })
+
     }
-
-    // useEffect(() => {
-    //      document.getElementById("result").value = res
-    //     }, [])
-
-
 
 
     return (
