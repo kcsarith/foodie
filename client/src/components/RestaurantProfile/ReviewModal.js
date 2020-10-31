@@ -1,11 +1,11 @@
 import React from 'react'
-import { Button, Icon, Input, Select, Rating, Form, Image, Modal, Container, TextArea, Checkbox } from 'semantic-ui-react'
+import { Button, Icon, Rating, Form, Modal, Container, TextArea } from 'semantic-ui-react'
 
-const options = [
-    { key: 'm', text: 'Male', value: 'male' },
-    { key: 'f', text: 'Female', value: 'female' },
-    { key: 'o', text: 'Other', value: 'other' },
-]
+// const options = [
+//     { key: 'm', text: 'Male', value: 'male' },
+//     { key: 'f', text: 'Female', value: 'female' },
+//     { key: 'o', text: 'Other', value: 'other' },
+// ]
 
 const ReviewModal = ({ restData }) => {
     const [open, setOpen] = React.useState(false)

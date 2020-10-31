@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Reservation from './Reservation'
 import Review from './Review';
 import RestaurantSafetyPrecautions from './RestaurantSafetyPrecautions'
-import { Image, Container, Divider, Icon, Tab, Grid, List, Rating, Message, Rail, Header, Sticky, Input, Ref, Segment, Visibility } from 'semantic-ui-react'
+import { Image, Container, Divider, Icon, Tab, Grid, List, Rating, Message, Sticky } from 'semantic-ui-react'
 
 
 const panes = [
@@ -104,7 +104,11 @@ Ryan Richardson, General Manager and Partner`;
                                     <span>{restData.avg_rating}</span> :
                                     <span>No Ratings</span>
                                 }
-                                {placeholderText.split('\n').map(ele => <p>{ele}</p>)}
+                                {placeholderText.split('\n').map((ele, index) =>
+                                  <div key={`${index}-${ele.id}`}>
+                                      <p>{ele}</p>
+                                  </div>
+                                )}
                                 <RestaurantSafetyPrecautions />
                                 <div>
                                     <Review id={id} restData={restData} />

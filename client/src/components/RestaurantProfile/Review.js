@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import './Review.css';
-import star_img from "./star.png";
-import { Rating, Header, Icon, Button, Comment, Form } from 'semantic-ui-react'
+//import star_img from "./star.png";
+import { Rating, Header, Button, Comment, Form } from 'semantic-ui-react'
 import ReviewModal from './ReviewModal'
 
 const CommentExampleComment = () => {

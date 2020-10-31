@@ -3,7 +3,7 @@ import { Button, Header, Confirm, Label, Item, Icon, Progress, Segment, Transiti
 import { useSelector } from 'react-redux';
 
 
-const tempImageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
+//const tempImageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
 
 const Points = ({ tabState, setTabState }) => {
     return (
@@ -97,7 +97,7 @@ const ProfileTabReservations = () => {
         pointsUntilReward: 2000
     });
 
-    
+
     return (
         <>
             <Points tabState={tabState} setTabState={setTabState} />
