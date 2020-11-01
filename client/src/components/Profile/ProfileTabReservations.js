@@ -31,7 +31,7 @@ const UpcomingReservations = (props) => {
 
     useEffect(() => {
         fetchReservData()
-    }, [])
+    }, [user_id])
 
     const [tabReservationState, setTabReservationState] = useState({
         open: false,
