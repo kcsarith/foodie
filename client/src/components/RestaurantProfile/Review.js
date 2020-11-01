@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import './Review.css';
-import { Rating, Header, Divider, Container, Icon, Menu, Dropdown, Comment, Pagination, Segment, Button, Form, Confirm } from 'semantic-ui-react'
+import { Rating, Divider, Container, Icon, Menu, Dropdown, Comment, Pagination, Segment, Button, Form, Confirm } from 'semantic-ui-react'
 import ReviewModal from './ReviewModal'
 
 
-const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, setHashLocationState }) => {
+const Review = ({ profileVisualState, setProfileVisualState }) => {
   const authSelector = useSelector(state => state.authentication);
   const [reviews, setReviews] = useState([]);
   const [state, setState] = useState({
@@ -39,11 +39,9 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
         newSortedReviews = reviews.sort((currentEle, nextEle) => currentEle.rating - nextEle.rating);
         break;
       default:
-        console.log('This animal will not.');
     }
     setReviews(newSortedReviews)
     setState({ ...state });
-    console.log(reviews);
   }
   const ReviewsSortingDropdown = () => {
     const options = [
@@ -73,7 +71,6 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ restaurant_id, user_id, content, rating }),
     });
-    console.log(restaurant_id, user_id, content, rating)
     if (res.ok) {
       const data = await res.json()
       const newAllRatings = [...profileVisualState.allRatings, rating]
@@ -96,7 +93,6 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
     textAreaEle.focus();
   }
   const onEditCommentRating = (e, props) => {
-    console.log(props);
     setProfileVisualState({ ...profileVisualState, rating: props.rating })
   }
 
@@ -118,13 +114,10 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
     handleReviews();
   }
   const onBlurReviewTextArea = (e, props) => {
-    console.log(e)
-    console.log(props)
     if (state.confirmMessageOpen) {
       setState({ ...state, currentReviewEdit: null })
     }
   }
-  let reviewsClientRect;
   useEffect(() => {
     async function fetchData() {
       if (profileVisualState.id) {
@@ -133,12 +126,6 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
           const data = await res.json()
           const newestSortedReviews = data.reviews.sort((currentEle, nextEle) => nextEle.id - currentEle.id);
           setReviews(newestSortedReviews)
-        }
-        const reviewsEle = document.getElementById('reviews')
-        if (reviewsEle) {
-          reviewsClientRect = reviewsEle.getBoundingClientRect()
-          console.log(reviewsClientRect)
-          setHashLocationState({ ...hashLocationState, reviewsY: reviewsClientRect.top });
         }
       }
     }
@@ -151,7 +138,6 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
 
   return (
     <>
-      <Header as='h3' id='reviews' dividing> Reviews</Header>
       <ReviewsSortingDropdown />
       <ReviewModal profileVisualState={profileVisualState} handleSubmit={handleSubmit} state={state} setState={setState} />
       {/* {reviews.map((review, index) =>
@@ -168,7 +154,7 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
       <h2>{profileVisualState.totalReviews} Reviews</h2>
       <Comment.Group size='small' style={{ minHeight: 500 }}>
         {reviews.length && reviews.map((review, index) => {
-          if (index >= (state.currentPage - 1) * 10 && index < state.currentPage * 10)
+          if (index >= (state.currentPage - 1) * 10 && index < state.currentPage * 10) {
             return (
               <Comment key={index}>
                 <Comment.Avatar src='https://central.wisd.us/uploaded/CENTRAL/Pics/Staff/No_photo.png' />
@@ -199,6 +185,10 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
                 <Divider />
               </Comment>
             )
+          }
+          else {
+            return <></>
+          }
         }
         )}
         {reviews.length === 0 && <Container style={{ minHeight: 500 }}><h1 > NO REVIEWS</h1></Container>}

@@ -5,13 +5,12 @@ import { HashLink } from 'react-router-hash-link'
 import Reservation from './Reservation'
 import Review from './Review';
 import RestaurantSafetyPrecautions from './RestaurantSafetyPrecautions'
-import { Image, Container, Divider, Icon, Menu, Grid, List, Rating, Message, Button, Tab, Sticky, Segment, Transition } from 'semantic-ui-react'
+import { Image, Container, Divider, Icon, Menu, Grid, List, Rating, Message, Button, Tab, Sticky, Segment, Header, Transition } from 'semantic-ui-react'
 
 import Footer from '../Footer';
 const findKeyValueInObjectArrayExists = (array, key, value) => {
     for (let i = 0; i < array.length; i++) {
         const ele = array[i];
-        console.log(ele[key], value)
         if (ele[key] === value) return true;
     }
     return false;
@@ -325,16 +324,22 @@ const RestaurantProfile = () => {
             let avg_rating = 0;
             const overviewEle = document.getElementById('overview')
             const menuEle = document.getElementById('menu')
+            const reviewsEle = document.getElementById('reviews')
             let overviewClientRect;
             let menuClientRect;
+            let reviewsClientRect;
             if (overviewEle) {
                 overviewClientRect = overviewEle.getBoundingClientRect()
             }
             if (menuEle) {
                 menuClientRect = menuEle.getBoundingClientRect()
             }
-            if (overviewEle && menuEle) {
-                setHashLocationState({ ...hashLocationState, overviewY: overviewClientRect.top, menuY: menuClientRect.top })
+
+            if (reviewsEle) {
+                reviewsClientRect = reviewsEle.getBoundingClientRect();
+            }
+            if (overviewEle && menuEle && reviewsEle) {
+                setHashLocationState({ ...hashLocationState, overviewY: overviewClientRect.top, menuY: menuClientRect.top, reviewsY: reviewsClientRect.top })
             }
             if (allRatings.length) {
                 avg_rating = (allRatings.reduce((accum, currentValue) => (accum + currentValue)) / allRatings.length).toFixed(2)
@@ -343,7 +348,6 @@ const RestaurantProfile = () => {
             if (authSelector.id) {
                 const res3 = await fetch(`/api/users/${authSelector.id}/favorites`)
                 const data3 = await res3.json()
-                console.log(data3.favorites)
                 isFavorited = findKeyValueInObjectArrayExists(data3.favorites, 'id', profileVisualState.id)
             }
             setProfileVisualState({ ...profileVisualState, allRatings: allRatings, ...data.restaurant, totalReviews: allRatings.length, avg_rating: avg_rating, favorited: isFavorited })
@@ -351,6 +355,7 @@ const RestaurantProfile = () => {
         fetchData()
     //make sure renders correctly
     }, [])
+
     const getAllRatings = (restaurantDataArray) => {
         let allRatings = [];
         if (restaurantDataArray) {
@@ -440,14 +445,15 @@ Ryan Richardson, General Manager and Partner`;
                                     <span>No Ratings</span>
                                 }
                                 {placeholderText.split('\n').map((ele, index) =>
-                                  <div key={`${index}-${ele.id}`}>
-                                      <p>{ele}</p>
-                                  </div>
+                                    <div key={`${index}-${ele.id}`}>
+                                        <p>{ele}</p>
+                                    </div>
                                 )}
                                 <RestaurantSafetyPrecautions />
                                 <h2 id='menu'>Menu</h2>
                                 <Divider />
                                 <MenuTabs />
+                                <Header as='h3' id='reviews' dividing> Reviews</Header>
                                 <Review profileVisualState={profileVisualState} setProfileVisualState={setProfileVisualState} hashLocationState={hashLocationState} setHashLocationState={setHashLocationState} />
                             </Grid.Column>
                             <Grid.Column width={rightWidth}>
