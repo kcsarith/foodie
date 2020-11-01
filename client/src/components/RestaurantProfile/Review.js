@@ -69,6 +69,7 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ restaurant_id, user_id, content, rating }),
     });
+    
     console.log(res)
     if (res.ok) {
       const data = await res.json()
@@ -84,9 +85,14 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
     }
   }
 
+
   const onClickEditReview = (e, props) => {
+
     const commentClicked = props.id.split('review-button-id_')[1]
+    console.log("AAAAAA::::::",props.id.split('review-button-id_'))
+    console.log("probs.value:::::", props.value )
     setState({ ...state, currentReviewEdit: commentClicked, editCommentText: props.value })
+    console.log("textFocusRef::::", textFocusRef)
     textFocusRef.current.focus();
   }
   const onEditCommentRating = (e, props) => {
