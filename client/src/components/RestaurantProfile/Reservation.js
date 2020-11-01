@@ -2,10 +2,24 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import TimePickers from '../HomePage/TimePicker'
 import { useHistory } from 'react-router-dom';
-import { Segment, Confirm, Message } from 'semantic-ui-react';
+import { Segment, Confirm, Form, Button, Dropdown, Message } from 'semantic-ui-react';
 import './Reservation.css'
 import { setPoints } from '../../store/authentication';
 
+const getPeopleArray = function () {
+    let newArray = [];
+    for (let i = 1; i <= 15; i++) {
+        let puralOrNotPerson = 'person';
+        if (i > 1) {
+            puralOrNotPerson = 'people'
+        }
+        let personText = `${i} ${puralOrNotPerson}`
+        newArray.push({ key: `${personText}`, value: `${personText}`, text: `${personText}` })
+    }
+    return newArray;
+}
+const peopleOptions = getPeopleArray()
+// { key: '1 person', value: 'af', text: 'Afghanistan' },
 
 export default function Reservation({ restaurantName }) {
     let now = new Date().toISOString().substring(0, 10)
@@ -16,7 +30,7 @@ export default function Reservation({ restaurantName }) {
         restaurantName: 'Untitled',
         date: now,
         time: '19:30',
-        group: '2 People'
+        group: '2 people'
     });
 
     const dispatch = useDispatch();
@@ -30,6 +44,10 @@ export default function Reservation({ restaurantName }) {
     function handleChange(e) {
         const { id, value } = e.target;
         setReservationState({ ...reservationState, [id]: value })
+    }
+    function handleSelectorChange(e, props) {
+        console.log(props)
+        setReservationState({ ...reservationState, ['group']: props.value })
     }
 
     const handleSubmit = async (e) => {
@@ -84,7 +102,22 @@ export default function Reservation({ restaurantName }) {
     return (
         <>
             <Segment>
-                <div className="reserv__title"> <h2>Make a Reservation </h2> </div>
+                <h2>Make a Reservation </h2>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Field>
+                        <label>Party Size</label>
+                        <Dropdown placeholder='How many people?' options={peopleOptions} onChange={handleSelectorChange} search selection />
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Last Name</label>
+                        <input type="date" id="date" defaultValue={now} onChange={handleChange} />
+                        <div className='reserv__time' id="time" onChange={handleChange}>
+                            <label htmlFor="time">Time</label>
+                            <TimePickers />
+                        </div>
+                    </Form.Field>
+                    <Button type='submit'>Find a table</Button>
+                </Form>
                 <div className="reservation_container">
                     <form name='form' onSubmit={handleSubmit}>
                         <div className='reserv__group'>
@@ -133,13 +166,6 @@ export default function Reservation({ restaurantName }) {
                         <div className="reserv__result" id="result">{res}</div>
                     </form>
                 </div>
-                {/* container--finish */}
-              <Message
-                    success
-                    header='Your user registration was successful'
-                    content='You may now log-in with the username you have chosen'
-                />
-                                
             </Segment>
             <Confirm
                 open={reservationState.openConfirmModal}
