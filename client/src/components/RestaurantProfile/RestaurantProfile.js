@@ -237,24 +237,50 @@ const MenuTabs = () => {
 
 const ListExampleIcon = () => (
     <List>
-        <List.Item as='a'>
-            <Icon name='help' />
+        <List.Item >
+            <Icon name='clock' />
             <List.Content>
-                <List.Header>Floated Icon</List.Header>
+                <List.Header>Hours of Operation</List.Header>
                 <List.Description>
-                    This text will always have a left margin to make sure it sits
-                    alongside your icon
-        </List.Description>
+                    Mon–Thu, 7:00 am–10:00 pm <br />
+                    Fri, Sat 7:00 am–11:00 pm<br />
+                </List.Description>
             </List.Content>
         </List.Item>
-        <List.Item as='a'>
-            <Icon name='right triangle' />
+        <List.Item >
+            <Icon name='food' />
             <List.Content>
-                <List.Header>Icon Alignment</List.Header>
+                <List.Header>Cuisine</List.Header>
                 <List.Description>
-                    Floated icons are by default top aligned. To have an icon top aligned
-                    try this example.
-        </List.Description>
+                    Vegan
+                </List.Description>
+            </List.Content>
+        </List.Item>
+        <List.Item >
+            <Icon name='credit card' />
+            <List.Content>
+                <List.Header>Payment Options</List.Header>
+                <List.Description>
+                    AMEX, Carte Blanche, Diners Club, Discover, JCB, MasterCard, Visa
+                </List.Description>
+            </List.Content>
+        </List.Item>
+        <List.Item >
+            <Icon name='phone' />
+            <List.Content>
+                <List.Header>Phone Number</List.Header>
+                <List.Description>
+                    555-555-5555
+                </List.Description>
+            </List.Content>
+        </List.Item>
+        <List.Item >
+            <Icon name='bell' />
+            <List.Content>
+                <List.Header>Catering</List.Header>
+                <List.Description>
+                    We have glass-enclosed private & semi private function facilities located directly across from The Bellagio Water Show, as well as private rooms off of our main dining area, with oversized chandeliers, plush red velvet drapes, and richly stained mahogany. From corporate events, to formal wedding receptions, you’ll feel right at home in our establishment. Capacity: Our 2 Private Rooms have seating for up to 80 guests. The glass-enclosed Pavilion has semi-private areas accommodating groups 80. The entire Pavilion & outdoor Patio is also available for buyouts of up to 350.
+                </List.Description>
             </List.Content>
         </List.Item>
     </List>
@@ -407,7 +433,7 @@ Ryan Richardson, General Manager and Partner`;
                                 }
                                 <h1> {profileVisualState.name}</h1>
                                 <Divider />
-                                <Rating rating={profileVisualState.allRatings ? Math.round(profileVisualState.avg_rating) : 0} maxRating={5} disabled />
+                                <Rating rating={profileVisualState.allRatings.length ? Math.round(profileVisualState.avg_rating) : 0} maxRating={5} disabled />
                                 {profileVisualState.allRatings.length ?
                                     <><span>{profileVisualState.avg_rating} <Icon name='pencil alternate' /> {profileVisualState.totalReviews} review(s)</span></> :
                                     <span>No Ratings</span>

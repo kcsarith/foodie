@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import './Review.css';
 import { Rating, Header, Divider, Container, Icon, Menu, Dropdown, Comment, Pagination, Segment, Button, Form, Confirm } from 'semantic-ui-react'
 import ReviewModal from './ReviewModal'
+import { set } from 'js-cookie';
 
 const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, setHashLocationState }) => {
   const authSelector = useSelector(state => state.authentication);
@@ -18,7 +19,6 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
     editCommentText: '',
     confirmMessage: 'Loading...'
   });
-  const textFocusRef = React.createRef();
   const handleSubmit = () => {
     handleReviews();
   }
@@ -63,13 +63,17 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
   }
 
   async function handleReviews() {
-    const { restaurant_id, user_id, content, rating } = state;
+    const restaurant_id = profileVisualState.id
+    const user_id = authSelector.id
+    const content = profileVisualState.content;
+    const rating = profileVisualState.rating;
+
     const res = await authSelector.csrf(`/api/home/restaurant/${profileVisualState.id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ restaurant_id, user_id, content, rating }),
     });
-    console.log(res)
+    console.log(restaurant_id, user_id, content, rating)
     if (res.ok) {
       const data = await res.json()
       const newAllRatings = [...profileVisualState.allRatings, rating]
@@ -84,14 +88,18 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
     }
   }
 
-  const onClickEditReview = (e, props) => {
+  const onClickEditReview = async (e, props) => {
     const commentClicked = props.id.split('review-button-id_')[1]
-    setState({ ...state, currentReviewEdit: commentClicked, editCommentText: props.value })
-    textFocusRef.current.focus();
+    await setState({ ...state, currentReviewEdit: commentClicked, editCommentText: props.value })
+    const textAreaEle = document.getElementById(`review-text-area-id_${commentClicked}`);
+    console.log(ratingEle)
+    await setProfileVisualState({ ...profileVisualState, content: textAreaEle.value, rating: ratingEle.rating })
+    textAreaEle.focus();
   }
   const onEditCommentRating = (e, props) => {
     const commentClicked = props.id.split('review-rating-id_')[1]
-    console.log(commentClicked)
+    console.log(props);
+    setProfileVisualState({ ...profileVisualState, rating: props.rating })
   }
 
   const onChangeEditReviewTextArea = (e, props) => {
@@ -109,9 +117,14 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
     setState({
       ...state, currentReviewEdit: null, confirmMessageOpen: false
     })
+    handleReviews();
   }
-  const onBlurReviewTextArea = () => {
-    setState({ ...state, currentReviewEdit: null })
+  const onBlurReviewTextArea = (e, props) => {
+    console.log(e)
+    console.log(props)
+    if (state.confirmMessageOpen) {
+      setState({ ...state, currentReviewEdit: null })
+    }
   }
   let reviewsClientRect;
   useEffect(() => {
@@ -179,7 +192,7 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
                         <div><Rating defaultRating={review.rating} maxRating={5} id={`review-rating-id_${review.id}`} onRate={onEditCommentRating} /> You may enter a new rating if you wish</div>
                       </Comment.Metadata>
                       <Form reply>
-                        <Form.TextArea onBlur={onBlurReviewTextArea} ref={textFocusRef} defaultValue={review.content} onChange={onChangeEditReviewTextArea} />
+                        <Form.TextArea onBlur={onBlurReviewTextArea} id={`review-text-area-id_${review.id}`} defaultValue={review.content} onChange={onChangeEditReviewTextArea} />
                         <Button content='Add Reply' onClick={onClickAddReply} disabled={!state.editCommentText} labelPosition='left' icon='edit' primary />
                       </Form>
                     </Segment>

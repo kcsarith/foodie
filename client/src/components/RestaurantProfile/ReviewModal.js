@@ -22,7 +22,10 @@ const ReviewModal = ({ profileVisualState, handleSubmit, state, setState }) => {
         <Modal
             open={open}
             onClose={() => setOpen(false)}
-            onOpen={() => setOpen(true)}
+            onOpen={() => {
+                setState({ ...state, currentReviewEdit: null, });
+                setOpen(true)
+            }}
             trigger={<Button color='red' fluid>WRITE A REVIEW</Button>}
         >
             <Modal.Header as='h1'>Write a review!</Modal.Header>
