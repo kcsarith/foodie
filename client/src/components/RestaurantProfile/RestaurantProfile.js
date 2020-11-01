@@ -1,19 +1,239 @@
 import React, { createRef, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link'
 import Reservation from './Reservation'
 import Review from './Review';
 import RestaurantSafetyPrecautions from './RestaurantSafetyPrecautions'
-import { Image, Container, Divider, Icon, Tab, Grid, List, Rating, Message, Button, Label, Header, Sticky, Input, Ref, Segment, Visibility } from 'semantic-ui-react'
+import { Image, Container, Divider, Icon, Menu, Grid, List, Rating, Message, Button, Tab, Sticky, Segment, Transition, Confirm } from 'semantic-ui-react'
+
+import Footer from '../Footer';
+const findKeyValueInObjectArrayExists = (array, key, value) => {
+    for (let i = 0; i < array.length; i++) {
+        const ele = array[i];
+        console.log(ele[key], value)
+        if (ele[key] == value) return true;
+    }
+    return false;
+}
 
 
-const panes = [
-    { menuItem: 'Overview' },
-    { menuItem: 'Menu' },
-    { menuItem: 'Reviews' },
-]
-const TabExampleSecondaryPointing = () => (
-    <Tab menu={{ attached: false, tabular: false }} panes={panes} />
-)
+const RestaurantTabs = ({ hashLocationState, setHashLocationState }) => {
+    const [scrollTop, setScrollTop] = useState(0);
+    const onScroll = () => {
+        const winScroll = document.documentElement.scrollTop;
+        setScrollTop(winScroll);
+    }
+    useEffect(() => {
+        window.addEventListener('scroll', onScroll)
+        return () => window.removeEventListener('scroll', onScroll)
+    })
+    const handleTabClick = (e, props) => {
+        setHashLocationState({ ...hashLocationState, activeTab: props.name })
+    }
+    return (
+        <Menu pointing secondary color='white' fluid style={{ backgroundColor: 'white' }}>
+            <HashLink smooth to='#overview' >
+                <Menu.Item
+                    name='Overview'
+                    active={scrollTop <= hashLocationState.menuY - 190 ? true : false}
+                    onClick={handleTabClick}
+                />
+            </HashLink>
+            <HashLink smooth to='#menu' >
+                <Menu.Item
+                    name='Menu'
+                    active={scrollTop > hashLocationState.menuY - 190 && scrollTop <= hashLocationState.reviewsY - 190 ? true : false}
+                    onClick={handleTabClick}
+                />
+            </HashLink>
+            <HashLink smooth to='#reviews' >
+                <Menu.Item
+                    name='Reviews'
+                    active={scrollTop > hashLocationState.reviewsY - 190 ? true : false}
+                    onClick={handleTabClick}
+                />
+            </HashLink>
+        </Menu>
+    )
+}
+
+const MenuTabs = () => {
+    const forTheTable = {
+        name: 'For the table',
+        menu: [
+            { name: "LG's Arepa Basket", price: 10.00, description: 'Lorena Garcias select arepas served with nata butter' },
+            { name: "Wild Mushroom Tostada", price: 14.00, description: 'roasted wild mushroom, whipped queso fresco, salsa verde, shaved radish, epazote' },
+            { name: "Guacamole", price: 16.00, description: 'Hass avocado, cilantro, chile, served with crispy tortillas, assorted arepas & plantain chips' },
+        ]
+    }
+    const salads = {
+        name: 'For the table',
+        menu: [
+            { name: "Kale & Lime Salad", price: 16.00, description: 'green apples, cranberries, pumpkin seeds, croutons, citrus yogurt dressing' },
+            { name: "Romaine & Watercress Salad", price: 16.00, description: 'croutons, parmesan cheese, cilantro goddess dressing' },
+            { name: "Chica Salad", price: 16.00, description: 'roasted corn, black eyed peas, tomato, bell pepper, Oaxaca cheese, tortilla strips, chipotle vinaigrette' },
+        ]
+    }
+    const startYourMeal = {
+        name: 'Start your meal',
+        menu: [
+            { name: "Kale & Lime Salad", price: 16.00, description: 'green apples, cranberries, pumpkin seeds, croutons, citrus yogurt dressing' },
+            { name: "Romaine & Watercress Salad", price: 16.00, description: 'croutons, parmesan cheese, cilantro goddess dressing' },
+            { name: "Chica Salad", price: 16.00, description: 'roasted corn, black eyed peas, tomato, bell pepper, Oaxaca cheese, tortilla strips, chipotle vinaigrette' },
+        ]
+    }
+    const panes = [
+        {
+            menuItem: 'Dinner', render: () =>
+                <Tab.Pane>
+                    <h4>{forTheTable.name}</h4>
+                    <List>
+                        {forTheTable.menu.map(ele =>
+                            <List.Item>
+                                <List.Header>{ele.name} ${ele.price}</List.Header>
+                                {ele.description}
+                            </List.Item>)}
+                    </List>
+                    <h4>{salads.name}</h4>
+                    <List>
+                        {salads.menu.map(ele =>
+                            <List.Item>
+                                <List.Header>{ele.name} ${ele.price}</List.Header>
+                                {ele.description}
+                            </List.Item>)}
+                    </List>
+                    <h4>{startYourMeal.name}</h4>
+                    <List>
+                        {startYourMeal.menu.map(ele =>
+                            <List.Item>
+                                <List.Header>{ele.name} ${ele.price}</List.Header>
+                                {ele.description}
+                            </List.Item>)}
+                    </List>
+                    <p>*Thoroughly cooking foods of animal origin such as beef, eggs, fish, lamb, milk, poultry, or shellfish reduces the risk of foodborne illness. Individuals with certain health conditions may be at higher risk if these foods are consumed raw or undercooked</p>
+                </Tab.Pane>
+        },
+        {
+            menuItem: 'Brunch', render: () =>
+                <Tab.Pane><h4>{startYourMeal.name}</h4>
+                    <List>
+                        {startYourMeal.menu.map(ele =>
+                            <List.Item>
+                                <List.Header>{ele.name} ${ele.price}</List.Header>
+                                {ele.description}
+                            </List.Item>)}
+                    </List>
+                    <h4>{forTheTable.name}</h4>
+                    <List>
+                        {forTheTable.menu.map(ele =>
+                            <List.Item>
+                                <List.Header>{ele.name} ${ele.price}</List.Header>
+                                {ele.description}
+                            </List.Item>)}
+                    </List>
+                    <h4>{salads.name}</h4>
+                    <List>
+                        {salads.menu.map(ele =>
+                            <List.Item>
+                                <List.Header>{ele.name} ${ele.price}</List.Header>
+                                {ele.description}
+                            </List.Item>)}
+                    </List>
+                    <p>*Thoroughly cooking foods of animal origin such as beef, eggs, fish, lamb, milk, poultry, or shellfish reduces the risk of foodborne illness. Individuals with certain health conditions may be at higher risk if these foods are consumed raw or undercooked</p></Tab.Pane>
+        },
+        {
+            menuItem: 'Dessert', render: () =>
+                <Tab.Pane>
+                    <h4>{forTheTable.name}</h4>
+                    <List>
+                        {forTheTable.menu.map(ele =>
+                            <List.Item>
+                                <List.Header>{ele.name} ${ele.price}</List.Header>
+                                {ele.description}
+                            </List.Item>)}
+                    </List>
+                    <h4>{salads.name}</h4>
+                    <List>
+                        {salads.menu.map(ele =>
+                            <List.Item>
+                                <List.Header>{ele.name} ${ele.price}</List.Header>
+                                {ele.description}
+                            </List.Item>)}
+                    </List>
+                    <h4>{startYourMeal.name}</h4>
+                    <List>
+                        {startYourMeal.menu.map(ele =>
+                            <List.Item>
+                                <List.Header>{ele.name} ${ele.price}</List.Header>
+                                {ele.description}
+                            </List.Item>)}
+                    </List>
+                    <p>*Thoroughly cooking foods of animal origin such as beef, eggs, fish, lamb, milk, poultry, or shellfish reduces the risk of foodborne illness. Individuals with certain health conditions may be at higher risk if these foods are consumed raw or undercooked</p>
+                </Tab.Pane>
+        },
+        {
+            menuItem: 'Drinks', render: () =>
+                <Tab.Pane>
+                    <h4>{salads.name}</h4>
+                    <List>
+                        {salads.menu.map(ele =>
+                            <List.Item>
+                                <List.Header>{ele.name} ${ele.price}</List.Header>
+                                {ele.description}
+                            </List.Item>)}
+                    </List>
+                    <h4>{startYourMeal.name}</h4>
+                    <List>
+                        {startYourMeal.menu.map(ele =>
+                            <List.Item>
+                                <List.Header>{ele.name} ${ele.price}</List.Header>
+                                {ele.description}
+                            </List.Item>)}
+                    </List>
+                    <h4>{forTheTable.name}</h4>
+                    <List>
+                        {forTheTable.menu.map(ele =>
+                            <List.Item>
+                                <List.Header>{ele.name} ${ele.price}</List.Header>
+                                {ele.description}
+                            </List.Item>)}
+                    </List>
+                    <p>*Thoroughly cooking foods of animal origin such as beef, eggs, fish, lamb, milk, poultry, or shellfish reduces the risk of foodborne illness. Individuals with certain health conditions may be at higher risk if these foods are consumed raw or undercooked</p>
+                </Tab.Pane>
+        },
+        {
+            menuItem: 'Whine', render: () => <Tab.Pane>
+                <h4>{forTheTable.name}</h4>
+                <List>
+                    {forTheTable.menu.map(ele =>
+                        <List.Item>
+                            <List.Header>{ele.name} ${ele.price}</List.Header>
+                            {ele.description}
+                        </List.Item>)}
+                </List>
+                <h4>{salads.name}</h4>
+                <List>
+                    {salads.menu.map(ele =>
+                        <List.Item>
+                            <List.Header>{ele.name} ${ele.price}</List.Header>
+                            {ele.description}
+                        </List.Item>)}
+                </List>
+                <h4>{startYourMeal.name}</h4>
+                <List>
+                    {startYourMeal.menu.map(ele =>
+                        <List.Item>
+                            <List.Header>{ele.name} ${ele.price}</List.Header>
+                            {ele.description}
+                        </List.Item>)}
+                </List>
+                <p>*Thoroughly cooking foods of animal origin such as beef, eggs, fish, lamb, milk, poultry, or shellfish reduces the risk of foodborne illness. Individuals with certain health conditions may be at higher risk if these foods are consumed raw or undercooked</p>
+            </Tab.Pane>
+        },
+    ]
+    return <><Tab panes={panes} /></>
+}
 
 const ListExampleIcon = () => (
     <List>
@@ -42,10 +262,29 @@ const ListExampleIcon = () => (
 
 const RestaurantProfile = () => {
     const contextRef = createRef()
-    const [restData, setRestData] = useState([])
+    const authSelector = useSelector(state => state.authentication);
     const [profileVisualState, setProfileVisualState] = useState({
         visible: true,
+        allRatings: [],
+        address: "Loading...",
+        avg_rating: 0,
+        totalReviews: 0,
+        city: "Loading...",
+        id: null,
+        img: "",
+        max_price: 5,
+        min_price: 0,
+        name: "Loading...",
+        state: "Loading...",
+        favorited: null,
+        triggerFave: true,
     });
+    const [hashLocationState, setHashLocationState] = useState({
+        overviewY: 100,
+        menuY: 200,
+        reviewsY: 500,
+        activeTab: "Overview",
+    })
     const history = useHistory()
     const idStr = history.location.pathname.split('/')[3]
     const id = parseInt(idStr, 10)
@@ -53,13 +292,49 @@ const RestaurantProfile = () => {
         async function fetchData() {
             const res = await fetch(`/api/home/restaurant/profile/${id}`)
             const data = await res.json()
-            setRestData(data.restaurant)
+
+            const res2 = await fetch(`/api/home/restaurant/${id}`)
+            const data2 = await res2.json()
+            const allRatings = getAllRatings(data2.reviews)
+            let avg_rating = 0;
+            const overviewEle = document.getElementById('overview')
+            const menuEle = document.getElementById('menu')
+            let overviewClientRect;
+            let menuClientRect;
+            if (overviewEle) {
+                overviewClientRect = overviewEle.getBoundingClientRect()
+            }
+            if (menuEle) {
+                menuClientRect = menuEle.getBoundingClientRect()
+            }
+            if (overviewEle && menuEle) {
+                setHashLocationState({ ...hashLocationState, overviewY: overviewClientRect.top, menuY: menuClientRect.top })
+            }
+            if (allRatings.length) {
+                avg_rating = (allRatings.reduce((accum, currentValue) => (accum + currentValue)) / allRatings.length).toFixed(2)
+            }
+            let isFavorited = false
+            if (authSelector.id) {
+                const res3 = await fetch(`/api/users/${authSelector.id}/favorites`)
+                const data3 = await res3.json()
+                console.log(data3.favorites)
+                isFavorited = findKeyValueInObjectArrayExists(data3.favorites, 'id', profileVisualState.id)
+            }
+            setProfileVisualState({ ...profileVisualState, allRatings: allRatings, ...data.restaurant, totalReviews: allRatings.length, avg_rating: avg_rating, favorited: isFavorited })
         }
         fetchData()
-    }, [id])
+    }, [profileVisualState.id])
+    const getAllRatings = (restaurantDataArray) => {
+        let allRatings = [];
+        if (restaurantDataArray) {
+            restaurantDataArray.forEach(ele => {
+                allRatings.push(ele.rating);
+            });
+            return allRatings;
+        }
+    }
     const leftWidth = 10;
     const rightWidth = 6;
-    const restarauntImageUrl = 'https://www.tripsavvy.com/thmb/1gJhZ3yzuQF1rwJOIY-FJxFlres=/800x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/lagobellagio-56a447b53df78cf772818bdb.jpg'
     const placeholderText = `Located at Paris Hotel, Mon Ami Gabi is now open for limited dine-in services at 50% capacity. We thank you for your patience and trust in Lettuce Entertain You. As we begin the process to reopen for dine-in, the health and safety of our guests and employees always comes first. Steps we are taking: dine-in at 50% capacity, masks and gloves on all employees, disposable and digital menus, thorough sanitation procedures and continuous hand washing.
     \n
 Just a few notes to help make your meal with us an enjoyable experience:
@@ -77,19 +352,49 @@ Ryan Richardson, General Manager and Partner`;
         setProfileVisualState({ ...profileVisualState, visible: false });
 
     }
+    const handleFavorite = async () => {
+        if (profileVisualState.favorited) {
+            const res = await authSelector.csrf(`/api/users/${authSelector.id}/favorites/delete/${profileVisualState.id}`, {
+                method: "DELETE"
+            })
+            if (res.ok) {
+                setProfileVisualState({ ...profileVisualState, favorited: false, triggerFave: !profileVisualState.triggerFave })
+            }
+        }
+        else {
+            const res = await authSelector.csrf(`/api/users/${authSelector.id}/favorites`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    restaurant_id: profileVisualState.id
+                })
+            })
+            if (res.ok) {
+                setProfileVisualState({ ...profileVisualState, favorited: true, triggerFave: !profileVisualState.triggerFave })
+            }
+        }
+    }
     return (
         <>
             <Segment style={{ position: 'relative' }}>
-                <Image centered src={restarauntImageUrl} style={{ width: '80%', height: '400px' }} />
-                <Button style={{ position: 'absolute', right: '20em', top: '4em' }}><Icon name='bookmark' />Save this restaurant</Button>
+                <Image centered src={profileVisualState.img} style={{ width: '80%', height: '400px' }} />
+                {profileVisualState.id &&
+                    <Transition
+                        animation={profileVisualState.favorited ? 'jiggle' : 'shake'}
+                        duration={500}
+                        visible={profileVisualState.triggerFave}
+                    >
+                        <Button color={profileVisualState.favorited ? 'red' : 'grey'} style={{ position: 'absolute', right: '20em', top: '4em' }} onClick={handleFavorite}><Icon name='bookmark' />Save this restaurant</Button>
+                    </Transition>
+                }
             </Segment>
             <div ref={contextRef} style={{ marginTop: '5em' }}>
                 <Container text>
                     <Grid divided='vertically'>
                         <Grid.Row columns={2}>
                             <Grid.Column width={leftWidth}>
-                                <Sticky context={contextRef} offset={50}>
-                                    <TabExampleSecondaryPointing />
+                                <Sticky context={contextRef} offset={50} id='overview'>
+                                    <RestaurantTabs profileVisualState={profileVisualState} hashLocationState={hashLocationState} setHashLocationState={setHashLocationState} />
                                 </Sticky>
                                 {profileVisualState.visible &&
                                     <Message
@@ -100,22 +405,23 @@ Ryan Richardson, General Manager and Partner`;
                                         content='This includes info about cleaning, sanitizing, social distancing, and usage of personal protective equipment.'
                                     />
                                 }
-                                <h1> {restData.name}</h1>
+                                <h1> {profileVisualState.name}</h1>
                                 <Divider />
-                                <Rating rating={Math.round(restData.avg_rating)} maxRating={5} disabled />
-                                {restData.avg_rating ?
-                                    <span>{restData.avg_rating}</span> :
+                                <Rating rating={profileVisualState.allRatings ? Math.round(profileVisualState.avg_rating) : 0} maxRating={5} disabled />
+                                {profileVisualState.allRatings.length ?
+                                    <><span>{profileVisualState.avg_rating} <Icon name='pencil alternate' /> {profileVisualState.totalReviews} review(s)</span></> :
                                     <span>No Ratings</span>
                                 }
                                 {placeholderText.split('\n').map(ele => <p>{ele}</p>)}
                                 <RestaurantSafetyPrecautions />
-                                <div>
-                                    <Review id={id} restData={restData} />
-                                </div>
+                                <h2 id='menu'>Menu</h2>
+                                <Divider />
+                                <MenuTabs />
+                                <Review profileVisualState={profileVisualState} setProfileVisualState={setProfileVisualState} hashLocationState={hashLocationState} setHashLocationState={setHashLocationState} />
                             </Grid.Column>
                             <Grid.Column width={rightWidth}>
                                 <Sticky context={contextRef} offset={50}>
-                                    <Reservation restaurantName={restData.name} />
+                                    <Reservation restaurantName={profileVisualState.name} />
                                 </Sticky>
                                 <ListExampleIcon />
                             </Grid.Column>
@@ -123,6 +429,7 @@ Ryan Richardson, General Manager and Partner`;
                     </Grid>
                 </Container>
             </div>
+            <Footer />
         </>
     )
 

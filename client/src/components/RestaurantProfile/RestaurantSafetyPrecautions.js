@@ -4,7 +4,7 @@ import { List, Grid, Divider } from 'semantic-ui-react'
 const RestaurantSafetyPrecautions = () => {
     return (
         <>
-            <h1>Safety precautions</h1>
+            <h4>Safety precautions</h4>
             <Divider />
             <List>
                 <List.Header>Cleaning & Sanitizing</List.Header>
