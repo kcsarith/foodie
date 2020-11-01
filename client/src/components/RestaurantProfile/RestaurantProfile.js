@@ -354,7 +354,7 @@ const RestaurantProfile = () => {
         }
         fetchData()
         //make sure renders correctly
-    }, [id, authSelector.id, hashLocationState, profileVisualState])
+    }, [profileVisualState.id])
     const getAllRatings = (restaurantDataArray) => {
         let allRatings = [];
         if (restaurantDataArray) {
