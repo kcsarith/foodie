@@ -110,8 +110,8 @@ function SignUp() {
     const [name, setName]= useState('');
     const [email, setEmail]= useState('');
     const [password, setPassword]= useState('');
-    const [city, setCity]= useState('');
-    const [state, setState]= useState('')
+    const [city, setCity]= useState('Las Vegas');
+    const [state, setState]= useState('NV')
     const [submitted, setSubmitted] = useState(false);
 
     const dispatch = useDispatch();
