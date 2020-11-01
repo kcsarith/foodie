@@ -47,4 +47,5 @@ def signup():
                    city=city, state=state, points=points)
     db.session.add(newUser)
     db.session.commit()
+    login_user(newUser)
     return {"user": newUser.to_dict()}
