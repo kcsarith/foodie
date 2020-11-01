@@ -30,7 +30,7 @@ export default function Reservation({ restaurantName }) {
         restaurantName: 'Untitled',
         date: now,
         time: '19:30',
-        group: '2 people'
+        group: '1 person'
     });
 
     const dispatch = useDispatch();
@@ -39,7 +39,6 @@ export default function Reservation({ restaurantName }) {
     const history = useHistory()
     const idStr = history.location.pathname.split('/')[3]
     const restaurant_id = parseInt(idStr, 10)
-    let res = '';
 
     function handleChange(e) {
         const { id, value } = e.target;
@@ -66,7 +65,7 @@ export default function Reservation({ restaurantName }) {
         const { date, time, group } = reservationState;
         const group_num = parseInt(group.substring(0, 2));
         const start_time = date + ' ' + time;
-        
+
         const response = await fetchWithCSRF("/api/home/restaurant/reserve", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -84,20 +83,20 @@ export default function Reservation({ restaurantName }) {
             }, 2000)
         }
 
-        // set points 
+        // set points
         const set_point = 200;
         const res = await fetchWithCSRF(`/api/home/restaurant/setpoint/${user_id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 set_point
-                }),
-            })
+            }),
+        })
         const data = await res.json();
         let points = data["user"].points;
         dispatch(setPoints(points))
     }
-    
+
 
     return (
         <>
@@ -106,7 +105,7 @@ export default function Reservation({ restaurantName }) {
                 <Form onSubmit={handleSubmit}>
                     <Form.Field>
                         <label>Party Size</label>
-                        <Dropdown placeholder='How many people?' options={peopleOptions} onChange={handleSelectorChange} search selection />
+                        <Dropdown placeholder='1 person?' defaultValue={0} options={peopleOptions} onChange={handleSelectorChange} search selection />
                     </Form.Field>
                     <Form.Field>
                         <label>Last Name</label>
@@ -116,16 +115,13 @@ export default function Reservation({ restaurantName }) {
                             <TimePickers />
                         </div>
                     </Form.Field>
-                    <Button type='submit'>Find a table</Button>
+                    <Button color='red' type='submit'>Find a table</Button>
                 </Form>
-                <div className="reservation_container">
+                {/* <div className="reservation_container">
                     <form name='form' onSubmit={handleSubmit}>
                         <div className='reserv__group'>
                             <label htmlFor="group">Party Size</label>
                             <select className='reserv__groupSelect' label='2 People' id="group" defaultValue='2 People' onChange={handleChange}>
-                                {/* { [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map( (i) =>(
-                        <option>{i} </option>
-                    ))} */}
                                 <option> 1 Person</option>
                                 <option> 2 People</option>
                                 <option> 3 People</option>
@@ -155,17 +151,17 @@ export default function Reservation({ restaurantName }) {
                         </div>
                         <div>
                             <button className='reserv__button' type='submit'>Find a table</button>
-                            {reservationState.messageVisibility &&
-                                <Message
-                                    success
-                                    header='Reserve Success'
-                                    content={`Book ${restaurantName} on ${reservationState.date} for ${reservationState.group}`}
-                                />
-                            }
-                        </div>
-                        <div className="reserv__result" id="result">{res}</div>
-                    </form>
-                </div>
+                            </div>
+                            <div className="reserv__result" id="result">{res}</div>
+                            </form>
+                        </div> */}
+                {reservationState.messageVisibility &&
+                    <Message
+                        success
+                        header='Reserve Success'
+                        content={`Book ${restaurantName} for ${reservationState.group}`}
+                    />
+                }
             </Segment>
             <Confirm
                 open={reservationState.openConfirmModal}
