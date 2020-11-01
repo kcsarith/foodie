@@ -92,7 +92,7 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
     const commentClicked = props.id.split('review-button-id_')[1]
     await setState({ ...state, currentReviewEdit: commentClicked, editCommentText: props.value })
     const textAreaEle = document.getElementById(`review-text-area-id_${commentClicked}`);
-    await setProfileVisualState({ ...profileVisualState, content: textAreaEle.value, rating: ratingEle.rating })
+    await setProfileVisualState({ ...profileVisualState, content: textAreaEle.value, rating: 3 })
     textAreaEle.focus();
   }
   const onEditCommentRating = (e, props) => {
