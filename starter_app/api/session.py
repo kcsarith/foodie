@@ -42,7 +42,7 @@ def signup():
     password = request.json.get("password", None)
     city = request.json.get("city", None)
     state = request.json.get("state", None)
-    points = request.json.get("point", None)
+    points = request.json.get("points", None)
     newUser = User(name=name, email=email, password=password,
                    city=city, state=state, points=points)
     db.session.add(newUser)

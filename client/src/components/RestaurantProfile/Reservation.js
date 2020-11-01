@@ -94,7 +94,7 @@ export default function Reservation({ restaurantName }) {
                 }),
             })
         const data = await res.json();
-        let points = data["user"].points + set_point
+        let points = data["user"].points;
         dispatch(setPoints(points))
     }
     
