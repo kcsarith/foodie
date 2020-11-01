@@ -4,6 +4,7 @@ const SET_USER = 'FOODIE/AUTH/SET_USER'
 const REMOVE_USER = 'FOODIE/AUTH/REMOVE_USER'
 const SET_CSRF = 'FOODIE/AUTH/SET_CSRF'
 const ERROR_MSG = 'ERROR_MSG'
+const SET_POINTS = 'SET_POINTS'
 
 export const setUser = (user) => {
     return {
@@ -74,16 +75,19 @@ export const error = (message) => {
     return { type: ERROR_MSG, message };
 }
 
-export const signup = (name, email, password, city, state) => {
+export const setPoints = (points) => {
+    return { type: SET_POINTS, points}
+}
+
+export const signup = (name, email, password, city, state, points) => {
     return async (dispatch, getState) => {
         const fetchWithCSRF = getState().authentication.csrf;
         const res = await fetchWithCSRF('/api/session/signup', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email, password, city, state })
+            body: JSON.stringify({ name, email, password, city, state, points })
         })
 
-        //Yongho
         if (res.status === 400) {
             const { errors } = await res.json();
             dispatch(error(errors))
@@ -136,6 +140,8 @@ export default function reducer(state = initialState, action) {
             return { csrf: state.csrf }
         case ERROR_MSG:
             return { ...state, error: action.message }
+        case SET_POINTS:
+            return { ...state, points: action.points}
         default:
             return state
     }

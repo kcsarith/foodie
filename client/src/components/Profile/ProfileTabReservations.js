@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Header, Confirm, Label, Item, Icon, Progress, Segment, Transition } from 'semantic-ui-react';
-import { useSelector } from 'react-redux';
-
-
-//const tempImageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
+import { Header, Confirm, Item, Progress, Segment } from 'semantic-ui-react';
+import { useSelector, useDispatch } from 'react-redux';
+import './ProfileTabReservations.css'
+import { setPoints } from '../../store/authentication';
 
 const Points = ({ tabState, setTabState }) => {
     return (
@@ -16,11 +15,13 @@ const Points = ({ tabState, setTabState }) => {
     )
 }
 
+
 const UpcomingReservations = (props) => {
 
     const [reserveList, setReserveList] = useState([])
     const user_id = useSelector(state => state.authentication.id);
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
+    const dispatch = useDispatch();
 
     async function fetchReservData() {
         const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
@@ -48,38 +49,62 @@ const UpcomingReservations = (props) => {
         setTabReservationState({ ...tabReservationState, open: false, confirm: false })
         console.log(tabReservationState.reservId)
         const response = await fetchWithCSRF(`/api/home/restaurant/reservationcancel/${tabReservationState.reservId}`, {
-
             method: "DELETE"
         })
 
+
         if (response.ok) {
             fetchReservData()
+
+            const set_point = -200;
+            const res = await fetchWithCSRF(`/api/home/restaurant/setpoint/${user_id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    set_point
+                    }),
+                })
+            const data = await res.json();
+            let points = data["user"].points + set_point
+            dispatch(setPoints(points))
         }
+
     }
+
+
+
+
     return (
         <>
             <Header as='h2' attached='top'>Upcoming Reservations</Header>
             <Segment attached>
-                <Transition animation='fade' duration={200}>
-                    <Item.Group divided>
-                        {reserveList.length > 0 ? reserveList.map((reserv, index) => (<Item key={`${index}-${reserv.restaurant_id}-${reserv.user_id}`}>
-                            <Item.Image src={reserv.restaurant_img} alt={reserv.restaurant_img}/>
-                            <Item.Content>
-                                <Item.Header as='a'>{reserv.restaurant_name}</Item.Header>
-                                <Item.Meta>
-                                    <span className='cinema'>{reserv.restaurant_address}</span>
-                                </Item.Meta>
-                                <Item.Description>Reservation Date and Time :  {new Date(reserv.start_time).toLocaleString()}</Item.Description>
-                                <Item.Description>Party of {reserv.group_num}</Item.Description>
-                                <Item.Extra>
-                                    <Button type="submit" value={reserv.id} onClick={handleSubmit} primary floated='right'>Cancel Reservation<Icon name='right chevron' /></Button>
-                                    <Label>Limited</Label>
-                                </Item.Extra>
-                            </Item.Content>
-                        </Item>)) : ''
-                        }
-                    </Item.Group>
-                </Transition>
+                {reserveList.length > 0 ? reserveList.map((reserv, index) => (<Item key={`${index}-${reserv.restaurant_id}-${reserv.user_id}`}>
+                    <div className='profile-reserve'>
+                        <div className='profile-reserve__img'>
+                            <img src={reserv.restaurant_img} alt='' />
+                        </div>
+                        <div className='profile-reserve__stuff'>
+                            <div className='profile-reserve__info'>
+                                <div className='profile-reserve__name'>
+                                    {reserv.restaurant_name}
+                                </div>
+                                <div className='profile-reserve__address'>
+                                    {reserv.restaurant_address}
+                                </div>
+                                <div className='profile-reserve__time'>
+                                    Reservation Date and Time - {new Date(reserv.start_time).toLocaleString()}
+                                </div>
+                                <div className='profile-reserve__group'>
+                                    Party of - {reserv.group_num}
+                                </div>
+                            </div>
+                            <div className='profile-reserve__btn'>
+                                <button className='reserve-btn' type='submit' value={reserv.id} onClick={handleSubmit}>Cancel Reservation</button>
+                            </div>
+                        </div>
+                    </div>
+                </Item>)) : 'No Reservations yet'
+                }
             </Segment>
             <Confirm
                 open={tabReservationState.open}
@@ -92,8 +117,10 @@ const UpcomingReservations = (props) => {
 
 
 const ProfileTabReservations = () => {
+    const authSelector = useSelector(state => state.authentication)
+
     const [tabState, setTabState] = useState({
-        pointsCurrent: 845,
+        pointsCurrent: authSelector.points,
         pointsUntilReward: 2000
     });
 

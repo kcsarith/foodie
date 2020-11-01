@@ -43,19 +43,17 @@ function HomePage() {
     return (
         <>
             <div className='home'>
-                <div className='home__selectors'>
-                    <div className='home-search'>
-                        <form onSubmit={handleSubmit} className='home-search__form'>
-                            <input onChange={updateTerm} type='text' name="search" value={term} placeholder='Name, Address, City, State' />
-                            <button className='home__button' type='submit'>Let's Go!</button>
-                        </form>
-                        <span className='home-search__icon'>
-                            <SearchSharpIcon />
-                        </span>
-                    </div>
+                <div className='home-search'>
+                    <form onSubmit={handleSubmit} className='home-search__form'>
+                        <input onChange={updateTerm} type='text' name="search" value={term} placeholder='Name, Address, City, State' />
+                        <button className='home__button' type='submit'>Let's Go!</button>
+                    </form>
+                    <span className='home-search__icon'>
+                        <SearchSharpIcon />
+                    </span>
                 </div>
                 <div className='home__img'>
-                    <img src='https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80' alt='' />
+                    <img src='https://images.unsplash.com/photo-1574936145840-28808d77a0b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80' alt='' />
                 </div>
                 <div className='home__body'>
                     <HomeBody data={restData} />

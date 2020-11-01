@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Reservation from './Reservation'
 import Review from './Review';
 import RestaurantSafetyPrecautions from './RestaurantSafetyPrecautions'
-import { Image, Container, Divider, Icon, Tab, Grid, List, Rating, Message, Sticky } from 'semantic-ui-react'
+import { Image, Container, Divider, Icon, Tab, Grid, List, Rating, Message, Button, Sticky, Segment } from 'semantic-ui-react'
 
 
 const panes = [
@@ -79,7 +79,10 @@ Ryan Richardson, General Manager and Partner`;
     }
     return (
         <>
-            <Image src={restarauntImageUrl} centered style={{ width: '80%', height: '400px' }} />
+            <Segment style={{ position: 'relative' }}>
+                <Image centered src={restarauntImageUrl} style={{ width: '80%', height: '400px' }} />
+                <Button style={{ position: 'absolute', right: '20em', top: '4em' }}><Icon name='bookmark' />Save this restaurant</Button>
+            </Segment>
             <div ref={contextRef} style={{ marginTop: '5em' }}>
                 <Container text>
                     <Grid divided='vertically'>

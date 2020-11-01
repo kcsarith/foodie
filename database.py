@@ -10,19 +10,19 @@ with app.app_context():
     db.drop_all()
     db.create_all()
     ian = User(name='Ian', email='ian@aa.io', city='Philadelphia',
-               state="PA", password='password')
+               state="PA", password='password', points=300)
     javier = User(name='Javier', email='javier@aa.io', city='Las Vegas',
-                  state="NV", password='password')
+                  state="NV", password='password', points=400)
     dean = User(name='Dean', email='dean@aa.io', city='Boise',
-                state="ID", password='password')
+                state="ID", password='password', points=500)
     angela = User(name='Angela', email='angela@aa.io', city='Baltimore',
-                  state="MD", password='password')
+                  state="MD", password='password', points=800)
     soonmi = User(name='Soon-Mi', email='soonmi@aa.io', city='Birmingham',
-                  state="AL", password='password')
+                  state="AL", password='password', points=500)
     alissa = User(name='Alissa', email='alissa@aa.io', city='Houston',
-                  state="TX", password='password')
+                  state="TX", password='password', points=600)
     demo = User(name='demo', email='demo@example.com', city='New York',
-                state="NY", password='password')
+                state="NY", password='password', points=745)
 
     fork = Restaurant(name='Fork', address='1234 N. 8th Street, New York, 83703', city='New York',
                       state='NY', avg_rating=4.4, min_price=0, max_price=5, img='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
