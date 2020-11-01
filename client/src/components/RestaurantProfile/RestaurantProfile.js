@@ -12,7 +12,7 @@ const findKeyValueInObjectArrayExists = (array, key, value) => {
     for (let i = 0; i < array.length; i++) {
         const ele = array[i];
         console.log(ele[key], value)
-        if (ele[key] == value) return true;
+        if (ele[key] === value) return true;
     }
     return false;
 }
@@ -349,7 +349,8 @@ const RestaurantProfile = () => {
             setProfileVisualState({ ...profileVisualState, allRatings: allRatings, ...data.restaurant, totalReviews: allRatings.length, avg_rating: avg_rating, favorited: isFavorited })
         }
         fetchData()
-    }, [profileVisualState.id])
+    //make sure renders correctly
+    }, [id, authSelector.id, hashLocationState, profileVisualState])
     const getAllRatings = (restaurantDataArray) => {
         let allRatings = [];
         if (restaurantDataArray) {

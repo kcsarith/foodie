@@ -38,7 +38,7 @@ const ReviewModal = ({ profileVisualState, handleSubmit, state, setState }) => {
                     <Form style={{ marginTop: '2em' }}>
                         <TextArea onChange={handleTextAreaChange} placeholder='Write a review' style={{ minHeight: 100 }} />
                     </Form>
-                    {state.content == '' &&
+                    {state.content === '' &&
                         <Message
                             header='Before submitting a review'
                             content='Please enter a comment before proceeding'
@@ -47,7 +47,7 @@ const ReviewModal = ({ profileVisualState, handleSubmit, state, setState }) => {
                 </Container>
             </Modal.Content>
             <Modal.Actions>
-                <Button color='red' disabled={state.content == '' ? true : false} onClick={handleSubmitReview} primary>
+                <Button color='red' disabled={state.content === '' ? true : false} onClick={handleSubmitReview} primary>
                     Proceed <Icon name='chevron right' />
                 </Button>
             </Modal.Actions>
