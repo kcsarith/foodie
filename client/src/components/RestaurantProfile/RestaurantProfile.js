@@ -353,8 +353,8 @@ const RestaurantProfile = () => {
             setProfileVisualState({ ...profileVisualState, allRatings: allRatings, ...data.restaurant, totalReviews: allRatings.length, avg_rating: avg_rating, favorited: isFavorited })
         }
         fetchData()
-        //make sure renders correctly
-    }, [profileVisualState.id])
+    //make sure renders correctly
+    }, [])
     const getAllRatings = (restaurantDataArray) => {
         let allRatings = [];
         if (restaurantDataArray) {
