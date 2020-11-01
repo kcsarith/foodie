@@ -5,14 +5,14 @@ import { HashLink } from 'react-router-hash-link'
 import Reservation from './Reservation'
 import Review from './Review';
 import RestaurantSafetyPrecautions from './RestaurantSafetyPrecautions'
-import { Image, Container, Divider, Icon, Menu, Grid, List, Rating, Message, Button, Tab, Sticky, Segment, Transition, Confirm } from 'semantic-ui-react'
+import { Image, Container, Divider, Icon, Menu, Grid, List, Rating, Message, Button, Tab, Sticky, Segment, Transition } from 'semantic-ui-react'
 
 import Footer from '../Footer';
 const findKeyValueInObjectArrayExists = (array, key, value) => {
     for (let i = 0; i < array.length; i++) {
         const ele = array[i];
         console.log(ele[key], value)
-        if (ele[key] == value) return true;
+        if (ele[key] === value) return true;
     }
     return false;
 }
@@ -237,24 +237,50 @@ const MenuTabs = () => {
 
 const ListExampleIcon = () => (
     <List>
-        <List.Item as='a'>
-            <Icon name='help' />
+        <List.Item >
+            <Icon name='clock' />
             <List.Content>
-                <List.Header>Floated Icon</List.Header>
+                <List.Header>Hours of Operation</List.Header>
                 <List.Description>
-                    This text will always have a left margin to make sure it sits
-                    alongside your icon
-        </List.Description>
+                    Mon–Thu, 7:00 am–10:00 pm <br />
+                    Fri, Sat 7:00 am–11:00 pm<br />
+                </List.Description>
             </List.Content>
         </List.Item>
-        <List.Item as='a'>
-            <Icon name='right triangle' />
+        <List.Item >
+            <Icon name='food' />
             <List.Content>
-                <List.Header>Icon Alignment</List.Header>
+                <List.Header>Cuisine</List.Header>
                 <List.Description>
-                    Floated icons are by default top aligned. To have an icon top aligned
-                    try this example.
-        </List.Description>
+                    Vegan
+                </List.Description>
+            </List.Content>
+        </List.Item>
+        <List.Item >
+            <Icon name='credit card' />
+            <List.Content>
+                <List.Header>Payment Options</List.Header>
+                <List.Description>
+                    AMEX, Carte Blanche, Diners Club, Discover, JCB, MasterCard, Visa
+                </List.Description>
+            </List.Content>
+        </List.Item>
+        <List.Item >
+            <Icon name='phone' />
+            <List.Content>
+                <List.Header>Phone Number</List.Header>
+                <List.Description>
+                    555-555-5555
+                </List.Description>
+            </List.Content>
+        </List.Item>
+        <List.Item >
+            <Icon name='bell' />
+            <List.Content>
+                <List.Header>Catering</List.Header>
+                <List.Description>
+                    We have glass-enclosed private & semi private function facilities located directly across from The Bellagio Water Show, as well as private rooms off of our main dining area, with oversized chandeliers, plush red velvet drapes, and richly stained mahogany. From corporate events, to formal wedding receptions, you’ll feel right at home in our establishment. Capacity: Our 2 Private Rooms have seating for up to 80 guests. The glass-enclosed Pavilion has semi-private areas accommodating groups 80. The entire Pavilion & outdoor Patio is also available for buyouts of up to 350.
+                </List.Description>
             </List.Content>
         </List.Item>
     </List>
@@ -323,7 +349,8 @@ const RestaurantProfile = () => {
             setProfileVisualState({ ...profileVisualState, allRatings: allRatings, ...data.restaurant, totalReviews: allRatings.length, avg_rating: avg_rating, favorited: isFavorited })
         }
         fetchData()
-    }, [profileVisualState.id])
+    //make sure renders correctly
+    }, [id, authSelector.id, hashLocationState, profileVisualState])
     const getAllRatings = (restaurantDataArray) => {
         let allRatings = [];
         if (restaurantDataArray) {
@@ -407,12 +434,16 @@ Ryan Richardson, General Manager and Partner`;
                                 }
                                 <h1> {profileVisualState.name}</h1>
                                 <Divider />
-                                <Rating rating={profileVisualState.allRatings ? Math.round(profileVisualState.avg_rating) : 0} maxRating={5} disabled />
+                                <Rating rating={profileVisualState.allRatings.length ? Math.round(profileVisualState.avg_rating) : 0} maxRating={5} disabled />
                                 {profileVisualState.allRatings.length ?
                                     <><span>{profileVisualState.avg_rating} <Icon name='pencil alternate' /> {profileVisualState.totalReviews} review(s)</span></> :
                                     <span>No Ratings</span>
                                 }
-                                {placeholderText.split('\n').map(ele => <p>{ele}</p>)}
+                                {placeholderText.split('\n').map((ele, index) =>
+                                  <div key={`${index}-${ele.id}`}>
+                                      <p>{ele}</p>
+                                  </div>
+                                )}
                                 <RestaurantSafetyPrecautions />
                                 <h2 id='menu'>Menu</h2>
                                 <Divider />

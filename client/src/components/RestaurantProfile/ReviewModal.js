@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Icon, Message, Select, Rating, Form, Image, Modal, Container, TextArea, Checkbox } from 'semantic-ui-react'
+import { Button, Icon, Message, Rating, Form, Modal, Container, TextArea } from 'semantic-ui-react'
 
 const ReviewModal = ({ profileVisualState, handleSubmit, state, setState }) => {
     const [open, setOpen] = React.useState(false)
@@ -22,7 +22,10 @@ const ReviewModal = ({ profileVisualState, handleSubmit, state, setState }) => {
         <Modal
             open={open}
             onClose={() => setOpen(false)}
-            onOpen={() => setOpen(true)}
+            onOpen={() => {
+                setState({ ...state, currentReviewEdit: null, });
+                setOpen(true)
+            }}
             trigger={<Button color='red' fluid>WRITE A REVIEW</Button>}
         >
             <Modal.Header as='h1'>Write a review!</Modal.Header>
@@ -35,7 +38,7 @@ const ReviewModal = ({ profileVisualState, handleSubmit, state, setState }) => {
                     <Form style={{ marginTop: '2em' }}>
                         <TextArea onChange={handleTextAreaChange} placeholder='Write a review' style={{ minHeight: 100 }} />
                     </Form>
-                    {state.content == '' &&
+                    {state.content === '' &&
                         <Message
                             header='Before submitting a review'
                             content='Please enter a comment before proceeding'
@@ -44,7 +47,7 @@ const ReviewModal = ({ profileVisualState, handleSubmit, state, setState }) => {
                 </Container>
             </Modal.Content>
             <Modal.Actions>
-                <Button color='red' disabled={state.content == '' ? true : false} onClick={handleSubmitReview} primary>
+                <Button color='red' disabled={state.content === '' ? true : false} onClick={handleSubmitReview} primary>
                     Proceed <Icon name='chevron right' />
                 </Button>
             </Modal.Actions>
