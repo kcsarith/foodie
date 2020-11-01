@@ -23,13 +23,18 @@ const UpcomingReservations = (props) => {
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
     const dispatch = useDispatch();
 
-    async function fetchReservData() {
+    async function fetchReservDataList() {
         const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
         const data = await res.json()
         setReserveList(data.reservation)
     }
 
     useEffect(() => {
+        async function fetchReservData() {
+            const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
+            const data = await res.json()
+            setReserveList(data.reservation)
+        }
         fetchReservData()
     }, [user_id])
 
@@ -53,7 +58,7 @@ const UpcomingReservations = (props) => {
 
 
         if (response.ok) {
-            fetchReservData()
+            fetchReservDataList()
 
             const set_point = -200;
             const res = await fetchWithCSRF(`/api/home/restaurant/setpoint/${user_id}`, {
