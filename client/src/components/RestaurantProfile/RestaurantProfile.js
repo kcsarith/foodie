@@ -11,7 +11,6 @@ import Footer from '../Footer';
 const findKeyValueInObjectArrayExists = (array, key, value) => {
     for (let i = 0; i < array.length; i++) {
         const ele = array[i];
-        console.log(ele[key], value)
         if (ele[key] === value) return true;
     }
     return false;
@@ -349,7 +348,6 @@ const RestaurantProfile = () => {
             if (authSelector.id) {
                 const res3 = await fetch(`/api/users/${authSelector.id}/favorites`)
                 const data3 = await res3.json()
-                console.log(data3.favorites)
                 isFavorited = findKeyValueInObjectArrayExists(data3.favorites, 'id', profileVisualState.id)
             }
             setProfileVisualState({ ...profileVisualState, allRatings: allRatings, ...data.restaurant, totalReviews: allRatings.length, avg_rating: avg_rating, favorited: isFavorited })

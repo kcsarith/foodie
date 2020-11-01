@@ -45,7 +45,6 @@ export default function Reservation({ restaurantName }) {
         setReservationState({ ...reservationState, [id]: value })
     }
     function handleSelectorChange(e, props) {
-        console.log(props)
         setReservationState({ ...reservationState, 'group': props.value })
     }
 
