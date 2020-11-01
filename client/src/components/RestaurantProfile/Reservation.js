@@ -46,7 +46,7 @@ export default function Reservation({ restaurantName }) {
     }
     function handleSelectorChange(e, props) {
         console.log(props)
-        setReservationState({ ...reservationState, ['group']: props.value })
+        setReservationState({ ...reservationState, 'group': props.value })
     }
 
     const handleSubmit = async (e) => {

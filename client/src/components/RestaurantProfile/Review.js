@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import './Review.css';
 import { Rating, Header, Divider, Container, Icon, Menu, Dropdown, Comment, Pagination, Segment, Button, Form, Confirm } from 'semantic-ui-react'
 import ReviewModal from './ReviewModal'
-import { set } from 'js-cookie';
+
 
 const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, setHashLocationState }) => {
   const authSelector = useSelector(state => state.authentication);
@@ -96,7 +96,6 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
     textAreaEle.focus();
   }
   const onEditCommentRating = (e, props) => {
-    const commentClicked = props.id.split('review-rating-id_')[1]
     console.log(props);
     setProfileVisualState({ ...profileVisualState, rating: props.rating })
   }
@@ -175,7 +174,7 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
                 <Comment.Avatar src='https://central.wisd.us/uploaded/CENTRAL/Pics/Staff/No_photo.png' />
                 <Comment.Content>
                   <Comment.Author>{review.user_name}</Comment.Author>
-                  {state.currentReviewEdit != review.id ?
+                  {state.currentReviewEdit !== review.id ?
                     <>
                       <Comment.Metadata>
                         <div><Rating rating={review.rating} maxRating={5} disabled />Today at 5:42PM</div>
@@ -202,7 +201,7 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
             )
         }
         )}
-        {reviews.length == 0 && <Container style={{ minHeight: 500 }}><h1 > NO REVIEWS</h1></Container>}
+        {reviews.length === 0 && <Container style={{ minHeight: 500 }}><h1 > NO REVIEWS</h1></Container>}
       </Comment.Group>
       <Segment basic
         style={{

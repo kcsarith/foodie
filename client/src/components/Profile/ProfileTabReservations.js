@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Header, Confirm, Item, Icon, Progress, Segment, Transition } from 'semantic-ui-react';
+import { Header, Confirm, Item, Progress, Segment } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import './ProfileTabReservations.css'
 import { setPoints } from '../../store/authentication';
@@ -71,7 +71,7 @@ const UpcomingReservations = (props) => {
 
     }
 
-    
+
 
 
     return (

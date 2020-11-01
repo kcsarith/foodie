@@ -5,14 +5,14 @@ import { HashLink } from 'react-router-hash-link'
 import Reservation from './Reservation'
 import Review from './Review';
 import RestaurantSafetyPrecautions from './RestaurantSafetyPrecautions'
-import { Image, Container, Divider, Icon, Menu, Grid, List, Rating, Message, Button, Tab, Sticky, Segment, Transition, Confirm } from 'semantic-ui-react'
+import { Image, Container, Divider, Icon, Menu, Grid, List, Rating, Message, Button, Tab, Sticky, Segment, Transition } from 'semantic-ui-react'
 
 import Footer from '../Footer';
 const findKeyValueInObjectArrayExists = (array, key, value) => {
     for (let i = 0; i < array.length; i++) {
         const ele = array[i];
         console.log(ele[key], value)
-        if (ele[key] == value) return true;
+        if (ele[key] === value) return true;
     }
     return false;
 }
@@ -349,7 +349,8 @@ const RestaurantProfile = () => {
             setProfileVisualState({ ...profileVisualState, allRatings: allRatings, ...data.restaurant, totalReviews: allRatings.length, avg_rating: avg_rating, favorited: isFavorited })
         }
         fetchData()
-    }, [profileVisualState.id])
+    //make sure renders correctly
+    }, [id, authSelector.id, hashLocationState, profileVisualState])
     const getAllRatings = (restaurantDataArray) => {
         let allRatings = [];
         if (restaurantDataArray) {
@@ -438,7 +439,11 @@ Ryan Richardson, General Manager and Partner`;
                                     <><span>{profileVisualState.avg_rating} <Icon name='pencil alternate' /> {profileVisualState.totalReviews} review(s)</span></> :
                                     <span>No Ratings</span>
                                 }
-                                {placeholderText.split('\n').map(ele => <p>{ele}</p>)}
+                                {placeholderText.split('\n').map((ele, index) =>
+                                  <div key={`${index}-${ele.id}`}>
+                                      <p>{ele}</p>
+                                  </div>
+                                )}
                                 <RestaurantSafetyPrecautions />
                                 <h2 id='menu'>Menu</h2>
                                 <Divider />
