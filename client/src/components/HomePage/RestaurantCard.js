@@ -42,11 +42,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function RestaurantCard({ rest }) {
+export default function RestaurantCard({ rest, favorited, homeBodyVisual, setHomeBodyVisual }) {
     const classes = useStyles();
     const [expanded, setExpanded] = useState(false);
-    const [color, setColor] = useState(false)
     const [reviews, setReviews] = useState([])
+    const [cardVisualState, setCardVisualState] = useState({
+        favorited: favorited,
+    })
     const history = useHistory()
     const userId = useSelector(state => state.authentication.id)
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
@@ -64,22 +66,24 @@ export default function RestaurantCard({ rest }) {
     async function handleFavorite() {
         const id = userId
         const restId = rest.id
-        setColor(!color)
-        if (color === true) {
+        if (cardVisualState.favorited) {
             await fetchWithCSRF(`/api/users/${id}/favorites/delete/${restId}`, {
                 method: 'DELETE'
             })
-            alert(`${rest.name} removed from favorites`)
+            setCardVisualState({ ...cardVisualState, favorited: false });
+            let indexOfDeleted = homeBodyVisual.favorites.findIndex(ele => ele.id === restId);
+            setHomeBodyVisual({ ...homeBodyVisual, favorites: homeBodyVisual.favorites.splice(indexOfDeleted, 1) });
+            alert(`${rest.name} removed from favorites ${indexOfDeleted}`)
         }
         else {
             await fetchWithCSRF(`/api/users/${userId}/favorites`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    user_id: id,
                     restaurant_id: restId
                 })
             })
+            setCardVisualState({ ...cardVisualState, favorited: true });
             alert(`${rest.name} added from favorites`)
         }
     }
@@ -115,9 +119,7 @@ export default function RestaurantCard({ rest }) {
                 </CardContent>
                 <CardActions disableSpacing>
                     <IconButton aria-label="add to favorites" onClick={handleFavorite}>
-                        <FavoriteIcon className={clsx(classes.likeNone, {
-                            [classes.likeRed]: color,
-                        })} />
+                        <FavoriteIcon className={cardVisualState.favorited ? classes.likeRed : classes.likeNone} />
                     </IconButton>
                     <IconButton
                         className={clsx(classes.expand, {
