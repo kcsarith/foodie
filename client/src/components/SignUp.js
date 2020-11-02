@@ -142,12 +142,14 @@ function SignUp() {
     }
   }
 
-  const handleSubmit = async (e) => {
-    let points = 200;
-    e.preventDefault();
-    setSubmitted(true);
-    dispatch(signup(name, email, password, city, state, points));
-  }
+    const handleSubmit = async (e) => {
+        let points = 200;
+        e.preventDefault();
+        setSubmitted(true);
+        if (password && email && name) {
+          dispatch(signup(name, email, password, city, state, points));
+        }
+    }
 
   if (currentUserId) {
     return <Redirect to="/" />;
