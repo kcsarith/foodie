@@ -28,23 +28,22 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
     switch (props.value) {
       case 'Newest':
         newSortedReviews = reviews.sort((currentEle, nextEle) => nextEle.id - currentEle.id);
-        setState({ ...state, dropDownSort: 'Newest' });
+        setState({ ...state, dropDownSort: 'Newest', });
         break;
       case 'Oldest':
-        setState({ ...state, dropDownSort: 'Oldest' });
         newSortedReviews = reviews.sort((currentEle, nextEle) => currentEle.id - nextEle.id);
+        setState({ ...state, dropDownSort: 'Oldest' });
         break;
       case 'Highest Rated':
-        setState({ ...state, dropDownSort: 'Highest Rated' });
         newSortedReviews = reviews.sort((currentEle, nextEle) => nextEle.rating - currentEle.rating);
+        setState({ ...state, dropDownSort: 'Highest Rated' });
         break;
       case 'Lowest Rated':
-        setState({ ...state, dropDownSort: 'Lowest Rated' });
         newSortedReviews = reviews.sort((currentEle, nextEle) => currentEle.rating - nextEle.rating);
+        setState({ ...state, dropDownSort: 'Lowest Rated' });
         break;
       default:
     }
-
     setReviews(newSortedReviews)
   }
   const ReviewsSortingDropdown = () => {
@@ -65,10 +64,10 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
   }
 
   async function handleReviews() {
-    const restaurant_id = profileVisualState.id
-    const user_id = authSelector.id
-    const content = profileVisualState.content;
-    const rating = profileVisualState.rating;
+    const restaurant_id = state.restaurant_id
+    const user_id = state.user_id
+    const content = state.content;
+    const rating = state.rating;
 
     const res = await authSelector.csrf(`/api/home/restaurant/${profileVisualState.id}`, {
       method: "POST",
@@ -88,23 +87,20 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
       switch (state.dropDownSort) {
         case 'Newest':
           newSortedReviews = data.reviews.sort((currentEle, nextEle) => nextEle.id - currentEle.id);
-          setState({ ...state, dropDownSort: 'Newest' });
           break;
         case 'Oldest':
-          setState({ ...state, dropDownSort: 'Oldest' });
           newSortedReviews = data.reviews.sort((currentEle, nextEle) => currentEle.id - nextEle.id);
           break;
         case 'Highest Rated':
-          setState({ ...state, dropDownSort: 'Highest Rated' });
           newSortedReviews = data.reviews.sort((currentEle, nextEle) => nextEle.rating - currentEle.rating);
           break;
         case 'Lowest Rated':
-          setState({ ...state, dropDownSort: 'Lowest Rated' });
           newSortedReviews = data.reviews.sort((currentEle, nextEle) => currentEle.rating - nextEle.rating);
           break;
         default:
       }
       setReviews(newSortedReviews)
+      setState({ ...state, currentReviewEdit: null, confirmMessageOpen: false })
     } else {
       alert('Please enter a comment')
     }
@@ -112,11 +108,12 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
 
   const onClickEditReview = async (e, props) => {
     const commentClicked = props.id.split('review-button-id_')[1]
-    await setState({ ...state, currentReviewEdit: commentClicked, editCommentText: props.value })
+    await setState({ ...state, currentReviewEdit: commentClicked, content: props.value, rating: props.rating })
+    await setProfileVisualState({ ...profileVisualState, content: props.value, rating: props.rating })
+    console.log(props.value)
     const textAreaEle = document.getElementById(`review-text-area-id_${commentClicked}`);
     if (textAreaEle) {
       textAreaEle.focus();
-      await setProfileVisualState({ ...profileVisualState, content: textAreaEle.value, rating: 3 })
     }
   }
   const onEditCommentRating = (e, props) => {
@@ -124,7 +121,8 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
   }
 
   const onChangeEditReviewTextArea = (e, props) => {
-    setState({ ...state, editCommentText: props.value })
+    setState({ ...state, content: props.value })
+    setProfileVisualState({ ...profileVisualState, content: props.value })
   }
   const onClickAddReply = (e, props) => {
     setState({ ...state, confirmMessageOpen: true, confirmMessage: 'Editing this comment' })
@@ -135,10 +133,6 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
     })
   }
   const onConfirmReview = (e, props) => {
-    setState({
-      ...state, currentReviewEdit: null, confirmMessageOpen: false
-    })
-    alert('Note that there is no route made for patching a review it is just duplicating a review.')
     handleReviews();
   }
   const onBlurReviewTextArea = (e, props) => {
@@ -193,21 +187,12 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
   return (
     <>
       <ReviewsSortingDropdown />
-      <ReviewModal profileVisualState={profileVisualState} handleSubmit={handleSubmit} state={state} setState={setState} />
-      {/* {reviews.map((review, index) =>
-        <div key={`${index}-${review.restaurant_id}-${review.user_id}`}>
-          <Rating rating={review.rating} maxRating={5} disabled />
-          <div className='container__reviews___star'>
-            <p className='container__reviews__text'>{review.content}</p>
-          </div>
-          <div className='container__reviews__text'>
-            <h6 className='container__reviews__readmore' >try something else</h6>
-          </div>
-        </div>
-      )} */}
-      <h2>{profileVisualState.totalReviews} Reviews</h2>
+      <ReviewModal profileVisualState={profileVisualState} setProfileVisualState={setProfileVisualState} handleSubmit={handleSubmit} state={state} setState={setState} />
+      {(reviews.length > 0) &&
+        <h2>{profileVisualState.totalReviews} Review(s)</h2>
+      }
       <Comment.Group size='small' style={{ minHeight: 500 }}>
-        {reviews.length && reviews.map((review, index) => {
+        {(reviews.length > 0) && reviews.map((review, index) => {
           if (index >= (state.currentPage - 1) * 10 && index < state.currentPage * 10) {
             return (
               <Comment key={index}>
@@ -221,7 +206,7 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
                       </Comment.Metadata>
                       <Comment.Text>{review.content}</Comment.Text>
                       {review.user_id === authSelector.id &&
-                        <Comment.Action as={Button} size='mini' color='red' id={`review-button-id_${review.id}`} value={review.content} onClick={onClickEditReview}>Edit</Comment.Action>
+                        <Comment.Action as={Button} size='mini' color='red' id={`review-button-id_${review.id}`} value={review.content} rating={review.rating} onClick={onClickEditReview}>Edit</Comment.Action>
                       }
                     </>
                     :
@@ -231,7 +216,7 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
                       </Comment.Metadata>
                       <Form reply>
                         <Form.TextArea onBlur={onBlurReviewTextArea} id={`review-text-area-id_${review.id}`} defaultValue={review.content} onChange={onChangeEditReviewTextArea} />
-                        <Button content='Add Reply' onClick={onClickAddReply} disabled={!state.editCommentText} labelPosition='left' icon='edit' primary />
+                        <Button content='Add Reply' onClick={onClickAddReply} disabled={!state.content} labelPosition='left' icon='edit' primary />
                       </Form>
                     </Segment>
                   }
@@ -241,11 +226,11 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
             )
           }
           else {
-            return <></>
+            return
           }
         }
         )}
-        {reviews.length === 0 && <Container style={{ minHeight: 500 }}><h1 > NO REVIEWS</h1></Container>}
+        {(!reviews.length) && <Container style={{ minHeight: 500 }}><h1 >NO REVIEWS</h1></Container>}
       </Comment.Group>
       <Segment basic
         style={{
@@ -253,16 +238,18 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
           alignItems: 'center',
           justifyContent: 'center'
         }}>
-        <Pagination
-          defaultActivePage={1}
-          onPageChange={handlePaginationChange}
-          ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
-          firstItem={{ content: <Icon name='angle double left' />, icon: true }}
-          lastItem={{ content: <Icon name='angle double right' />, icon: true }}
-          prevItem={{ content: <Icon name='angle left' />, icon: true }}
-          nextItem={{ content: <Icon name='angle right' />, icon: true }}
-          totalPages={Math.ceil(profileVisualState.totalReviews / 10)}
-        />
+        {(reviews.length > 0) &&
+          <Pagination
+            defaultActivePage={1}
+            onPageChange={handlePaginationChange}
+            ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
+            firstItem={{ content: <Icon name='angle double left' />, icon: true }}
+            lastItem={{ content: <Icon name='angle double right' />, icon: true }}
+            prevItem={{ content: <Icon name='angle left' />, icon: true }}
+            nextItem={{ content: <Icon name='angle right' />, icon: true }}
+            totalPages={Math.ceil(profileVisualState.totalReviews / 10)}
+          />
+        }
       </Segment>
       <Confirm
         size='mini'

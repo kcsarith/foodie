@@ -38,7 +38,7 @@ function HomeBody({ data }) {
             }
         }
         fetchData();
-    }, [authSelector.id]);
+    }, [homeBodyVisual, authSelector.id]);
 
 
     useEffect(() => {

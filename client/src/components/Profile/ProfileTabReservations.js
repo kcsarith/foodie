@@ -32,8 +32,12 @@ const UpcomingReservations = (props) => {
     useEffect(() => {
         async function fetchReservData() {
             const res = await fetch(`/api/home/restaurant/reservationlist/${user_id}`)
-            const data = await res.json()
-            setReserveList(data.reservation)
+            let newSortedReviews = [];
+            if (res.ok) {
+                const data = await res.json()
+                newSortedReviews = data.reservation.sort((currentEle, nextEle) => nextEle.id - currentEle.id);
+                setReserveList(newSortedReviews)
+            }
         }
         fetchReservData()
     }, [user_id])
@@ -66,8 +70,8 @@ const UpcomingReservations = (props) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     set_point
-                    }),
-                })
+                }),
+            })
             const data = await res.json();
             let points = data["user"].points;
             dispatch(setPoints(points));
