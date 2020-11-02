@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import TimePickers from '../HomePage/TimePicker'
 import { useHistory } from 'react-router-dom';
 import { Segment, Confirm, Form, Button, Dropdown, Message } from 'semantic-ui-react';
 import './Reservation.css'
@@ -107,11 +106,22 @@ export default function Reservation({ restaurantName }) {
                         <Dropdown placeholder='1 person?' defaultValue={0} options={peopleOptions} onChange={handleSelectorChange} search selection />
                     </Form.Field>
                     <Form.Field>
-                        <label>Last Name</label>
+                        <label>Date</label>
                         <input type="date" id="date" defaultValue={now} onChange={handleChange} />
                         <div className='reserv__time' id="time" onChange={handleChange}>
                             <label htmlFor="time">Time</label>
-                            <TimePickers />
+                            <input
+                                id="time"
+                                label="Time"
+                                type="time"
+                                defaultValue="19:30"
+                            // inputLabelProps={{
+                            //     shrink: true,
+                            // }}
+                            // inputProps={{
+                            //     step: 300, // 5 min
+                            // }}
+                            />
                         </div>
                     </Form.Field>
                     <Button color='red' type='submit'>Find a table</Button>
