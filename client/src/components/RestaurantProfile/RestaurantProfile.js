@@ -430,7 +430,6 @@ Ryan Richardson, General Manager and Partner`;
                                 {profileVisualState.visible &&
                                     <Message
                                         icon='warning circle'
-                                        color='red'
                                         onDismiss={handleDismissTopMessage}
                                         header='This restaurant added safety precaution details'
                                         content='This includes info about cleaning, sanitizing, social distancing, and usage of personal protective equipment.'
