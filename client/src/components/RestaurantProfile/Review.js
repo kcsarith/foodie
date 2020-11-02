@@ -14,6 +14,7 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
     user_id: authSelector.id,
     content: '',
     rating: 3,
+    oldRating: 3,
     dropDownSort: 'Newest',
     currentPage: 1,
     currentReviewEdit: null,
@@ -121,6 +122,14 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
         reviewsCopy[patchIndex].content = content;
         reviewsCopy[patchIndex].rating = rating;
         await setReviews(reviewsCopy)
+        let allRatingsCopy = profileVisualState.allRatings
+        const indexToEdit = allRatingsCopy.indexOf(state.oldRating);
+        console.log(state.oldRating)
+        allRatingsCopy[indexToEdit] = rating
+
+        const sum = allRatingsCopy.reduce((accum, currentValue) => (accum + currentValue));
+        const avg_rating = (sum / allRatingsCopy.length).toFixed(2);
+        await setProfileVisualState({ ...profileVisualState, allRatings: allRatingsCopy, avg_rating: avg_rating })
         // const newAllRatings = [...profileVisualState.allRatings, rating]
         // const newTotalReviews = profileVisualState.totalReviews + 1
         // const new_avg_rating = (newAllRatings.reduce((accum, currentValue) => (accum + currentValue)) / newAllRatings.length).toFixed(2)
@@ -138,7 +147,7 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
 
   const onClickEditReview = async (e, props) => {
     const commentClicked = props.id.split('review-button-id_')[1]
-    await setState({ ...state, currentReviewEdit: commentClicked, content: props.value, rating: props.rating })
+    await setState({ ...state, currentReviewEdit: commentClicked, content: props.value, rating: props.rating, oldRating: props.rating })
     await setProfileVisualState({ ...profileVisualState, content: props.value, rating: props.rating })
     const textAreaEle = document.getElementById(`review-text-area-id_${commentClicked}`);
     if (textAreaEle) {
@@ -243,7 +252,7 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
                       </Comment.Metadata>
                       <Form reply>
                         <Form.TextArea onBlur={onBlurReviewTextArea} id={`review-text-area-id_${review.id}`} defaultValue={review.content} onChange={onChangeEditReviewTextArea} />
-                        <Button content='Add Reply' onClick={onClickAddReply} disabled={!state.content} labelPosition='left' icon='edit' primary />
+                        <Button content='Edit Review' onClick={onClickAddReply} disabled={!state.content} labelPosition='left' icon='edit' primary />
                       </Form>
                     </Segment>
                   }
