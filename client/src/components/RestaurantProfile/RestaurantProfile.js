@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link'
 import Reservation from './Reservation'
 import Review from './Review';
@@ -16,7 +16,7 @@ const findKeyValueInObjectArrayExists = (array, key, value) => {
     return false;
 }
 
-
+const { id } = useParams;
 const RestaurantTabs = ({ hashLocationState, setHashLocationState }) => {
     const [scrollTop, setScrollTop] = useState(0);
     const onScroll = () => {
@@ -397,7 +397,7 @@ Ryan Richardson, General Manager and Partner`;
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    restaurant_id: profileVisualState.id
+                    restaurant_id: id
                 })
             })
             if (res.ok) {
