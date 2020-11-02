@@ -10,11 +10,9 @@ const ReviewModal = ({ profileVisualState, handleSubmit, state, setState }) => {
         handleSubmit();
     }
     const handleRate = (e, props) => {
-   
         setState({ ...state, rating: props.rating })
     }
     const handleTextAreaChange = (e, props) => {
-    
         setState({ ...state, content: props.value })
     }
     return (

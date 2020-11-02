@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import './Review.css';
-import { Rating, Header, Divider, Container, Icon, Menu, Dropdown, Comment, Pagination, Segment, Button, Form, Confirm } from 'semantic-ui-react'
+import { Rating, Divider, Container, Icon, Menu, Dropdown, Comment, Pagination, Segment, Button, Form, Confirm } from 'semantic-ui-react'
 import ReviewModal from './ReviewModal'
 
 
-const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, setHashLocationState }) => {
+const Review = ({ profileVisualState, setProfileVisualState }) => {
   const authSelector = useSelector(state => state.authentication);
   const [reviews, setReviews] = useState([]);
   const [state, setState] = useState({
@@ -28,20 +28,24 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
     switch (props.value) {
       case 'Newest':
         newSortedReviews = reviews.sort((currentEle, nextEle) => nextEle.id - currentEle.id);
+        setState({ ...state, dropDownSort: 'Newest' });
         break;
       case 'Oldest':
+        setState({ ...state, dropDownSort: 'Oldest' });
         newSortedReviews = reviews.sort((currentEle, nextEle) => currentEle.id - nextEle.id);
         break;
       case 'Highest Rated':
+        setState({ ...state, dropDownSort: 'Highest Rated' });
         newSortedReviews = reviews.sort((currentEle, nextEle) => nextEle.rating - currentEle.rating);
         break;
       case 'Lowest Rated':
+        setState({ ...state, dropDownSort: 'Lowest Rated' });
         newSortedReviews = reviews.sort((currentEle, nextEle) => currentEle.rating - nextEle.rating);
         break;
       default:
     }
+
     setReviews(newSortedReviews)
-    setState({ ...state });
   }
   const ReviewsSortingDropdown = () => {
     const options = [
@@ -54,7 +58,7 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
       <>
         <h4>Sort by</h4>
         <Menu compact style={{ marginBottom: '3em' }}>
-          <Dropdown search onChange={handleOnReviewSortChange} selection placeholder='Newest' options={options} />
+          <Dropdown value={state.dropDownSort} onChange={handleOnReviewSortChange} selection placeholder='Newest' options={options} />
         </Menu>
       </>
     )
@@ -71,7 +75,10 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ restaurant_id, user_id, content, rating }),
     });
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
     if (res.ok) {
       const data = await res.json()
       const newAllRatings = [...profileVisualState.allRatings, rating]
@@ -80,7 +87,28 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
       setProfileVisualState({
         ...profileVisualState, allRatings: newAllRatings, totalReviews: newTotalReviews, avg_rating: new_avg_rating
       });
-      setReviews(data.reviews)
+
+      let newSortedReviews
+      switch (state.dropDownSort) {
+        case 'Newest':
+          newSortedReviews = data.reviews.sort((currentEle, nextEle) => nextEle.id - currentEle.id);
+          setState({ ...state, dropDownSort: 'Newest' });
+          break;
+        case 'Oldest':
+          setState({ ...state, dropDownSort: 'Oldest' });
+          newSortedReviews = data.reviews.sort((currentEle, nextEle) => currentEle.id - nextEle.id);
+          break;
+        case 'Highest Rated':
+          setState({ ...state, dropDownSort: 'Highest Rated' });
+          newSortedReviews = data.reviews.sort((currentEle, nextEle) => nextEle.rating - currentEle.rating);
+          break;
+        case 'Lowest Rated':
+          setState({ ...state, dropDownSort: 'Lowest Rated' });
+          newSortedReviews = data.reviews.sort((currentEle, nextEle) => currentEle.rating - nextEle.rating);
+          break;
+        default:
+      }
+      setReviews(newSortedReviews)
     } else {
       alert('Please enter a comment')
     }
@@ -90,8 +118,10 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
     const commentClicked = props.id.split('review-button-id_')[1]
     await setState({ ...state, currentReviewEdit: commentClicked, editCommentText: props.value })
     const textAreaEle = document.getElementById(`review-text-area-id_${commentClicked}`);
-    await setProfileVisualState({ ...profileVisualState, content: textAreaEle.value, rating: 3 })
-    textAreaEle.focus();
+    if (textAreaEle) {
+      textAreaEle.focus();
+      await setProfileVisualState({ ...profileVisualState, content: textAreaEle.value, rating: 3 })
+    }
   }
   const onEditCommentRating = (e, props) => {
     setProfileVisualState({ ...profileVisualState, rating: props.rating })
@@ -112,21 +142,31 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
     setState({
       ...state, currentReviewEdit: null, confirmMessageOpen: false
     })
+    alert('Note that there is no route made for patching a review it is just duplicating a review.')
     handleReviews();
   }
   const onBlurReviewTextArea = (e, props) => {
+<<<<<<< HEAD
  
     if (state.confirmMessageOpen) {
+=======
+    const relatedTarget = e.relatedTarget
+    if (relatedTarget) {
+      // console.log(relatedTarget.classList.value === 'ui icon primary left labeled button')
+      // if (!relatedTarget.classList.value === 'ui icon primary left labeled button') {
+      // }
+    } else {
+>>>>>>> main
       setState({ ...state, currentReviewEdit: null })
     }
   }
-  let reviewsClientRect;
   useEffect(() => {
     async function fetchData() {
       if (profileVisualState.id) {
         const res = await fetch(`/api/home/restaurant/${profileVisualState.id}`)
         if (res.ok) {
           const data = await res.json()
+<<<<<<< HEAD
           const newestSortedReviews = data.reviews.sort((currentEle, nextEle) => nextEle.id - currentEle.id);
           setReviews(newestSortedReviews)
         }
@@ -135,11 +175,36 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
           reviewsClientRect = reviewsEle.getBoundingClientRect()
 
           setHashLocationState({ ...hashLocationState, reviewsY: reviewsClientRect.top });
+=======
+
+          let newSortedReviews
+          switch (state.dropDownSort) {
+            case 'Newest':
+              newSortedReviews = data.reviews.sort((currentEle, nextEle) => nextEle.id - currentEle.id);
+              setState({ ...state, dropDownSort: 'Newest' });
+              break;
+            case 'Oldest':
+              setState({ ...state, dropDownSort: 'Oldest' });
+              newSortedReviews = data.reviews.sort((currentEle, nextEle) => currentEle.id - nextEle.id);
+              break;
+            case 'Highest Rated':
+              setState({ ...state, dropDownSort: 'Highest Rated' });
+              newSortedReviews = data.reviews.sort((currentEle, nextEle) => nextEle.rating - currentEle.rating);
+              break;
+            case 'Lowest Rated':
+              setState({ ...state, dropDownSort: 'Lowest Rated' });
+              newSortedReviews = data.reviews.sort((currentEle, nextEle) => currentEle.rating - nextEle.rating);
+              break;
+            default:
+          }
+
+          setReviews(newSortedReviews)
+>>>>>>> main
         }
       }
     }
     fetchData()
-  }, [profileVisualState]);
+  }, [profileVisualState.id]);
 
   const handlePaginationChange = (e, props) => {
     setState({ ...state, currentPage: props.activePage });
@@ -147,7 +212,6 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
 
   return (
     <>
-      <Header as='h3' id='reviews' dividing> Reviews</Header>
       <ReviewsSortingDropdown />
       <ReviewModal profileVisualState={profileVisualState} handleSubmit={handleSubmit} state={state} setState={setState} />
       {/* {reviews.map((review, index) =>
@@ -164,13 +228,13 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
       <h2>{profileVisualState.totalReviews} Reviews</h2>
       <Comment.Group size='small' style={{ minHeight: 500 }}>
         {reviews.length && reviews.map((review, index) => {
-          if (index >= (state.currentPage - 1) * 10 && index < state.currentPage * 10)
+          if (index >= (state.currentPage - 1) * 10 && index < state.currentPage * 10) {
             return (
               <Comment key={index}>
                 <Comment.Avatar src='https://central.wisd.us/uploaded/CENTRAL/Pics/Staff/No_photo.png' />
                 <Comment.Content>
                   <Comment.Author>{review.user_name}</Comment.Author>
-                  {state.currentReviewEdit !== review.id ?
+                  {parseInt(state.currentReviewEdit) !== review.id ?
                     <>
                       <Comment.Metadata>
                         <div><Rating rating={review.rating} maxRating={5} disabled />Today at 5:42PM</div>
@@ -195,6 +259,10 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
                 <Divider />
               </Comment>
             )
+          }
+          else {
+            return <></>
+          }
         }
         )}
         {reviews.length === 0 && <Container style={{ minHeight: 500 }}><h1 > NO REVIEWS</h1></Container>}

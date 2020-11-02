@@ -5,7 +5,7 @@ import { HashLink } from 'react-router-hash-link'
 import Reservation from './Reservation'
 import Review from './Review';
 import RestaurantSafetyPrecautions from './RestaurantSafetyPrecautions'
-import { Image, Container, Divider, Icon, Menu, Grid, List, Rating, Message, Button, Tab, Sticky, Segment, Transition } from 'semantic-ui-react'
+import { Image, Container, Divider, Icon, Menu, Grid, List, Rating, Message, Button, Tab, Sticky, Segment, Header, Transition } from 'semantic-ui-react'
 
 import Footer from '../Footer';
 const findKeyValueInObjectArrayExists = (array, key, value) => {
@@ -31,7 +31,7 @@ const RestaurantTabs = ({ hashLocationState, setHashLocationState }) => {
         setHashLocationState({ ...hashLocationState, activeTab: props.name })
     }
     return (
-        <Menu pointing secondary color='white' fluid style={{ backgroundColor: 'white' }}>
+        <Menu pointing secondary fluid style={{ backgroundColor: 'white' }}>
             <HashLink smooth to='#overview' >
                 <Menu.Item
                     name='Overview'
@@ -88,24 +88,24 @@ const MenuTabs = () => {
                 <Tab.Pane>
                     <h4>{forTheTable.name}</h4>
                     <List>
-                        {forTheTable.menu.map(ele =>
-                            <List.Item>
+                        {forTheTable.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{salads.name}</h4>
                     <List>
-                        {salads.menu.map(ele =>
-                            <List.Item>
+                        {salads.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{startYourMeal.name}</h4>
                     <List>
-                        {startYourMeal.menu.map(ele =>
-                            <List.Item>
+                        {startYourMeal.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
@@ -117,24 +117,24 @@ const MenuTabs = () => {
             menuItem: 'Brunch', render: () =>
                 <Tab.Pane><h4>{startYourMeal.name}</h4>
                     <List>
-                        {startYourMeal.menu.map(ele =>
-                            <List.Item>
+                        {startYourMeal.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{forTheTable.name}</h4>
                     <List>
-                        {forTheTable.menu.map(ele =>
-                            <List.Item>
+                        {forTheTable.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{salads.name}</h4>
                     <List>
-                        {salads.menu.map(ele =>
-                            <List.Item>
+                        {salads.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
@@ -146,24 +146,24 @@ const MenuTabs = () => {
                 <Tab.Pane>
                     <h4>{forTheTable.name}</h4>
                     <List>
-                        {forTheTable.menu.map(ele =>
-                            <List.Item>
+                        {forTheTable.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{salads.name}</h4>
                     <List>
-                        {salads.menu.map(ele =>
-                            <List.Item>
+                        {salads.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{startYourMeal.name}</h4>
                     <List>
-                        {startYourMeal.menu.map(ele =>
-                            <List.Item>
+                        {startYourMeal.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
@@ -176,24 +176,24 @@ const MenuTabs = () => {
                 <Tab.Pane>
                     <h4>{salads.name}</h4>
                     <List>
-                        {salads.menu.map(ele =>
-                            <List.Item>
+                        {salads.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{startYourMeal.name}</h4>
                     <List>
-                        {startYourMeal.menu.map(ele =>
-                            <List.Item>
+                        {startYourMeal.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{forTheTable.name}</h4>
                     <List>
-                        {forTheTable.menu.map(ele =>
-                            <List.Item>
+                        {forTheTable.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
@@ -205,24 +205,24 @@ const MenuTabs = () => {
             menuItem: 'Whine', render: () => <Tab.Pane>
                 <h4>{forTheTable.name}</h4>
                 <List>
-                    {forTheTable.menu.map(ele =>
-                        <List.Item>
+                    {forTheTable.menu.map((ele, index) =>
+                        <List.Item key={index}>
                             <List.Header>{ele.name} ${ele.price}</List.Header>
                             {ele.description}
                         </List.Item>)}
                 </List>
                 <h4>{salads.name}</h4>
                 <List>
-                    {salads.menu.map(ele =>
-                        <List.Item>
+                    {salads.menu.map((ele, index) =>
+                        <List.Item key={index}>
                             <List.Header>{ele.name} ${ele.price}</List.Header>
                             {ele.description}
                         </List.Item>)}
                 </List>
                 <h4>{startYourMeal.name}</h4>
                 <List>
-                    {startYourMeal.menu.map(ele =>
-                        <List.Item>
+                    {startYourMeal.menu.map((ele, index) =>
+                        <List.Item key={index}>
                             <List.Header>{ele.name} ${ele.price}</List.Header>
                             {ele.description}
                         </List.Item>)}
@@ -324,16 +324,22 @@ const RestaurantProfile = () => {
             let avg_rating = 0;
             const overviewEle = document.getElementById('overview')
             const menuEle = document.getElementById('menu')
+            const reviewsEle = document.getElementById('reviews')
             let overviewClientRect;
             let menuClientRect;
+            let reviewsClientRect;
             if (overviewEle) {
                 overviewClientRect = overviewEle.getBoundingClientRect()
             }
             if (menuEle) {
                 menuClientRect = menuEle.getBoundingClientRect()
             }
-            if (overviewEle && menuEle) {
-                setHashLocationState({ ...hashLocationState, overviewY: overviewClientRect.top, menuY: menuClientRect.top })
+
+            if (reviewsEle) {
+                reviewsClientRect = reviewsEle.getBoundingClientRect();
+            }
+            if (overviewEle && menuEle && reviewsEle) {
+                setHashLocationState({ ...hashLocationState, overviewY: overviewClientRect.top, menuY: menuClientRect.top, reviewsY: reviewsClientRect.top })
             }
             if (allRatings.length) {
                 avg_rating = (allRatings.reduce((accum, currentValue) => (accum + currentValue)) / allRatings.length).toFixed(2)
@@ -347,8 +353,8 @@ const RestaurantProfile = () => {
             setProfileVisualState({ ...profileVisualState, allRatings: allRatings, ...data.restaurant, totalReviews: allRatings.length, avg_rating: avg_rating, favorited: isFavorited })
         }
         fetchData()
-    //make sure renders correctly
-    }, [])
+        //make sure renders correctly
+    }, [profileVisualState.id])
     const getAllRatings = (restaurantDataArray) => {
         let allRatings = [];
         if (restaurantDataArray) {
@@ -438,14 +444,15 @@ Ryan Richardson, General Manager and Partner`;
                                     <span>No Ratings</span>
                                 }
                                 {placeholderText.split('\n').map((ele, index) =>
-                                  <div key={`${index}-${ele.id}`}>
-                                      <p>{ele}</p>
-                                  </div>
+                                    <div key={`${index}-${ele.id}`}>
+                                        <p>{ele}</p>
+                                    </div>
                                 )}
                                 <RestaurantSafetyPrecautions />
                                 <h2 id='menu'>Menu</h2>
                                 <Divider />
                                 <MenuTabs />
+                                <Header as='h3' id='reviews' dividing> Reviews</Header>
                                 <Review profileVisualState={profileVisualState} setProfileVisualState={setProfileVisualState} hashLocationState={hashLocationState} setHashLocationState={setHashLocationState} />
                             </Grid.Column>
                             <Grid.Column width={rightWidth}>

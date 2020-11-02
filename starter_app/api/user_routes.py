@@ -101,7 +101,7 @@ def user_favorites(user_id):
 @login_required
 def delete_favorite(rest_id, user_id):
     user = User.query.get_or_404(user_id)
-    restaurant = Restaurant.query.filter_by(id=rest_id)
+    restaurant = Restaurant.query.filter_by(id=rest_id).first()
     user.restaurants.clear(restaurant)
     db.session.add(user)
     db.session.commit()
