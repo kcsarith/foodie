@@ -43,16 +43,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RestaurantCard({ rest, favorited, homeBodyVisual, setHomeBodyVisual }) {
-
-    console.log(`RestaurantCard ${rest.name} is booked? ${favorited}`)
     const classes = useStyles();
     const [expanded, setExpanded] = useState(false);
     const [reviews, setReviews] = useState([])
     const [cardVisualState, setCardVisualState] = useState({
         favorited: favorited,
     })
-
-    console.log(`RestaurantCard ${rest.name} is booked? ${cardVisualState.favorited}`)
     const history = useHistory()
     const userId = useSelector(state => state.authentication.id)
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
