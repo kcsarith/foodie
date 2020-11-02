@@ -93,7 +93,7 @@ const ProfileTabAccountDetail = () => {
             }
             setTimeout(() => {
                 setMessageState({ ...messageState, errors: res.errors, visible: false });
-            }, 10000)
+            }, 1000)
         }
         fetchData();
     }

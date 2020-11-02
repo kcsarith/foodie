@@ -96,12 +96,17 @@ def user_favorites(user_id):
         return {'favorites': [rest.to_dict() for rest in response]}
 
 
+<<<<<<< HEAD
 @user_routes.route("/<int:user_id>/favorites/delete/<int:rest_id>",
                    methods=["DELETE"])
+=======
+
+@user_routes.route("/<int:user_id>/favorites/delete/<int:rest_id>", methods=["DELETE"])
+>>>>>>> main
 @login_required
 def delete_favorite(rest_id, user_id):
     user = User.query.get_or_404(user_id)
-    restaurant = Restaurant.query.filter_by(id=rest_id)
+    restaurant = Restaurant.query.filter_by(id=rest_id).first()
     user.restaurants.clear(restaurant)
     db.session.add(user)
     db.session.commit()

@@ -7,7 +7,6 @@ const Logo = () => {
         <NavLink
             to="/"
             style={{
-                color: 'white',
                 textDecoration: 'none',
                 fontSize: '15px',
                 height: '50px',

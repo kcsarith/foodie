@@ -22,24 +22,24 @@ const Footer = () => {
                             <Grid.Column width={5}>
                                 <Header inverted as='h4' content='DISCOVER' />
                                 <List link inverted>
-                                    {discoverFooterItems.map(footerItem =>
-                                        <List.Item as='a' href='/'>{footerItem}</List.Item>
+                                    {discoverFooterItems.map((footerItem, index) =>
+                                        <List.Item key={index} href='/'>{footerItem}</List.Item>
                                     )}
                                 </List>
                             </Grid.Column>
                             <Grid.Column width={5}>
                                 <Header inverted as='h4' content='FOODIE' />
                                 <List link inverted>
-                                    {foodieFooterItems.map(footerItem =>
-                                        <List.Item as='a'>{footerItem}</List.Item>
+                                    {foodieFooterItems.map((footerItem, index) =>
+                                        <List.Item key={index}>{footerItem}</List.Item>
                                     )}
                                 </List>
                             </Grid.Column>
                             <Grid.Column width={5}>
                                 <Header inverted as='h4' content='MORE' />
                                 <List link inverted>
-                                    {moreFooterItems.map(footerItem =>
-                                        <List.Item as='a'>{footerItem}</List.Item>
+                                    {moreFooterItems.map((footerItem, index) =>
+                                        <List.Item key={index} >{footerItem}</List.Item>
                                     )}
                                 </List>
                             </Grid.Column>
