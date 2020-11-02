@@ -15,7 +15,7 @@ const Footer = () => {
                 <Container>
                     <h1>Become an Insider</h1>
                     <p>Gain access to exclusive offers, best-of lists, local events & more (you can unsubscribe any time).</p>
-                    <FooterSignup />
+                    {/* <FooterSignup /> */}
                     <Divider />
                     <Grid divided inverted stackable>
                         <Grid.Row>
