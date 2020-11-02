@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Icon, Message, Rating, Form, Modal, Container, TextArea } from 'semantic-ui-react'
 
-const ReviewModal = ({ profileVisualState, handleSubmit, state, setState }) => {
+const ReviewModal = ({ profileVisualState, setProfileVisualState, handleSubmit, state, setState }) => {
     const [open, setOpen] = React.useState(false)
     const handleSubmitReview = (e) => {
         e.preventDefault();
@@ -20,7 +20,7 @@ const ReviewModal = ({ profileVisualState, handleSubmit, state, setState }) => {
             open={open}
             onClose={() => setOpen(false)}
             onOpen={() => {
-                setState({ ...state, currentReviewEdit: null, });
+                setState({ ...state, currentReviewEdit: null, rating: 3, content: '', restaurant_id: profileVisualState.id });
                 setOpen(true)
             }}
             trigger={<Button color='red' fluid>WRITE A REVIEW</Button>}
