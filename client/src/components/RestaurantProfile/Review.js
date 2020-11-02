@@ -149,7 +149,6 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
       // }
     } else {
       setState({ ...state, currentReviewEdit: null })
-      console.log(false)
     }
   }
   useEffect(() => {

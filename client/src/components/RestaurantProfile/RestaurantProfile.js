@@ -31,7 +31,7 @@ const RestaurantTabs = ({ hashLocationState, setHashLocationState }) => {
         setHashLocationState({ ...hashLocationState, activeTab: props.name })
     }
     return (
-        <Menu pointing secondary color='white' fluid style={{ backgroundColor: 'white' }}>
+        <Menu pointing secondary fluid style={{ backgroundColor: 'white' }}>
             <HashLink smooth to='#overview' >
                 <Menu.Item
                     name='Overview'
@@ -88,24 +88,24 @@ const MenuTabs = () => {
                 <Tab.Pane>
                     <h4>{forTheTable.name}</h4>
                     <List>
-                        {forTheTable.menu.map(ele =>
-                            <List.Item>
+                        {forTheTable.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{salads.name}</h4>
                     <List>
-                        {salads.menu.map(ele =>
-                            <List.Item>
+                        {salads.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{startYourMeal.name}</h4>
                     <List>
-                        {startYourMeal.menu.map(ele =>
-                            <List.Item>
+                        {startYourMeal.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
@@ -117,24 +117,24 @@ const MenuTabs = () => {
             menuItem: 'Brunch', render: () =>
                 <Tab.Pane><h4>{startYourMeal.name}</h4>
                     <List>
-                        {startYourMeal.menu.map(ele =>
-                            <List.Item>
+                        {startYourMeal.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{forTheTable.name}</h4>
                     <List>
-                        {forTheTable.menu.map(ele =>
-                            <List.Item>
+                        {forTheTable.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{salads.name}</h4>
                     <List>
-                        {salads.menu.map(ele =>
-                            <List.Item>
+                        {salads.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
@@ -146,24 +146,24 @@ const MenuTabs = () => {
                 <Tab.Pane>
                     <h4>{forTheTable.name}</h4>
                     <List>
-                        {forTheTable.menu.map(ele =>
-                            <List.Item>
+                        {forTheTable.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{salads.name}</h4>
                     <List>
-                        {salads.menu.map(ele =>
-                            <List.Item>
+                        {salads.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{startYourMeal.name}</h4>
                     <List>
-                        {startYourMeal.menu.map(ele =>
-                            <List.Item>
+                        {startYourMeal.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
@@ -176,24 +176,24 @@ const MenuTabs = () => {
                 <Tab.Pane>
                     <h4>{salads.name}</h4>
                     <List>
-                        {salads.menu.map(ele =>
-                            <List.Item>
+                        {salads.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{startYourMeal.name}</h4>
                     <List>
-                        {startYourMeal.menu.map(ele =>
-                            <List.Item>
+                        {startYourMeal.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
                     </List>
                     <h4>{forTheTable.name}</h4>
                     <List>
-                        {forTheTable.menu.map(ele =>
-                            <List.Item>
+                        {forTheTable.menu.map((ele, index) =>
+                            <List.Item key={index}>
                                 <List.Header>{ele.name} ${ele.price}</List.Header>
                                 {ele.description}
                             </List.Item>)}
@@ -205,24 +205,24 @@ const MenuTabs = () => {
             menuItem: 'Whine', render: () => <Tab.Pane>
                 <h4>{forTheTable.name}</h4>
                 <List>
-                    {forTheTable.menu.map(ele =>
-                        <List.Item>
+                    {forTheTable.menu.map((ele, index) =>
+                        <List.Item key={index}>
                             <List.Header>{ele.name} ${ele.price}</List.Header>
                             {ele.description}
                         </List.Item>)}
                 </List>
                 <h4>{salads.name}</h4>
                 <List>
-                    {salads.menu.map(ele =>
-                        <List.Item>
+                    {salads.menu.map((ele, index) =>
+                        <List.Item key={index}>
                             <List.Header>{ele.name} ${ele.price}</List.Header>
                             {ele.description}
                         </List.Item>)}
                 </List>
                 <h4>{startYourMeal.name}</h4>
                 <List>
-                    {startYourMeal.menu.map(ele =>
-                        <List.Item>
+                    {startYourMeal.menu.map((ele, index) =>
+                        <List.Item key={index}>
                             <List.Header>{ele.name} ${ele.price}</List.Header>
                             {ele.description}
                         </List.Item>)}
