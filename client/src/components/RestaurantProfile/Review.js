@@ -39,11 +39,9 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
         newSortedReviews = reviews.sort((currentEle, nextEle) => currentEle.rating - nextEle.rating);
         break;
       default:
-        console.log('This animal will not.');
     }
     setReviews(newSortedReviews)
     setState({ ...state });
-    console.log(reviews);
   }
   const ReviewsSortingDropdown = () => {
     const options = [
@@ -73,7 +71,7 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ restaurant_id, user_id, content, rating }),
     });
-    console.log(restaurant_id, user_id, content, rating)
+
     if (res.ok) {
       const data = await res.json()
       const newAllRatings = [...profileVisualState.allRatings, rating]
@@ -96,7 +94,6 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
     textAreaEle.focus();
   }
   const onEditCommentRating = (e, props) => {
-    console.log(props);
     setProfileVisualState({ ...profileVisualState, rating: props.rating })
   }
 
@@ -118,8 +115,7 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
     handleReviews();
   }
   const onBlurReviewTextArea = (e, props) => {
-    console.log(e)
-    console.log(props)
+ 
     if (state.confirmMessageOpen) {
       setState({ ...state, currentReviewEdit: null })
     }
@@ -137,7 +133,7 @@ const Review = ({ profileVisualState, setProfileVisualState, hashLocationState, 
         const reviewsEle = document.getElementById('reviews')
         if (reviewsEle) {
           reviewsClientRect = reviewsEle.getBoundingClientRect()
-          console.log(reviewsClientRect)
+
           setHashLocationState({ ...hashLocationState, reviewsY: reviewsClientRect.top });
         }
       }

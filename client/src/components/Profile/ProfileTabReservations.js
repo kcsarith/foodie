@@ -52,7 +52,6 @@ const UpcomingReservations = (props) => {
     }
     const handleConfirm = async () => {
         setTabReservationState({ ...tabReservationState, open: false, confirm: false })
-        console.log(tabReservationState.reservId)
         const response = await fetchWithCSRF(`/api/home/restaurant/reservationcancel/${tabReservationState.reservId}`, {
             method: "DELETE"
         })

@@ -96,6 +96,7 @@ def user_favorites(user_id):
         return {'favorites': [rest.to_dict() for rest in response]}
 
 
+
 @user_routes.route("/<int:user_id>/favorites/delete/<int:rest_id>", methods=["DELETE"])
 @login_required
 def delete_favorite(rest_id, user_id):
