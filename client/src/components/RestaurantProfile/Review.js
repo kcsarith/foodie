@@ -3,13 +3,14 @@ import { useSelector } from 'react-redux';
 import './Review.css';
 import { Rating, Divider, Container, Icon, Menu, Dropdown, Comment, Pagination, Segment, Button, Form, Confirm } from 'semantic-ui-react'
 import ReviewModal from './ReviewModal'
-
+import { useParams } from "react-router-dom";
 
 const Review = ({ profileVisualState, setProfileVisualState }) => {
   const authSelector = useSelector(state => state.authentication);
   const [reviews, setReviews] = useState([]);
+  const restaurant_id = useParams().id;
   const [state, setState] = useState({
-    restaurant_id: profileVisualState.id,
+    restaurant_id: restaurant_id,
     user_id: authSelector.id,
     content: '',
     rating: 3,
@@ -69,6 +70,7 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
     const content = state.content;
     const rating = state.rating;
 
+    console.log(state)
     const res = await authSelector.csrf(`/api/home/restaurant/${profileVisualState.id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -110,13 +112,14 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
     const commentClicked = props.id.split('review-button-id_')[1]
     await setState({ ...state, currentReviewEdit: commentClicked, content: props.value, rating: props.rating })
     await setProfileVisualState({ ...profileVisualState, content: props.value, rating: props.rating })
-    console.log(props.value)
+    console.log(props)
     const textAreaEle = document.getElementById(`review-text-area-id_${commentClicked}`);
     if (textAreaEle) {
       textAreaEle.focus();
     }
   }
   const onEditCommentRating = (e, props) => {
+    setState({ ...state, rating: props.rating })
     setProfileVisualState({ ...profileVisualState, rating: props.rating })
   }
 
@@ -206,7 +209,7 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
                       </Comment.Metadata>
                       <Comment.Text>{review.content}</Comment.Text>
                       {review.user_id === authSelector.id &&
-                        <Comment.Action as={Button} size='mini' color='red' id={`review-button-id_${review.id}`} value={review.content} rating={review.rating} onClick={onClickEditReview}>Edit</Comment.Action>
+                        <Comment.Action as={Button} size='mini' color='red' id={`review-button-id_${review.id}`} value={review.content} rating={review.rating} onClick={onClickEditReview}>Edit (New Review)</Comment.Action>
                       }
                     </>
                     :
