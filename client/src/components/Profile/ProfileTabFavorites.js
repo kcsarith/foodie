@@ -11,11 +11,25 @@ const ProfileTabFavorites = () => {
     const history = useHistory()
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
 
-    async function removeFavorite(rest_id) {
-        await fetchWithCSRF(`/api/users/${id}/favorites/delete/${rest_id}`, {
-            method: 'DELETE'
-        })
+
+    const removeFavorite = async (e) => {
+        const rest_id = e.target.value;
+
+        const res = await fetchWithCSRF(`/api/users/${id}/favorites/delete/${rest_id}`, {
+                    method: 'DELETE'
+                })
+   
+        if (res.ok) {
+            fetchFavoritesList()
+        }
+
     }
+
+    async function fetchFavoritesList() {
+            const res = await fetch(`/api/users/${id}/favorites`)
+            const data = await res.json()
+            setMyFavorites(data.favorites)
+        }
 
     useEffect(() => {
         async function fetchFavorites() {
@@ -26,6 +40,7 @@ const ProfileTabFavorites = () => {
         fetchFavorites()
     }, [id])
 
+
     return (
         <>
             <Header as='h2' attached='top'>Favorites</Header>
@@ -35,7 +50,7 @@ const ProfileTabFavorites = () => {
                         <div key={`${index}-${myFavorite.id}`}>
                             <div className='profile-favs'>
                                 <div className='profile-favs__img'>
-                                    <img src={myFavorite.img} />
+                                    <img src={myFavorite.img} alt={myFavorite.img} />
                                 </div>
                                 <div className='profile-favs__stuff'>
                                     <div className='profile-favs__info'>
@@ -44,7 +59,7 @@ const ProfileTabFavorites = () => {
                                         </div>
                                         <div className='profile-favs__address'>
                                             {myFavorite.address}
-                                        </div>
+                                        </div>                   
                                     </div>
                                     <div className='profile-favs__btn'>
                                         <button className='reserve-btn' primary floated='right' onClick={() => {
@@ -52,6 +67,13 @@ const ProfileTabFavorites = () => {
                                             history.push(path)
                                         }}>
                                             Make Revervation<Icon name='right chevron' />
+                                        </button>
+                                    </div>
+                                    {/* Yongho */}
+                                    <div className='profile-favs__btn'>
+                                        <button className='reserve-btn' primary floated='right' value={myFavorite.id} onClick={removeFavorite}
+                                            >
+                                            Cancel favorites<Icon name='right chevron' />
                                         </button>
                                     </div>
                                 </div>
