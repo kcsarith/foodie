@@ -146,7 +146,9 @@ function SignUp() {
         let points = 200;
         e.preventDefault();
         setSubmitted(true);
-        dispatch(signup(name, email, password, city, state, points));
+        if (password && email && name) {
+          dispatch(signup(name, email, password, city, state, points));
+        }
     }
 
     if (currentUserId) {
