@@ -75,10 +75,6 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ restaurant_id, user_id, content, rating }),
     });
-<<<<<<< HEAD
-
-=======
->>>>>>> main
     if (res.ok) {
       const data = await res.json()
       const newAllRatings = [...profileVisualState.allRatings, rating]
@@ -146,17 +142,12 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
     handleReviews();
   }
   const onBlurReviewTextArea = (e, props) => {
-<<<<<<< HEAD
- 
-    if (state.confirmMessageOpen) {
-=======
     const relatedTarget = e.relatedTarget
     if (relatedTarget) {
       // console.log(relatedTarget.classList.value === 'ui icon primary left labeled button')
       // if (!relatedTarget.classList.value === 'ui icon primary left labeled button') {
       // }
     } else {
->>>>>>> main
       setState({ ...state, currentReviewEdit: null })
     }
   }
@@ -166,16 +157,6 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
         const res = await fetch(`/api/home/restaurant/${profileVisualState.id}`)
         if (res.ok) {
           const data = await res.json()
-<<<<<<< HEAD
-          const newestSortedReviews = data.reviews.sort((currentEle, nextEle) => nextEle.id - currentEle.id);
-          setReviews(newestSortedReviews)
-        }
-        const reviewsEle = document.getElementById('reviews')
-        if (reviewsEle) {
-          reviewsClientRect = reviewsEle.getBoundingClientRect()
-
-          setHashLocationState({ ...hashLocationState, reviewsY: reviewsClientRect.top });
-=======
 
           let newSortedReviews
           switch (state.dropDownSort) {
@@ -199,7 +180,6 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
           }
 
           setReviews(newSortedReviews)
->>>>>>> main
         }
       }
     }
