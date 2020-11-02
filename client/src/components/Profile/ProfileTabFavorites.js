@@ -46,6 +46,7 @@ const ProfileTabFavorites = () => {
                                             {myFavorite.address}
                                         </div>
                                     </div>
+
                                     <div className='profile-favs__btn'>
                                         <button className='reserve-btn' primary floated='right' onClick={() => {
                                             let path = `restaurant/profile/${myFavorite.id}`
