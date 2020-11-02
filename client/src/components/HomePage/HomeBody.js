@@ -12,14 +12,16 @@ function HomeBody({ data }) {
         favorites: [],
     })
 
-    const findKeyValueInObjectArrayExists = (restId) => {
+    const findKeyValueInObjectArrayExists = (rest) => {
         if (homeBodyVisual.favorites.length) {
             for (let i = 0; i < homeBodyVisual.favorites.length; i++) {
                 const ele = homeBodyVisual.favorites[i];
-                if (ele.id === restId) return true;
+                if (ele.id === rest.id) {
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
     }
     useEffect(() => {
         async function fetchData() {
@@ -44,8 +46,7 @@ function HomeBody({ data }) {
     }, [data])
 
     const restComponents = restData.map((rest) => {
-        console.log(rest)
-        const favorited = findKeyValueInObjectArrayExists(rest.id);
+        const favorited = findKeyValueInObjectArrayExists(rest);
         return <RestaurantCard key={rest.id} favorited={favorited} homeBodyVisual={homeBodyVisual} setHomeBodyVisual={setHomeBodyVisual} rest={rest} />
     })
 

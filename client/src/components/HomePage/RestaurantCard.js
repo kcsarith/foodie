@@ -43,12 +43,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RestaurantCard({ rest, favorited, homeBodyVisual, setHomeBodyVisual }) {
+
+    console.log(`RestaurantCard ${rest.name} is booked? ${favorited}`)
     const classes = useStyles();
     const [expanded, setExpanded] = useState(false);
     const [reviews, setReviews] = useState([])
     const [cardVisualState, setCardVisualState] = useState({
         favorited: favorited,
     })
+
+    console.log(`RestaurantCard ${rest.name} is booked? ${cardVisualState.favorited}`)
     const history = useHistory()
     const userId = useSelector(state => state.authentication.id)
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
@@ -84,6 +88,7 @@ export default function RestaurantCard({ rest, favorited, homeBodyVisual, setHom
                 })
             })
             setCardVisualState({ ...cardVisualState, favorited: true });
+            setHomeBodyVisual({ ...homeBodyVisual, favorites: [...homeBodyVisual.favorites, rest] });
             alert(`${rest.name} added from favorites`)
         }
     }
@@ -119,7 +124,7 @@ export default function RestaurantCard({ rest, favorited, homeBodyVisual, setHom
                 </CardContent>
                 <CardActions disableSpacing>
                     <IconButton aria-label="add to favorites" onClick={handleFavorite}>
-                        <FavoriteIcon className={cardVisualState.favorited ? classes.likeRed : classes.likeNone} />
+                        <FavoriteIcon className={favorited ? classes.likeRed : classes.likeNone} />
                     </IconButton>
                     <IconButton
                         className={clsx(classes.expand, {
