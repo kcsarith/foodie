@@ -21,7 +21,7 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
     confirmMessage: 'Loading...'
   });
   const handleSubmit = () => {
-    handleReviews();
+    handleReviews('post');
   }
 
   const handleOnReviewSortChange = (e, props) => {
@@ -64,55 +64,82 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
     )
   }
 
-  async function handleReviews() {
+  async function handleReviews(method, reviewId) {
     const restaurant_id = state.restaurant_id
     const user_id = state.user_id
     const content = state.content;
     const rating = state.rating;
-
-    console.log(state)
-    const res = await authSelector.csrf(`/api/home/restaurant/${profileVisualState.id}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ restaurant_id, user_id, content, rating }),
-    });
-    if (res.ok) {
-      const data = await res.json()
-      const newAllRatings = [...profileVisualState.allRatings, rating]
-      const newTotalReviews = profileVisualState.totalReviews + 1
-      const new_avg_rating = (newAllRatings.reduce((accum, currentValue) => (accum + currentValue)) / newAllRatings.length).toFixed(2)
-      setProfileVisualState({
-        ...profileVisualState, allRatings: newAllRatings, totalReviews: newTotalReviews, avg_rating: new_avg_rating
+    const id = reviewId;
+    let data;
+    if (method.toLowerCase() === 'post') {
+      const res = await authSelector.csrf(`/api/home/restaurant/${profileVisualState.id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ restaurant_id, user_id, content, rating }),
       });
+      if (res.ok) {
+        data = await res.json()
+        const newAllRatings = [...profileVisualState.allRatings, rating]
+        const newTotalReviews = profileVisualState.totalReviews + 1
+        const new_avg_rating = (newAllRatings.reduce((accum, currentValue) => (accum + currentValue)) / newAllRatings.length).toFixed(2)
+        setProfileVisualState({
+          ...profileVisualState, allRatings: newAllRatings, totalReviews: newTotalReviews, avg_rating: new_avg_rating
+        });
 
-      let newSortedReviews
-      switch (state.dropDownSort) {
-        case 'Newest':
-          newSortedReviews = data.reviews.sort((currentEle, nextEle) => nextEle.id - currentEle.id);
-          break;
-        case 'Oldest':
-          newSortedReviews = data.reviews.sort((currentEle, nextEle) => currentEle.id - nextEle.id);
-          break;
-        case 'Highest Rated':
-          newSortedReviews = data.reviews.sort((currentEle, nextEle) => nextEle.rating - currentEle.rating);
-          break;
-        case 'Lowest Rated':
-          newSortedReviews = data.reviews.sort((currentEle, nextEle) => currentEle.rating - nextEle.rating);
-          break;
-        default:
+        let newSortedReviews
+        switch (state.dropDownSort) {
+          case 'Newest':
+            newSortedReviews = data.reviews.sort((currentEle, nextEle) => nextEle.id - currentEle.id);
+            break;
+          case 'Oldest':
+            newSortedReviews = data.reviews.sort((currentEle, nextEle) => currentEle.id - nextEle.id);
+            break;
+          case 'Highest Rated':
+            newSortedReviews = data.reviews.sort((currentEle, nextEle) => nextEle.rating - currentEle.rating);
+            break;
+          case 'Lowest Rated':
+            newSortedReviews = data.reviews.sort((currentEle, nextEle) => currentEle.rating - nextEle.rating);
+            break;
+          default:
+        }
+        setReviews(newSortedReviews)
       }
-      setReviews(newSortedReviews)
-      setState({ ...state, currentReviewEdit: null, confirmMessageOpen: false })
-    } else {
-      alert('Please enter a comment')
+      else {
+        alert('Please enter a comment')
+      }
     }
+    else if (method.toLowerCase() === 'patch') {
+      const res = await authSelector.csrf(`/api/home/restaurant/${profileVisualState.id}/patch-review`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, restaurant_id, user_id, content, rating }),
+      });
+      if (res.ok) {
+        data = await res.json()
+        let patchIndex = reviews.findIndex(ele => ele.id == id)
+        let reviewsCopy = reviews
+        reviewsCopy[patchIndex].content = content;
+        reviewsCopy[patchIndex].rating = rating;
+        await setReviews(reviewsCopy)
+        // const newAllRatings = [...profileVisualState.allRatings, rating]
+        // const newTotalReviews = profileVisualState.totalReviews + 1
+        // const new_avg_rating = (newAllRatings.reduce((accum, currentValue) => (accum + currentValue)) / newAllRatings.length).toFixed(2)
+        // setProfileVisualState({
+        //   ...profileVisualState, allRatings: newAllRatings, totalReviews: newTotalReviews, avg_rating: new_avg_rating
+        // });
+      }
+      else {
+        alert('Please enter a comment')
+      }
+    }
+
+    setState({ ...state, currentReviewEdit: null, confirmMessageOpen: false })
   }
 
   const onClickEditReview = async (e, props) => {
     const commentClicked = props.id.split('review-button-id_')[1]
     await setState({ ...state, currentReviewEdit: commentClicked, content: props.value, rating: props.rating })
     await setProfileVisualState({ ...profileVisualState, content: props.value, rating: props.rating })
-    console.log(props)
     const textAreaEle = document.getElementById(`review-text-area-id_${commentClicked}`);
     if (textAreaEle) {
       textAreaEle.focus();
@@ -135,16 +162,13 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
       ...state, currentReviewEdit: null, confirmMessageOpen: false
     })
   }
-  const onConfirmReview = (e, props) => {
-    handleReviews();
+  const onConfirmReview = () => {
+    const reviewId = parseInt(state.currentReviewEdit)
+    handleReviews('patch', reviewId);
   }
-  const onBlurReviewTextArea = (e, props) => {
+  const onBlurReviewTextArea = (e) => {
     const relatedTarget = e.relatedTarget
-    if (relatedTarget) {
-      // console.log(relatedTarget.classList.value === 'ui icon primary left labeled button')
-      // if (!relatedTarget.classList.value === 'ui icon primary left labeled button') {
-      // }
-    } else {
+    if (!relatedTarget) {
       setState({ ...state, currentReviewEdit: null })
     }
   }
@@ -209,7 +233,7 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
                       </Comment.Metadata>
                       <Comment.Text>{review.content}</Comment.Text>
                       {review.user_id === authSelector.id &&
-                        <Comment.Action as={Button} size='mini' color='red' id={`review-button-id_${review.id}`} value={review.content} rating={review.rating} onClick={onClickEditReview}>Edit (New Review)</Comment.Action>
+                        <Comment.Action as={Button} size='mini' color='red' id={`review-button-id_${review.id}`} value={review.content} rating={review.rating} onClick={onClickEditReview}>Edit</Comment.Action>
                       }
                     </>
                     :

@@ -47,6 +47,19 @@ def reviews(rest_id):
     response = Review.query.filter_by(restaurant_id=rest_id).all()
     return {'reviews': [review.to_dict() for review in response]}
 
+@login_required
+@bp.route('/restaurant/<int:rest_id>/patch-review', methods=["GET", "PATCH"])
+def patch_review(rest_id):
+    id = request.json.get("id")
+    new_content = request.json.get("content")
+    new_rating = request.json.get("rating")
+
+    review = Review.query.get_or_404(id)
+
+    review.content = new_content
+    review.rating = new_rating
+    db.session.commit()
+    return {'review': review.to_dict()}
 
 @login_required
 @bp.route('/restaurant/profile/<int:rest_id>')
