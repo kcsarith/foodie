@@ -3,19 +3,62 @@ from flask_login import current_user, login_required
 from sqlalchemy import or_
 from starter_app.models import db, User, Restaurant, Review, Reservation
 from sqlalchemy.orm import joinedload
+import googlemaps
+import os
+import pprint
+import time
+from datetime import datetime
+import pprint
+import random
+
+llave = os.environ.get("API_KEY")
+gmaps = googlemaps.Client(key=llave)
 
 bp = Blueprint("home", __name__)
 
+images = ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+           'https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80',
+           'https://images.unsplash.com/photo-1579027989536-b7b1f875659b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+           'https://images.unsplash.com/photo-1578474846511-04ba529f0b88?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+           'https://images.unsplash.com/photo-1579027989536-b7b1f875659b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+           'https://images.unsplash.com/photo-1525610553991-2bede1a236e2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+           'https://images.unsplash.com/photo-1555992336-03a23c7b20ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+           'https://images.unsplash.com/photo-1586999768265-24af89630739?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+           'https://images.unsplash.com/photo-1529417305485-480f579e7578?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+           'https://images.unsplash.com/photo-1484980972926-edee96e0960d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+           'https://images.unsplash.com/photo-1571705042748-55feda1cfadc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+           'https://images.unsplash.com/photo-1581486902120-5880052aadf0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+           'https://images.unsplash.com/photo-1477763858572-cda7deaa9bc5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+           'https://images.unsplash.com/photo-1541086095944-f4b5412d3666?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+           'https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60']
 
 @bp.route('/', methods=["POST"])
 def search():
-    key = request.get_json()["term"]
-    search_args = [col.ilike('%%%s%%' % key) for col in
-                   [Restaurant.name, Restaurant.address,
-                    Restaurant.city, Restaurant.state]]
-    restaurants = Restaurant.query.filter(or_(*search_args)).order_by(
-                    Restaurant.avg_rating.desc()).all()
-    return {'restaurants': [rest.to_dict() for rest in restaurants]}
+
+
+    res = []
+    front = []
+    lat = request.get_json()['lat']
+    lng = request.get_json()['lng']
+    loc_string = f"{str(lat)},{str(lng)}"
+    places_res = gmaps.places_nearby(location=loc_string,
+                                     radius=2000,
+                                     open_now=False, type='restaurant')
+
+    for i in places_res['results']:
+        res.append(i)
+    for item in res:
+        randImg = random.randint(0,len(images) - 1)
+        my_place_id = item['place_id']
+        my_fields = ['formatted_address']
+        place_details = gmaps.place(place_id=my_place_id, fields=my_fields)
+        city = item['vicinity'].split(',')
+        state = place_details['result']['formatted_address'].split(',')[-2].split(' ')[1]
+        newRest = Restaurant(name=item['name'], address=place_details['result']['formatted_address'], city=city[-1], state=state, img=images[randImg])
+        front.append(newRest)
+        db.session.add(newRest)
+    db.session.commit()
+    return {'restaurants': [val.to_dict() for val in front]}
 
 
 @login_required
@@ -124,7 +167,6 @@ def earnpoint(user_id):
         db.session.commit()
         return {"user": user.to_dict()}, 200
     return {}, 404
-
 
 
 @bp.route('/reviews/<int:rev_id>')
