@@ -408,7 +408,7 @@ Ryan Richardson, General Manager and Partner`;
     return (
         <>
             <Segment style={{ position: 'relative' }}>
-                <Image centered src={profileVisualState.img} style={{ width: '80%', height: '400px' }} />
+                <Image centered src={profileVisualState.img} style={{ width: '80%', height: '400px', objectFit: 'cover' }} />
                 {profileVisualState.id &&
                     <Transition
                         animation={profileVisualState.favorited ? 'jiggle' : 'shake'}

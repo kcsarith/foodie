@@ -1,6 +1,6 @@
 import React from 'react';
 import { Segment, Header, Divider, Grid, Container, List } from 'semantic-ui-react';
-import FooterSignup from './FooterSignup'
+
 const Footer = () => {
     const discoverFooterItems = ["Dining Rewards", "Private Dining", "Top 100 Restaurants", "Reserve for Others", "Cuisines Near Me", "Restaurants Near Me", "Delivery Near Me", "Cuisines", "Restaurants Open Now"]
     const foodieFooterItems = ["About Us", "Blog", "Careers", "Press"]
