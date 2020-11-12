@@ -15,7 +15,6 @@ const NavBarWrapper = styled.div`
   box-shadow: 0 1px 2px rgba(0,0,0,0.15);
   display: flex;
   .nav-bar-content {
-    margin: 0 auto;
     display: flex;
     height: 50px;
   }
@@ -54,7 +53,7 @@ const NavBar = () => {
                         FOODIE
                     </Menu.Item>
                     {authSelector.name &&
-                        <Dropdown item text={`Hi ${authSelector.name}`}>
+                        <Dropdown item text={`Hi ${authSelector.name}`} className="nav-bar-content__dropdown">
                             <Dropdown.Menu>
                                 <Dropdown.Header style={{ fontSize: '16px' }}>You have {authSelector.points}/2000 points!</Dropdown.Header>
                                 <Dropdown.Item onClick={handleProfile}>Profile</Dropdown.Item>
