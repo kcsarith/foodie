@@ -26,7 +26,6 @@ WTForms = "==2.3.3"
 googlemaps = "*"
 prettyprint = "*"
 requests = "*"
-psycopg2-binary = "*"
 
 [requires]
 python_version = "3.8"
