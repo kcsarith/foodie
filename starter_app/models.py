@@ -4,6 +4,19 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
+# favorites = db.Table(
+#     'favorites',
+#     db.Model.metadata,
+#     db.Column(
+#         'user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True
+#     ), db.Column('restaurant_id', db.Integer,
+#                  db.ForeignKey('restaurants.id'), primary_key=True)
+# )
+
+class Favorites (db.Model):
+    
+    __tablename__ = 'restaurants'
+
 favorites = db.Table(
     'favorites',
     db.Model.metadata,
