@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from starter_app.models import db, User, Restaurant
+from starter_app.models import db, User, Restaurant, Favorite
 from flask_login import login_required
 from sqlalchemy.orm import joinedload
 
@@ -81,28 +81,25 @@ def user_favorites(user_id):
     if request.method == "POST":
         if not request.is_json:
             return jsonify({"msg": "Missing JSON in request"}), 400
-        user = User.query.get_or_404(user_id)
         restaurant_id = request.json.get("restaurant_id", None)
-        rest = Restaurant.query.get(restaurant_id)
-        user.restaurants.append(rest)
-        db.session.add(user)
+        newfavorite = Favorite(user_id=user_id, restaurant_id=restaurant_id)
+        db.session.add(newfavorite)
         db.session.commit()
         return 'Restaurant added to favorites', 200
     else:
-        response = db.session.query(Restaurant).order_by(
-                      Restaurant.name).options(
-                      joinedload(Restaurant.users)
-                      ).filter(Restaurant.users.any(id=user_id)).all()
+        response = db.session.query(Favorite) \
+                      .options(joinedload(Favorite.restaurant)) \
+                      .filter(Favorite.user_id == user_id)
         return {'favorites': [rest.to_dict() for rest in response]}
+
 
 
 @user_routes.route("/<int:user_id>/favorites/delete/<int:rest_id>",
                    methods=["DELETE"])
 @login_required
 def delete_favorite(rest_id, user_id):
-    user = User.query.get_or_404(user_id)
-    restaurant = Restaurant.query.filter_by(id=rest_id).first()
-    user.restaurants.clear(restaurant)
-    db.session.add(user)
+    favorite = Favorite.query.filter_by(user_id=user_id).filter_by(restaurant_id=rest_id).first()
+    print("favorite-------------", favorite)
+    db.session.delete(favorite)
     db.session.commit()
     return 'Delete worked', 200

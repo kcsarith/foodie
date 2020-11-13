@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
-from starter_app.models import User, Restaurant, Reservation, Review, favorites
+# from starter_app.models import User, Restaurant, Reservation, Review ,favorites
+from starter_app.models import User, Restaurant, Reservation, Review ,Favorite
 from starter_app import app, db
 from datetime import date
 
@@ -25,16 +26,16 @@ with app.app_context():
                 state="NY", password='password', points=745)
 
     fork = Restaurant(name='Fork', address='1234 N. 8th Street, New York, 83703', city='New York',
-                      state='NY', avg_rating=4.4, min_price=0, max_price=5, img='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-                      users=[demo, alissa, soonmi])
+                      state='NY', avg_rating=4.4, min_price=0, max_price=5, img='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
+                    )
 
     riverside_grill = Restaurant(name='Riverside Grill', address='2051 S. 9th Street, New York, 83686', city='New York',
-                                 state='NY', img='https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80',
-                                 users=[demo, dean, angela, javier])
+                                 state='NY', img='https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80'
+                                )
 
     pf_changs = Restaurant(name='P.F. Chang\'s', address='0987 N. 6th Street, New York, 83686', city='New York',
-                           state='NY', img='https://images.unsplash.com/photo-1579027989536-b7b1f875659b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-                           users=[demo, alissa, soonmi, dean, ian])
+                           state='NY', img='https://images.unsplash.com/photo-1579027989536-b7b1f875659b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
+                         )
 
     trillium = Restaurant(name='Trillium', address='1028 E. 4th Street, New York, 83686', city='New York',
                           state='NY',

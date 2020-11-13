@@ -129,7 +129,6 @@ def reserveRes():
     db.session.commit()
     return {'reservation': newReserve.to_dict()}, 200
 
-
 @bp.route('/restaurant/reservationlist/<int:user_id>')
 def reservationlist(user_id):
 

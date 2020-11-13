@@ -2,6 +2,5 @@
     "python.linting.pylintEnabled": false,
     "python.linting.pycodestyleEnabled": true,
     "python.linting.enabled": true,
-    "python.formatting.provider": "black",
-    "python.pythonPath": "/Users/mattzamora/Desktop/Portfolio/open_table_clone_group/flask-react-group-project/.venv/bin/python3.8"
+    "python.formatting.provider": "black"
 }
