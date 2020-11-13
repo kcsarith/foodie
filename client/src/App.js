@@ -9,27 +9,11 @@ import HomePage from './components/HomePage/HomePage'
 import RestaurantProfile from './components/RestaurantProfile/RestaurantProfile';
 import { setCsrfFunc } from './store/authentication';
 import Script from 'react-load-script'
-
 require('dotenv').config()
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    let needLogin = useSelector(state => !state.authentication.id);
-    return (
-        <Route {...rest} render={(props) => (
-            needLogin
-                ? <Redirect to='/login' />
-                : <Component {...props} />
-        )} />
-    )
-}
 
-function App() {
-
-    let location = useLocation();
-    let dispatch = useDispatch();
-
-    const [fetchWithCSRF, setFetchWithCSRF] = useState(() => fetch);
     const [scriptLoaded, setScriptLoaded] = useState(false)
     const [scriptError, setScriptError] = useState(true)
 
@@ -39,6 +23,45 @@ function App() {
 
     const handleScriptError = () => {
         setScriptError(true)
+    }
+
+    const handleScriptLoad = () => {
+        setScriptLoaded(true)
+    }
+    let needLogin = useSelector(state => !state.authentication.id);
+    return (
+        <>
+            <Script
+                url={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&libraries=places`}
+                onCreate={handleScriptCreate}
+                onError={handleScriptError}
+                onLoad={handleScriptLoad}>
+            </Script>
+            <Route {...rest} render={(props) => (
+                needLogin
+                    ? <Redirect to='/login' />
+                    : <Component {...props} />
+            )} />
+        </>
+    )
+}
+
+function App() {
+
+    let location = useLocation();
+    let dispatch = useDispatch();
+    const [fetchWithCSRF, setFetchWithCSRF] = useState(() => fetch);
+    const [scriptLoaded, setScriptLoaded] = useState(false)
+    const [scriptError, setScriptError] = useState(true)
+
+    const handleScriptCreate = () => {
+        setScriptLoaded(false)
+        return scriptLoaded
+    }
+
+    const handleScriptError = () => {
+        setScriptError(true)
+        return scriptError
     }
 
     const handleScriptLoad = () => {
@@ -77,7 +100,6 @@ function App() {
         dispatch(setCsrfFunc(fetchWithCSRF));
     }, [fetchWithCSRF, dispatch]);
 
-    console.log(process)
     return (
         <>
             <Script
