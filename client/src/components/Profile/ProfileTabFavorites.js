@@ -18,7 +18,7 @@ const ProfileTabFavorites = () => {
         const res = await fetchWithCSRF(`/api/users/${id}/favorites/delete/${rest_id}`, {
                     method: 'DELETE'
                 })
-   
+
         if (res.ok) {
             fetchFavoritesList()
         }
@@ -59,7 +59,7 @@ const ProfileTabFavorites = () => {
                                         </div>
                                         <div className='profile-favs__address'>
                                             {myFavorite.address}
-                                        </div>                   
+                                        </div>
                                     </div>
 
                                     <div className='profile-favs__btn'>
@@ -70,7 +70,7 @@ const ProfileTabFavorites = () => {
                                             Make Revervation<Icon name='right chevron' />
                                         </button>
                                     </div>
-                                    {/* Yongho */}
+
                                     <div className='profile-favs__btn'>
                                         <button className='reserve-btn' primary floated='right' value={myFavorite.id} onClick={removeFavorite}
                                             >
