@@ -5,13 +5,11 @@ import LoginPanel from './components/LoginPanel';
 import SignUp from './components/SignUp';
 import NavBar from './components/NavBar';
 import Profile from './components/Profile';
-//import UserList from './components/UsersList';
-//import { getUserInfo } from './store/currentUser';
 import HomePage from './components/HomePage/HomePage'
 import RestaurantProfile from './components/RestaurantProfile/RestaurantProfile';
 import { setCsrfFunc } from './store/authentication';
 import Script from 'react-load-script'
-import { requirePropFactory } from '@material-ui/core';
+
 require('dotenv').config()
 
 
@@ -27,12 +25,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 }
 
 function App() {
-    //let currentUserId = useSelector(state => state.authentication.id);
+
     let location = useLocation();
     let dispatch = useDispatch();
-    // useEffect(() => {
-    //     dispatch(getUserInfo(currentUserId));
-    // }, [currentUserId, dispatch])
+
     const [fetchWithCSRF, setFetchWithCSRF] = useState(() => fetch);
     const [scriptLoaded, setScriptLoaded] = useState(false)
     const [scriptError, setScriptError] = useState(true)

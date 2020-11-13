@@ -117,7 +117,7 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
       });
       if (res.ok) {
         data = await res.json()
-        let patchIndex = reviews.findIndex(ele => ele.id == id)
+        let patchIndex = reviews.findIndex(ele => ele.id === id)
         let reviewsCopy = reviews
         reviewsCopy[patchIndex].content = content;
         reviewsCopy[patchIndex].rating = rating;
@@ -262,7 +262,7 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
             )
           }
           else {
-            return
+            return {}
           }
         }
         )}

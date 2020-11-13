@@ -16,7 +16,7 @@ const findKeyValueInObjectArrayExists = (array, key, value) => {
     return false;
 }
 
-const { id } = useParams;
+
 const RestaurantTabs = ({ hashLocationState, setHashLocationState }) => {
     const [scrollTop, setScrollTop] = useState(0);
     const onScroll = () => {
