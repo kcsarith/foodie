@@ -4,27 +4,27 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
-# favorites = db.Table(
-#     'favorites',
-#     db.Model.metadata,
-#     db.Column(
-#         'user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True
-#     ), db.Column('restaurant_id', db.Integer,
-#                  db.ForeignKey('restaurants.id'), primary_key=True)
-# )
 
-class Favorites (db.Model):
+class Favorite (db.Model):
     
-    __tablename__ = 'restaurants'
+    __tablename__ = 'favorites'
 
-favorites = db.Table(
-    'favorites',
-    db.Model.metadata,
-    db.Column(
-        'user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True
-    ), db.Column('restaurant_id', db.Integer,
-                 db.ForeignKey('restaurants.id'), primary_key=True)
-)
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'))
+
+    def to_dict(self):
+        return {
+            "id": self.restaurant.id,
+            "name": self.restaurant.name,
+            "address": self.restaurant.address,
+            "city": self.restaurant.city,
+            "state": self.restaurant.state,
+            "avg_rating": self.restaurant.avg_rating,
+            "min_price": self.restaurant.min_price,
+            "max_price": self.restaurant.max_price,
+            'img': self.restaurant.img
+        }
 
 
 class User(db.Model, UserMixin):
@@ -39,7 +39,7 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(100), nullable=False)
     reservations = db.relationship('Reservation', backref='user', lazy=True)
     reviews = db.relationship('Review', backref='user', lazy=True)
-    restaurants = db.relationship('Restaurant', secondary=favorites)
+    favorites = db.relationship('Favorite', backref='user', lazy=True)
 
     @property
     def password(self):
@@ -80,8 +80,7 @@ class Restaurant(db.Model):
     reviews = db.relationship('Review', backref='restaurant', lazy=True)
     reservations = db.relationship('Reservation',
                                    backref='restaurant', lazy=True)
-    users = db.relationship('User', secondary=favorites,
-                            lazy='subquery')
+    favorites = db.relationship('Favorite', backref='restaurant', lazy=True)
 
     def to_dict(self):
         return {
@@ -125,7 +124,7 @@ class Reservation(db.Model):
 
 
 class Review(db.Model):
-
+    
     __tablename__ = 'reviews'
 
     id = db.Column(db.Integer, primary_key=True)
