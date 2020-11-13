@@ -26,7 +26,6 @@ Flask-Login = "*"
 googlemaps = "*"
 prettyprint = "*"
 requests = "*"
-psycopg2-binary = "*"
 
 [requires]
 python_version = "3.8"
