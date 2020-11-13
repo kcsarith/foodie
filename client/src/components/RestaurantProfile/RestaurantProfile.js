@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link'
 import Reservation from './Reservation'
 import Review from './Review';
