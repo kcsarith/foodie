@@ -19,10 +19,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
     const handleScriptCreate = () => {
         setScriptLoaded(false)
+        return scriptLoaded
     }
 
     const handleScriptError = () => {
         setScriptError(true)
+        return scriptError
     }
 
     const handleScriptLoad = () => {

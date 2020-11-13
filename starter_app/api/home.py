@@ -34,8 +34,6 @@ images = ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb
 
 @bp.route('/', methods=["POST"])
 def search():
-
-
     res = []
     front = []
     lat = request.get_json()['lat']
@@ -53,8 +51,12 @@ def search():
         my_fields = ['formatted_address']
         place_details = gmaps.place(place_id=my_place_id, fields=my_fields)
         city = item['vicinity'].split(',')
-        state = place_details['result']['formatted_address'].split(',')[-2].split(' ')[1]
-        newRest = Restaurant(name=item['name'], address=place_details['result']['formatted_address'], city=city[-1], state=state, img=images[randImg])
+        state = place_details['result']['formatted_address'].split(',')[
+                              -2].split(' ')[1]
+        newRest = Restaurant(name=item['name'],
+                             address=place_details['result'][
+                               'formatted_address'],
+                             city=city[-1], state=state, img=images[randImg])
         front.append(newRest)
         db.session.add(newRest)
     db.session.commit()
@@ -146,7 +148,8 @@ def reviewlist(restaurant_id):
 
 
 @login_required
-@bp.route('/restaurant/reservationcancel/<int:reserv_id>', methods=["DELETE", "GET"])
+@bp.route('/restaurant/reservationcancel/<int:reserv_id>',
+          methods=["DELETE", "GET"])
 def reservationcancel(reserv_id):
     reserv = Reservation.query.filter(Reservation.id == reserv_id).first()
     if reserv:
