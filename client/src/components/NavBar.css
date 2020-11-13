@@ -1,4 +1,12 @@
 .nav-bar-content {
-    width: 100%;
+    width: 100% !important;
+    display: flex;
     justify-content: space-between;
+    padding: 0 30px;
+    border: none !important;
+}
+
+.nav-bar-content__dropdown {
+
+    margin-right: 120px;
 }

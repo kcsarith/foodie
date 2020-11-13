@@ -3,61 +3,39 @@ import React, { useState } from 'react';
 import './HomePage.css'
 import Footer from '../Footer';
 import 'semantic-ui-css/semantic.min.css'
-import HomeBody from './HomeBody';
 import { useSelector } from 'react-redux';
 import './SearchInput.css'
-import SearchSharpIcon from '@material-ui/icons/SearchSharp';
-
+import SearchInput from './SearchInput';
+import Script from 'react-load-script'
+require('dotenv').config()
 
 function HomePage() {
 
     const fetchWithCSRF = useSelector(state => state.authentication.csrf);
-
-    const [term, setTerm] = useState([]);
-    const [restData, setRestData] = useState([])
-
-    const updateTerm = (e) => {
-        setTerm(e.target.value);
+    const [scriptLoaded, setScriptLoaded] = useState(false)
+    const [scriptError, setScriptError] = useState(true)
+    const handleScriptCreate = () => {
+        setScriptLoaded(false)
     }
 
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        searchRestaurants();
+    const handleScriptError = () => {
+        setScriptError(true)
     }
 
-    async function searchRestaurants() {
-
-        const res = await fetchWithCSRF("/api/home/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ term }),
-        });
-        if (res.ok) {
-            const data = await res.json()
-            setRestData(data.restaurants)
-            return
-        }
+    const handleScriptLoad = () => {
+        setScriptLoaded(true)
     }
 
     return (
         <>
+            <Script
+                url={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&libraries=places`}
+                onCreate={handleScriptCreate}
+                onError={handleScriptError}
+                onLoad={handleScriptLoad}>
+            </Script>
             <div className='home'>
-                <div className='home-search'>
-                    <form onSubmit={handleSubmit} className='home-search__form'>
-                        <input onChange={updateTerm} type='text' name="search" value={term} placeholder='Name, Address, City, State' />
-                        <button className='home__button' type='submit'>Let's Go!</button>
-                    </form>
-                    <span className='home-search__icon'>
-                        <SearchSharpIcon />
-                    </span>
-                </div>
-                <div className='home__img'>
-                    <img src='https://images.unsplash.com/photo-1574936145840-28808d77a0b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80' alt='' />
-                </div>
-                <div className='home__body'>
-                    <HomeBody data={restData} />
-                </div>
+                <SearchInput csrf={fetchWithCSRF} />
                 <Footer />
             </div>
         </>
