@@ -1,4 +1,4 @@
-# flask-react-group-project
+# Fo
 Clone based off https://www.opentable.com/.
 
 # Features
