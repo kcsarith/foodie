@@ -1,4 +1,4 @@
-# Fo
+# Foodie
 Clone based off https://www.opentable.com/.
 
 # Features
