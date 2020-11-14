@@ -32,11 +32,7 @@ def update(userId):
                          .filter(User.email == new_email))
     is_same_name = user.name == new_name
     is_same_email = user.email == new_email
-    print('*' * 50)
-    print('is this the same name? ', is_same_name)
-    print('*' * 50)
-    print('is this the same email? ', is_same_email)
-    print('*'*50)
+
     if is_same_name:
         if len(checked_name) > 1:
             errors.append('Name already exists')
