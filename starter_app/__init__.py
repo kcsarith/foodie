@@ -57,3 +57,8 @@ def load_user(id):
 @app.route('/api/csrf/restore')
 def restore_csrf():
     return {"csrf_token": generate_csrf()}
+
+@app.route('/api/key')
+def key():
+    llave = os.environ.get('REACT_APP_API_KEY')
+    return {'llave': llave}

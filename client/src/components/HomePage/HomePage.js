@@ -30,12 +30,6 @@ function HomePage() {
 
     return (
         <>
-            <Script
-                url={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&libraries=places`}
-                onCreate={handleScriptCreate}
-                onError={handleScriptError}
-                onLoad={handleScriptLoad}>
-            </Script>
             <div className='home'>
                 <SearchInput csrf={fetchWithCSRF} />
                 <Footer />
