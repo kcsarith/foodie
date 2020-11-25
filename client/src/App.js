@@ -33,12 +33,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     let needLogin = useSelector(state => !state.authentication.id);
     return (
         <>
-            <Script
-                url={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&libraries=places`}
-                onCreate={handleScriptCreate}
-                onError={handleScriptError}
-                onLoad={handleScriptLoad}>
-            </Script>
             <Route {...rest} render={(props) => (
                 needLogin
                     ? <Redirect to='/login' />
@@ -55,6 +49,7 @@ function App() {
     const [fetchWithCSRF, setFetchWithCSRF] = useState(() => fetch);
     const [scriptLoaded, setScriptLoaded] = useState(false)
     const [scriptError, setScriptError] = useState(true)
+    const [key, setKey] = useState('')
 
     const handleScriptCreate = () => {
         setScriptLoaded(false)
@@ -97,6 +92,18 @@ function App() {
         restoreCSRF();
     }, []);
 
+    useEffect(() => {
+        async function fetchKey() {
+            const res = await fetch('/api/key', {
+                method: 'GET'
+            })
+            if (res.ok) {
+                const data = res.json()
+                console.log(data)
+            }
+        }
+        fetchKey()
+    }, [])
 
     useEffect(() => {
         dispatch(setCsrfFunc(fetchWithCSRF));
@@ -104,12 +111,6 @@ function App() {
 
     return (
         <>
-            <Script
-                url={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&libraries=places`}
-                onCreate={handleScriptCreate}
-                onError={handleScriptError}
-                onLoad={handleScriptLoad}>
-            </Script>
 
             {
                 location.pathname !== '/login' && location.pathname !== '/signup' ?
