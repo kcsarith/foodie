@@ -20,6 +20,7 @@ class SearchInput extends React.Component {
         this.setState({ address });
     };
 
+
     handleSelect = address => {
         geocodeByAddress(address)
             .then(results => getLatLng(results[0]))
