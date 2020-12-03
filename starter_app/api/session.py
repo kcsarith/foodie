@@ -49,3 +49,10 @@ def signup():
     db.session.commit()
     login_user(newUser)
     return {"user": newUser.to_dict()}
+
+
+@bp.route('/load')
+def load():
+    if current_user.is_authenticated:
+        return current_user.to_dict()
+    return {}
