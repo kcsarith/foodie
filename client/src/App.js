@@ -8,7 +8,6 @@ import Profile from './components/Profile';
 import HomePage from './components/HomePage/HomePage'
 import RestaurantProfile from './components/RestaurantProfile/RestaurantProfile';
 import { setCsrfFunc } from './store/authentication';
-import Script from 'react-load-script'
 require('dotenv').config()
 
 
@@ -49,7 +48,6 @@ function App() {
     const [fetchWithCSRF, setFetchWithCSRF] = useState(() => fetch);
     const [scriptLoaded, setScriptLoaded] = useState(false)
     const [scriptError, setScriptError] = useState(true)
-    const [key, setKey] = useState('')
 
     const handleScriptCreate = () => {
         setScriptLoaded(false)

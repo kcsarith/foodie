@@ -99,7 +99,6 @@ def user_favorites(user_id):
 @login_required
 def delete_favorite(rest_id, user_id):
     favorite = Favorite.query.filter_by(user_id=user_id).filter_by(restaurant_id=rest_id).first()
-    print("favorite-------------", favorite)
     db.session.delete(favorite)
     db.session.commit()
     return 'Delete worked', 200
