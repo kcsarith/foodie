@@ -20,23 +20,24 @@
 //         this.setState({ address });
 //     };
 
-//     handleSelect = address => {
-//         geocodeByAddress(address)
-//             .then(results => getLatLng(results[0]))
-//             .then(latLng => {
-//                 this.setState({ coords: latLng })
-//                 console.log('Success', this.state.coords)
-//                 this.props.csrf('/api/home/', {
-//                     method: "POST",
-//                     headers: { "Content-Type": "application/json" },
-//                     body: JSON.stringify(this.state.coords),
-//                 })
-//                     .then(res => res.json())
-//                     .then(data => this.setState({ restData: data.restaurants }))
-//             })
-//             .catch(error => console.error('Error', error));
-//         this.setState({ address: address })
-//     };
+
+    // handleSelect = address => {
+    //     geocodeByAddress(address)
+    //         .then(results => getLatLng(results[0]))
+    //         .then(latLng => {
+    //             this.setState({ coords: latLng })
+    //             console.log('Success', this.state.coords)
+    //             this.props.csrf('/api/home/', {
+    //                 method: "POST",
+    //                 headers: { "Content-Type": "application/json" },
+    //                 body: JSON.stringify(this.state.coords),
+    //             })
+    //                 .then(res => res.json())
+    //                 .then(data => this.setState({ restData: data.restaurants }))
+    //         })
+    //         .catch(error => console.error('Error', error));
+    //     this.setState({ address: address })
+    // };
 
 
 //     render() {
