@@ -7,7 +7,7 @@ import NavBar from './components/NavBar';
 import Profile from './components/Profile';
 import HomePage from './components/HomePage/HomePage'
 import RestaurantProfile from './components/RestaurantProfile/RestaurantProfile';
-import { setCsrfFunc } from './store/authentication';
+import { loadUser, setCsrfFunc } from './store/authentication';
 require('dotenv').config()
 
 
@@ -30,6 +30,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         setScriptLoaded(true)
     }
     let needLogin = useSelector(state => !state.authentication.id);
+
+    if (needLogin === undefined) {
+        return <h1>loading...</h1>
+    }
     return (
         <>
             <Route {...rest} render={(props) => (
@@ -48,6 +52,7 @@ function App() {
     const [fetchWithCSRF, setFetchWithCSRF] = useState(() => fetch);
     const [scriptLoaded, setScriptLoaded] = useState(false)
     const [scriptError, setScriptError] = useState(true)
+    const loadCurrentUser = () => dispatch(loadUser())
 
     const handleScriptCreate = () => {
         setScriptLoaded(false)
@@ -87,21 +92,9 @@ function App() {
                 });
             }
         }
+        loadCurrentUser()
         restoreCSRF();
     }, []);
-
-    useEffect(() => {
-        async function fetchKey() {
-            const res = await fetch('/api/key', {
-                method: 'GET'
-            })
-            if (res.ok) {
-                const data = res.json()
-                console.log(data)
-            }
-        }
-        fetchKey()
-    }, [])
 
     useEffect(() => {
         dispatch(setCsrfFunc(fetchWithCSRF));

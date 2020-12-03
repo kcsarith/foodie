@@ -1,10 +1,10 @@
-import Cookies from 'js-cookie'
 
 const SET_USER = 'FOODIE/AUTH/SET_USER'
 const REMOVE_USER = 'FOODIE/AUTH/REMOVE_USER'
 const SET_CSRF = 'FOODIE/AUTH/SET_CSRF'
 const ERROR_MSG = 'ERROR_MSG'
 const SET_POINTS = 'SET_POINTS'
+const LOAD_USER = 'AUTH/LOAD_USER';
 
 export const setUser = (user) => {
     return {
@@ -17,6 +17,13 @@ export const setCsrfFunc = (cb) => {
     return {
         type: SET_CSRF,
         cb
+    }
+}
+
+export const userLoad = (user) => {
+    return {
+        type: LOAD_USER,
+        user
     }
 }
 
@@ -34,20 +41,28 @@ export const logout = () => (dispatch, getState) => {
     }).then(() => dispatch(removeUser()));
 }
 
-function loadUser() {
-    const authToken = Cookies.get("session");
-    if (authToken) {
-        try {
-            const payload = authToken.split(".")[1];
-            const decodedPayload = atob(payload);
-            const payloadObj = JSON.parse(decodedPayload);
-            const { data } = payloadObj;
-            return data;
-        } catch (e) {
-            Cookies.remove("session");
-        }
+// function loadUser() {
+//     const authToken = Cookies.get("session");
+//     if (authToken) {
+//         try {
+//             const payload = authToken.split(".")[1];
+//             const decodedPayload = atob(payload);
+//             const payloadObj = JSON.parse(decodedPayload);
+//             const { data } = payloadObj;
+//             return data;
+//         } catch (e) {
+//             Cookies.remove("session");
+//         }
+//     }
+//     return {};
+// }
+
+export const loadUser = () => async dispatch => {
+    const res = await fetch('/api/session/load')
+    if (res.ok) {
+        const user = await res.json()
+        dispatch(userLoad(user))
     }
-    return {};
 }
 
 export const login = (email, password) => {
@@ -76,7 +91,7 @@ export const error = (message) => {
 }
 
 export const setPoints = (points) => {
-    return { type: SET_POINTS, points}
+    return { type: SET_POINTS, points }
 }
 
 export const signup = (name, email, password, city, state, points) => {
@@ -125,13 +140,11 @@ export const patchUser = (formState) => {
     }
 }
 
-const initialState = {
-    ...loadUser(),
-    csrf: fetch,
-}
 
-export default function reducer(state = initialState, action) {
+export default function reducer(state = {}, action) {
     switch (action.type) {
+        case LOAD_USER:
+            return { ...state, ...action.user }
         case SET_USER:
             return { ...state, ...action.user }
         case SET_CSRF:
@@ -141,7 +154,7 @@ export default function reducer(state = initialState, action) {
         case ERROR_MSG:
             return { ...state, error: action.message }
         case SET_POINTS:
-            return { ...state, points: action.points}
+            return { ...state, points: action.points }
         default:
             return state
     }
