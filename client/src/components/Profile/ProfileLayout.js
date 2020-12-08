@@ -4,8 +4,6 @@ const tempImageUrl = 'https://previews.123rf.com/images/avectors/avectors1810/av
 const ProfileLayout = ({ username, points }) => (
     <>
         <Segment size='small' padded='very' style={{ width: '80%', margin: 'auto', marginTop: '3em', marginBottom: '3em' }}>
-            <Image src={tempImageUrl} size='mini' /> Foodie
-            <Divider />
             <Grid>
                 <Grid.Column floated='left' width={5}>
                     <Header as='h2'>{username}
