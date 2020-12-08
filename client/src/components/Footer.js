@@ -2,9 +2,7 @@ import React from 'react';
 import { Segment, Header, Divider, Grid, Container, List } from 'semantic-ui-react';
 
 const Footer = () => {
-    const discoverFooterItems = ["Dining Rewards", "Private Dining", "Top 100 Restaurants", "Reserve for Others", "Cuisines Near Me", "Restaurants Near Me", "Delivery Near Me", "Cuisines", "Restaurants Open Now"]
-    const foodieFooterItems = ["About Us", "Blog", "Careers", "Press"]
-    const moreFooterItems = ["Foodie for iOS", "Foodie for Android", "Affiliate Program", "Contact Us"]
+
     return (
         <>
             <Segment inverted vertical style={{
@@ -12,35 +10,69 @@ const Footer = () => {
                 bottom: 0,
                 width: '100%',
             }}>
+
+                {/* */}
                 <Container>
-                    <h1>Become an Insider</h1>
-                    <p>Gain access to exclusive offers, best-of lists, local events & more (you can unsubscribe any time).</p>
+                    <h1>Contributers</h1>
+                    {/* <p>Gain access to exclusive offers, best-of lists, local events & more (you can unsubscribe any time).</p> */}
                     {/* <FooterSignup /> */}
                     <Divider />
                     <Grid divided inverted stackable>
                         <Grid.Row>
-                            <Grid.Column width={5}>
-                                <Header inverted as='h4' content='DISCOVER' />
+                            <Grid.Column width={4}>
+                                <Header inverted as='h4' content='Tom Xu' />
                                 <List link inverted>
-                                    {discoverFooterItems.map((footerItem, index) =>
-                                        <List.Item key={index} href='/'>{footerItem}</List.Item>
-                                    )}
+                                    <a href="https://www.linkedin.com/in/tom-xu-dupont/" target="_blank" rel="noopener noreferrer">
+                                        <List.Item>LinkedIn <i class="linkedin icon"></i></List.Item>
+                                    </a>
+                                    <a href="https://github.com/xxl4tomxu98" target="_blank" rel="noopener noreferrer">
+                                        <List.Item>GitHub <i class="github icon"></i></List.Item> 
+                                    </a>
+                                     <a href="https://angel.co/u/xxl4tomxu98" target="_blank" rel="noopener noreferrer">
+                                        <List.Item>AngelList <i class="angellist icon"></i></List.Item> 
+                                    </a>   
                                 </List>
                             </Grid.Column>
-                            <Grid.Column width={5}>
-                                <Header inverted as='h4' content='FOODIE' />
+                            <Grid.Column width={4}>
+                                <Header inverted as='h4' content='Matt Zamora' />
                                 <List link inverted>
-                                    {foodieFooterItems.map((footerItem, index) =>
-                                        <List.Item key={index}>{footerItem}</List.Item>
-                                    )}
+                                    <a href="https://www.linkedin.com/in/matt-zamora-95b38316b/" target="_blank" rel="noopener noreferrer">
+                                        <List.Item>LinkedIn <i class="linkedin icon"></i></List.Item>
+                                    </a>
+                                    <a href="https://github.com/MattZ-2051" target="_blank" rel="noopener noreferrer">
+                                        <List.Item>GitHub <i class="github icon"></i></List.Item> 
+                                    </a>
+                                    <a href="https://angel.co/u/matt-zamora-1" target="_blank" rel="noopener noreferrer">
+                                        <List.Item>AngelList <i class="angellist icon"></i></List.Item> 
+                                    </a>      
                                 </List>
                             </Grid.Column>
-                            <Grid.Column width={5}>
-                                <Header inverted as='h4' content='MORE' />
+                            <Grid.Column width={4}>
+                                <Header inverted as='h4' content='Krisna Sarith' />
                                 <List link inverted>
-                                    {moreFooterItems.map((footerItem, index) =>
-                                        <List.Item key={index} >{footerItem}</List.Item>
-                                    )}
+                                    <a href="https://www.linkedin.com/in/krisna-sarith-11788b1b9/" target="_blank" rel="noopener noreferrer">
+                                        <List.Item>LinkedIn <i class="linkedin icon"></i></List.Item>
+                                    </a>
+                                    <a href="https://github.com/kcsarith" target="_blank" rel="noopener noreferrer">
+                                        <List.Item>GitHub <i class="github icon"></i></List.Item> 
+                                    </a>
+                                    <a href="https://angel.co/u/krisna-charlie-sarith" target="_blank" rel="noopener noreferrer">
+                                        <List.Item>AngelList <i class="angellist icon"></i></List.Item> 
+                                    </a>     
+                                </List>
+                            </Grid.Column>
+                            <Grid.Column width={4}>
+                                <Header inverted as='h4' content='Yongho Kim' />
+                                <List link inverted>
+                                    <a href="https://www.linkedin.com/in/yongho-kim-024451199/" target="_blank" rel="noopener noreferrer">
+                                        <List.Item>LinkedIn <i class="linkedin icon"></i></List.Item>
+                                    </a>
+                                    <a href="https://github.com/yongho12" target="_blank" rel="noopener noreferrer">
+                                        <List.Item>GitHub <i class="github icon"></i></List.Item> 
+                                    </a>
+                                    <a href="https://angel.co/u/yongho-kim-2" target="_blank" rel="noopener noreferrer">
+                                        <List.Item>AngelList <i class="angellist icon"></i></List.Item> 
+                                    </a>    
                                 </List>
                             </Grid.Column>
                         </Grid.Row>
