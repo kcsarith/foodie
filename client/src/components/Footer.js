@@ -78,7 +78,7 @@ const Footer = () => {
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width={15}>
-                                The Foodie is developed with JavaScript,  React,  Redux,  Python,  Flask,  SQLAlchemy,  HTML,  CSS,  Material-UI,  Semantic UI.
+                                Foodie is developed with JavaScript,  React,  Redux,  Python,  Flask,  SQLAlchemy,  HTML,  CSS,  Material-UI, and Semantic UI.
                             <Divider />
                             </Grid.Column>
                         </Grid.Row>
