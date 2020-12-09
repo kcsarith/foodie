@@ -1,6 +1,7 @@
 import React from 'react';
 import { Segment, Header, Divider, Grid, Container, List } from 'semantic-ui-react';
 
+
 const Footer = () => {
 
     return (
@@ -77,7 +78,7 @@ const Footer = () => {
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width={15}>
-                                The Foodie is developed with JavaScript, React, Redux, Python, Flask, SQLAlchemy, HTML, CSS, Material-UI, Semantic UI.
+                                The Foodie is developed with JavaScript,  React,  Redux,  Python,  Flask,  SQLAlchemy,  HTML,  CSS,  Material-UI,  Semantic UI.
                             <Divider />
                             </Grid.Column>
                         </Grid.Row>
