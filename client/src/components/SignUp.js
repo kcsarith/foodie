@@ -165,7 +165,7 @@ function SignUp() {
 
   return (
     <div className="loginandsignup">
-      <img className='login__image' src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80" alt="" />
+      <img className='login__image' src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80" alt="signup image" />
       <SignUpFormWrapper>
         <h2>Welcome To Foodie!</h2>
         <form name='form' onSubmit={handleSubmit}>
