@@ -11,7 +11,6 @@ const Footer = () => {
                 width: '100%',
             }}>
 
-                {/* */}
                 <Container>
                     <h1>Contributers</h1>
                     {/* <p>Gain access to exclusive offers, best-of lists, local events & more (you can unsubscribe any time).</p> */}
@@ -78,7 +77,7 @@ const Footer = () => {
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width={15}>
-                                Copyright © 2020 Foodie, Inc. 1 Washington St Ste 100, San Anton GA 34104 - All rights reserved.
+                                The Foodie is developed with JavaScript, React, Redux, Python, Flask, SQLAlchemy, HTML, CSS, Material-UI, Semantic UI.
                             <Divider />
                             </Grid.Column>
                         </Grid.Row>
