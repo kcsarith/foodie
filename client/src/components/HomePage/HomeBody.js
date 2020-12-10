@@ -7,10 +7,10 @@ import { useSelector } from 'react-redux';
 function HomeBody({ data }) {
 
     const authSelector = useSelector(state => state.authentication)
-    const [restData, setRestData] = useState([])
     const [homeBodyVisual, setHomeBodyVisual] = useState({
         favorites: [],
     })
+    const [restData, setRestData] = useState([])
 
     const findKeyValueInObjectArrayExists = (rest) => {
         if (homeBodyVisual.favorites.length) {
@@ -40,19 +40,14 @@ function HomeBody({ data }) {
         fetchData();
     }, []);
 
-
-    useEffect(() => {
-        setRestData(data)
-    }, [data])
-
-    const restComponents = restData.map((rest) => {
+    const restComponents = data.map((rest) => {
         const favorited = findKeyValueInObjectArrayExists(rest);
         return <RestaurantCard key={rest.id} favorited={favorited} homeBodyVisual={homeBodyVisual} setHomeBodyVisual={setHomeBodyVisual} rest={rest} />
     })
 
     return (
         <div className='restaurants-list'>
-            { restData.length === 0 ? <h3>Sorry we couldn't find any Restaurants in that area</h3> : restComponents}
+            { data.length === 0 ? <h3>Search for Restaurants in your area!</h3> : restComponents}
         </div>
 
     );

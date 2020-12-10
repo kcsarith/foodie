@@ -13,23 +13,7 @@ require('dotenv').config()
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
 
-    const [scriptLoaded, setScriptLoaded] = useState(false)
-    const [scriptError, setScriptError] = useState(true)
-
-    const handleScriptCreate = () => {
-        setScriptLoaded(false)
-        return scriptLoaded
-    }
-
-    const handleScriptError = () => {
-        setScriptError(true)
-        return scriptError
-    }
-
-    const handleScriptLoad = () => {
-        setScriptLoaded(true)
-    }
-    let needLogin = useSelector(state => !state.authentication.id);
+    const needLogin = useSelector(state => !state.authentication.id);
 
     if (needLogin === undefined) {
         return <h1>loading...</h1>
@@ -47,27 +31,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
 function App() {
 
-    let location = useLocation();
-    let dispatch = useDispatch();
+    const location = useLocation();
+    const dispatch = useDispatch();
     const [fetchWithCSRF, setFetchWithCSRF] = useState(() => fetch);
-    const [scriptLoaded, setScriptLoaded] = useState(false)
-    const [scriptError, setScriptError] = useState(true)
     const loadCurrentUser = () => dispatch(loadUser())
-
-    const handleScriptCreate = () => {
-        setScriptLoaded(false)
-        return scriptLoaded
-    }
-
-    const handleScriptError = () => {
-        setScriptError(true)
-        return scriptError
-    }
-
-    const handleScriptLoad = () => {
-        setScriptLoaded(true)
-    }
-
 
 
     useEffect(() => {

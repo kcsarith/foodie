@@ -5,6 +5,7 @@ import PlacesAutocomplete, {
 } from 'react-autocomplete-places';
 import HomeBody from './HomeBody'
 import './HomePage.css'
+import Loading from '../Loading/Loading';
 
 class SearchInput extends React.Component {
     constructor(props) {
@@ -12,39 +13,44 @@ class SearchInput extends React.Component {
         this.state = {
             address: '',
             coords: null,
-            restData: []
+            restData: [],
+            loading: false
         };
+
     }
+
 
     handleChange = address => {
         this.setState({ address });
     };
 
 
-    // handleSelect = address => {
-    //     geocodeByAddress(address)
-    //         .then(results => getLatLng(results[0]))
-    //         .then(latLng => {
-    //             this.setState({ coords: latLng })
-    //             console.log('Success', this.state.coords)
-    //             this.props.csrf('/api/home/', {
-    //                 method: "POST",
-    //                 headers: { "Content-Type": "application/json" },
-    //                 body: JSON.stringify(this.state.coords),
-    //             })
-    //                 .then(res => res.json())
-    //                 .then(data => this.setState({ restData: data.restaurants }))
-    //         })
-    //         .catch(error => console.error('Error', error));
-    //     this.setState({ address: address })
-    // };
+    handleSelect = address => {
+        this.setState({ loading: true })
+        geocodeByAddress(address)
+            .then(results => getLatLng(results[0]))
+            .then(latLng => {
+                this.setState({ coords: latLng })
+                this.props.csrf('/api/home/', {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(this.state.coords),
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        this.setState({ loading: false })
+                        this.setState({ restData: data.restaurants })
+                    })
+            })
+            .catch(error => console.error('Error', error));
+        this.setState({ address: address })
+    };
 
 
     render() {
-
         return (
             <>
-                {/* <div className='home-search'>
+                <div className='home-search'>
                     <PlacesAutocomplete
                         value={this.state.address}
                         onChange={this.handleChange}
@@ -64,18 +70,17 @@ class SearchInput extends React.Component {
                                         const className = suggestion.active
                                             ? 'suggestion-item--active'
                                             : 'suggestion-item';
-                                        // inline style for demonstration purpose
                                         const style = suggestion.active
-                                            ? { backgroundColor: 'lightgray', cursor: 'pointer' }
-                                            : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                            ? { backgroundColor: 'lightgray', cursor: 'pointer', width: '400px' }
+                                            : { backgroundColor: '#ffffff', cursor: 'pointer', width: '400px' };
                                         return (
-                                            <div key={index}
+                                            <div key={index.toString()}
                                                 {...getSuggestionItemProps(suggestion, {
                                                     className,
                                                     style,
                                                 })}
                                             >
-                                                <span>{suggestion.description}</span>
+                                                <span key={index}>{suggestion.description}</span>
                                             </div>
                                         );
                                     })}
@@ -83,13 +88,16 @@ class SearchInput extends React.Component {
                             </div>
                         )}
                     </PlacesAutocomplete>
-                </div> */}
+                </div>
                 <div className='home__img'>
                     <img src='https://images.unsplash.com/photo-1574936145840-28808d77a0b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80' alt='' />
                 </div>
                 <div className='home__body'>
-
-                    <HomeBody data={this.state.restData} />
+                    {this.state.loading ?
+                        <Loading />
+                        :
+                        <HomeBody data={this.state.restData} />
+                    }
                 </div>
             </>
         );

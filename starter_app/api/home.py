@@ -11,7 +11,7 @@ from datetime import datetime
 import pprint
 import random
 
-llave = os.environ.get("API_KEY")
+llave = os.environ.get("BACK_END_KEY")
 gmaps = googlemaps.Client(key=llave)
 
 bp = Blueprint("home", __name__)

@@ -38,7 +38,8 @@ export const logout = () => (dispatch, getState) => {
     const fetchWithCSRF = getState().authentication.csrf;
     fetchWithCSRF(`/api/session/logout`, {
         method: 'POST'
-    }).then(() => dispatch(removeUser()));
+    })
+        .then(() => dispatch(removeUser()));
 }
 
 // function loadUser() {
