@@ -31,7 +31,7 @@ function HomePage() {
     return (
         <>
             <div className='home'>
-                {/* <SearchInput csrf={fetchWithCSRF} /> */}
+                <SearchInput csrf={fetchWithCSRF} />
                 <Footer />
             </div>
         </>
