@@ -38,6 +38,7 @@ function HomeBody({ data }) {
             }
         }
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const restComponents = data.map((rest) => {

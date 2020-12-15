@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import './HomePage.css'
 import Footer from '../Footer';
 import 'semantic-ui-css/semantic.min.css'

@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import logger from 'redux-logger';
 import authentication from './authentication';
 
 
@@ -20,6 +19,6 @@ const configureStore = initialState => {
     );
 };
 
-const storeEnhancer = composeEnhancers(applyMiddleware(thunk, logger));
+const storeEnhancer = composeEnhancers(applyMiddleware(thunk));
 
 export default configureStore;

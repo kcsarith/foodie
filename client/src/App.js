@@ -8,6 +8,7 @@ import Profile from './components/Profile';
 import HomePage from './components/HomePage/HomePage'
 import RestaurantProfile from './components/RestaurantProfile/RestaurantProfile';
 import { loadUser, setCsrfFunc } from './store/authentication';
+import Loading from './components/Loading/Loading';
 require('dotenv').config()
 
 
@@ -16,7 +17,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     const needLogin = useSelector(state => !state.authentication.id);
 
     if (needLogin === undefined) {
-        return <h1>loading...</h1>
+        return <Loading />
     }
     return (
         <>
@@ -61,6 +62,7 @@ function App() {
         }
         loadCurrentUser()
         restoreCSRF();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {

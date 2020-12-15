@@ -354,6 +354,7 @@ const RestaurantProfile = () => {
         }
         fetchData()
         //make sure renders correctly
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [profileVisualState.id])
     const getAllRatings = (restaurantDataArray) => {
         let allRatings = [];

@@ -214,6 +214,7 @@ const Review = ({ profileVisualState, setProfileVisualState }) => {
             }
         }
         fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [profileVisualState.id]);
 
     const handlePaginationChange = (e, props) => {
