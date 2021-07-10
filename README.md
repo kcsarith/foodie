@@ -1,6 +1,7 @@
 # Foodie
-Clone based off https://www.opentable.com/.
+Clone based off opentable.com.
 
+Live preview of our app https://foodie0520.herokuapp.com/.
 # Features
 ## Create and search restaurants
 Account holders are able to advertise their restaurants on this site to get more people to eat in. Restaraunt owners may name it, set the address, add images, set the pricing and more.
